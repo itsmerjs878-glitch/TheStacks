@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.8 Documentation with Comments — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-8.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.8</div>
+<h1 class="article-title"><span class="title-num">1.8</span> Documentation with Comments</h1>
+<p class="article-lede">Comments document code for humans. The exam has specific vocabulary for the promises a method makes.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>//</code> starts a single-line comment. <code>/* ... */</code> is a multi-line comment. <code>/** ... */</code> is a Javadoc comment, used to document classes and methods.</li><li>A <strong>precondition</strong> is a condition that must be true <em>before</em> a method is called for it to work correctly. The method is <em>not</em> required to check it — the caller is responsible.</li><li>A <strong>postcondition</strong> is a condition that will be true <em>after</em> the method finishes, assuming preconditions were met. It describes what the method guarantees.</li><li>On FRQs, the problem statement gives preconditions (e.g., "the array contains at least one element"). You may rely on them — you don't need to handle cases they rule out.</li><li>Good comments explain intent and non-obvious decisions. Restating the code (<code>x++; // add one to x</code>) adds nothing.</li><li>Documentation helps future readers, including you, and is part of a professional development process.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">/**
+ * Returns the average of the values in nums.
+ * Precondition: nums.length &gt; 0
+ * Postcondition: the returned value is the sum of the
+ *                elements divided by nums.length
+ */
+public static double average(int[] nums)
+{
+    // no need to check for empty array: precondition handles it
+    ...
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions ask "which statement is a precondition?" — look for what must be true of the <em>input</em> before calling. Postconditions describe the <em>result</em>. And when an FRQ states a precondition, don't waste time writing code to check it.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A <strong>precondition</strong> is a promise the <em>caller</em> makes: "I will only call this with valid input." The method can assume it's true. On FRQs, when a precondition says "the array is non-empty," you don't check for empty — doing so wastes time and can even introduce bugs.</li><li>A <strong>postcondition</strong> is a promise the <em>method</em> makes: "when I return, this will be true." It describes the result, not the process. Different implementations can satisfy the same postcondition.</li><li>Preconditions and postconditions are the formal version of an API contract. They let you use a method without reading its code: know what it needs, know what it guarantees.</li><li>Comments explain <strong>why</strong>, not <strong>what</strong>. <code>i++; // increment i</code> is noise. <code>i++; // skip the header row</code> is documentation.</li><li>Javadoc comments (<code>/** */</code>) before a class or method are extracted by tools into API documentation. That's how the official Java docs are generated. The exam may show them; you won't be asked to write them.</li><li>Reading FRQ problem statements is reading documentation: every method you're given comes with a description, sometimes preconditions, and the expected behavior. Students who skim lose points to details that were spelled out.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Checking preconditions inside the method on an FRQ.</strong> Not wrong, but wasted effort, and if your check is buggy it costs points. Trust the precondition.</li><li><strong>Confusing pre and post.</strong> Pre = about inputs, before. Post = about outputs/state, after.</li><li><strong>Restating code in comments.</strong> The exam won't penalize it, but it signals not understanding what comments are for.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A method <code>getElement(int index)</code> is documented with "Precondition: 0 <= index < size." Which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The method must check whether index is valid and throw an exception if not.</li><li><span class="opt-letter">B</span> The caller is responsible for ensuring index is valid before calling the method.</li><li><span class="opt-letter">C</span> The method will return -1 if index is invalid.</li><li><span class="opt-letter">D</span> The precondition is checked by the compiler.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Preconditions are the caller's responsibility. The method assumes they hold.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes a postcondition?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A requirement on the arguments passed to a method</li><li><span class="opt-letter">B</span> A statement about what is true after a method completes execution</li><li><span class="opt-letter">C</span> A comment that explains the algorithm used</li><li><span class="opt-letter">D</span> A run-time check inside the method</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Postconditions describe the guaranteed state or result once the method finishes.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Precondition</dt><dd>a condition that must be true before a method is called</dd></div><div><dt>Postcondition</dt><dd>a condition guaranteed to be true after a method finishes</dd></div><div><dt>Javadoc</dt><dd>a /** */ comment used to document classes and methods</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-7.html"><span class="dir">Previous</span>1.7 Application Program Interface (API) and Libraries</a>
+  <a class="to-right" href="1-9.html"><span class="dir">Next</span>1.9 Method Signatures</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

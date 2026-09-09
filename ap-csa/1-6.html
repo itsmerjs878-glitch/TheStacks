@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.6 Compound Assignment Operators — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.6</div>
+<h1 class="article-title"><span class="title-num">1.6</span> Compound Assignment Operators</h1>
+<p class="article-lede">Shorthand that shows up in every loop. The traps are the hidden cast in compound operators and what ++ does inside an expression.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>x += 5</code> means <code>x = x + 5</code>. Same for <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>.</li><li>Compound operators include an <strong>implicit cast</strong> back to the variable's type: if <code>x</code> is an int, <code>x /= 2.0</code> compiles and stores an int. <code>x = x / 2.0</code> would not compile.</li><li><code>x++</code> and <code>++x</code> both add 1 to x. <code>x--</code> and <code>--x</code> subtract 1. On the exam these are used as standalone statements, where the pre/post distinction doesn't matter.</li><li>The AP exam does not test <code>x++</code> inside larger expressions (like <code>y = x++</code>). Keep increments on their own line.</li><li><code>x *= 2 + 3</code> means <code>x = x * (2 + 3)</code> — the whole right side is computed first.</li><li>These operators work on doubles too: <code>total += 0.5;</code></li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int x = 10;
+x += 3;        // 13
+x -= 5;        // 8
+x *= 2;        // 16
+x /= 3;        // 5   (integer division)
+x %= 4;        // 1
+x++;           // 2
+x *= 1 + 1;    // 4   (x * 2, not x * 1 + 1)</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Rewrite every compound operator as its long form before tracing: <code>x *= a + b</code> → <code>x = x * (a + b)</code>. The parentheses are the part students drop.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>x op= expr</code> means <code>x = x op (expr)</code> — the entire right side is parenthesized. <code>x *= 2 + 3</code> is <code>x = x * 5</code>, not <code>x * 2 + 3</code>.</li><li><strong>The hidden cast:</strong> compound operators cast the result back to the variable's type. <code>int x = 10; x /= 4.0;</code> compiles and leaves x = 2 (10 / 4.0 = 2.5, cast to int). The long form <code>x = x / 4.0</code> would be a compile error (double to int). This asymmetry is occasionally tested.</li><li><code>x++</code> and <code>++x</code> are identical as standalone statements. The exam only uses them that way — inside larger expressions (<code>y = x++</code>) is explicitly out of scope, so you won't see it.</li><li><code>x--</code> and <code>--x</code> likewise. <code>x += 1</code>, <code>x++</code>, <code>x = x + 1</code> are all the same statement.</li><li>Compound operators work on doubles (<code>total += 0.25</code>) and, for <code>+=</code> only, on Strings (<code>s += "x"</code> concatenates).</li><li>Loop updates almost always use these: <code>i++</code>, <code>i += 2</code>, <code>i--</code>. Reading them fluently speeds up every loop question.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Forgetting the implied parentheses.</strong> <code>x -= 2 * 3</code> subtracts 6, not 2 then times 3.</li><li><strong>Misreading <code>x -= 5</code> as <code>x = -5</code>.</strong> It subtracts 5 from x.</li><li><strong>Thinking <code>x++</code> inside a loop body increments twice with the loop header.</strong> Each increment is one. If both the header and body increment, i goes up by 2 per iteration.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is the value of <code>n</code> after the following code?
+<pre class="code">int n = 7;
+n += 3;
+n /= 2;
+n *= n;</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 25</li><li><span class="opt-letter">B</span> 50</li><li><span class="opt-letter">C</span> 49</li><li><span class="opt-letter">D</span> 100</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> 7 + 3 = 10. 10 / 2 = 5. 5 * 5 = 25.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is the value of <code>total</code> after <code>int total = 12; total -= 2 * 3;</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 30</li><li><span class="opt-letter">B</span> 6</li><li><span class="opt-letter">C</span> 18</li><li><span class="opt-letter">D</span> 10</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The right side (2 * 3 = 6) is computed first, then total = 12 - 6 = 6.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Compound assignment</dt><dd>operators like += that combine arithmetic with assignment</dd></div><div><dt>Increment (++)</dt><dd>adds 1 to a variable</dd></div><div><dt>Decrement (--)</dt><dd>subtracts 1 from a variable</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-5.html"><span class="dir">Previous</span>1.5 Casting and Range of Variables</a>
+  <a class="to-right" href="1-7.html"><span class="dir">Next</span>1.7 Application Program Interface (API) and Libraries</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.1 Collaboration — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/1-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">BIG IDEA 1: CREATIVE DEVELOPMENT</a> &middot; TOPIC 1.1</div>
+<h1 class="article-title"><span class="title-num">1.1</span> Collaboration</h1>
+<p class="article-lede">Programs get built by people working together. The CED cares about why collaboration helps and what makes it work.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Collaboration brings together people with <strong>different perspectives, skills, and experiences</strong>, which produces programs that are more innovative, more accurate, and less biased than solo work.</li><li>It helps at <em>every</em> stage: planning, designing, coding, testing, and reviewing. Collaboration is not only for splitting up work.</li><li><strong>Pair programming</strong> is the CED's named example: two people share one workstation. The <strong>driver</strong> writes code; the <strong>navigator</strong> reviews each line and thinks ahead. Roles switch regularly.</li><li>Effective collaboration requires <strong>communication, consensus building, conflict resolution, and negotiation</strong> — the exam treats these as real skills, not soft filler.</li><li>Feedback from users, teachers, and peers is part of collaboration. Incorporating it makes the final product better match what people actually need.</li><li>Online tools (shared repositories, version control, messaging) let people collaborate without being in the same room.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A team of three is building a study-timer app. One student likes minimal interfaces, one has strong design skills, one has used timers that annoyed them with too many alerts. Because they combine perspectives, the final design has a clean interface with a single, adjustable alert — something none of them would have built alone. That "different perspectives → better product" logic is what an exam question about collaboration is fishing for.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When a question asks why collaboration helped, the correct option almost always mentions <em>diverse perspectives</em>, <em>reduced bias</em>, or <em>catching errors earlier</em>. Options claiming collaboration makes programs run faster or use less memory are distractors — collaboration is about the people process, not program performance.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED gives a specific list of what collaboration <em>reduces</em>: it reduces bias, reduces errors (more eyes on the code), and makes programs more usable by more people (more perspectives on who the users are). When an exam option lists one of these three, that's the signal it's correct.</li><li>Collaboration works because of <strong>complementary skills</strong>: one person may be strong at algorithm design, another at interface design, another at testing. The exam frames this as "different perspectives and skills" — the phrase to look for.</li><li>Communication isn't only talking: shared documents, code comments, commit messages, and issue trackers are all collaboration tools. A question describing a team using a shared repository with change tracking is describing collaboration infrastructure.</li><li>Consensus building means the team agrees on decisions rather than one person dictating; conflict resolution means disagreements get worked through, not ignored. Both are named in the CED as things effective collaborators do.</li><li>The Create Task is <em>individual</em> even though collaboration during development is allowed — you must be able to say exactly what you personally wrote. Collaborating on ideas is fine; submitting someone else's algorithm as your own is not.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Picking an option about performance.</strong> "Collaboration makes the program run faster / use less memory" is always wrong. Collaboration affects the development process and the quality of the design, not the program's execution.</li><li><strong>Confusing pair programming with splitting work.</strong> In pair programming both people work on the <em>same</em> code at the <em>same</em> time. If two people each write half the program separately, that's dividing labor, not pair programming.</li><li><strong>Assuming collaboration means more people = always better.</strong> The CED's claim is about diverse perspectives, not headcount. A team of ten identical thinkers doesn't get the benefit.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Two students are working on a program together. One student types code while the other watches, reviews each line, and suggests improvements. After twenty minutes they switch roles. Which of the following best describes this practice?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Pair programming</li><li><span class="opt-letter">B</span> Iterative development</li><li><span class="opt-letter">C</span> Code documentation</li><li><span class="opt-letter">D</span> Procedural abstraction</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> One person writing (driver) while the other reviews (navigator), with roles swapping, is the definition of pair programming.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is a benefit of developing a program with a diverse team rather than alone?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The program will always run more efficiently.</li><li><span class="opt-letter">B</span> The team is less likely to build in unintentional bias, because members bring different perspectives.</li><li><span class="opt-letter">C</span> The program will require less testing.</li><li><span class="opt-letter">D</span> Documentation becomes unnecessary.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The CED explicitly ties diverse collaboration to reduced bias and better design. Efficiency, testing needs, and documentation are unaffected.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Pair programming</dt><dd>two programmers share one workstation; one writes (driver) while the other reviews (navigator), switching regularly</dd></div><div><dt>Collaboration</dt><dd>working together throughout development to combine perspectives and skills</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-1.html"><span class="dir">Up</span>Big Idea 1 overview</a>
+  <a class="to-right" href="1-2.html"><span class="dir">Next</span>1.2 Program Function and Purpose</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

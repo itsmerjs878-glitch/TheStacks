@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.5 Methods: How to Write Them — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-5.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.5</div>
+<h1 class="article-title"><span class="title-num">3.5</span> Methods: How to Write Them</h1>
+<p class="article-lede">Writing methods that read and change an object's state. The exam expects accessors, mutators, and a toString that returns — not prints — a String.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Method structure: <code>public returnType name(parameters) { body }</code>. A non-void method must <code>return</code> a value of the declared type on every path.</li><li><strong>Accessors</strong> return an instance variable's value: <code>public int getCount() { return count; }</code>. They never change state.</li><li><strong>Mutators</strong> change instance variables and are usually <code>void</code>: <code>public void setCount(int c) { count = c; }</code>. They may validate first.</li><li><code>public String toString()</code> returns a String description of the object. <code>System.out.println(obj)</code> calls it automatically. It <em>returns</em>; it does not print.</li><li>A method can call other methods of the same class by name, and can use instance variables directly.</li><li>Reaching the end of a non-void method without a return is a compile-time error ("missing return statement"). A return inside an if isn't enough unless every branch returns.</li><li>Parameters are local to the method; changing a primitive parameter doesn't affect the caller's variable.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Counter
+{
+    private int count;
+    private String label;
+
+    public Counter(String l) { label = l; count = 0; }
+
+    public int getCount() { return count; }                 // accessor
+    public void increment() { count++; }                    // mutator
+    public void reset() { count = 0; }                      // mutator
+    public boolean isPositive() { return count &gt; 0; }       // accessor
+    public String toString()
+    {
+        return label + ": " + count;                        // returns, not prints
+    }
+}
+Counter c = new Counter("clicks");
+c.increment();
+c.increment();
+System.out.println(c);        // clicks: 2</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If the prompt says "returns," write <code>return</code>; if it says "prints," write <code>System.out.println</code>. Mixing them up is a full rubric point. For toString, always return. For every non-void method, ask: does every possible path hit a return?</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Every path must return</strong> in a non-void method. The compiler checks this. <code>if (x &gt; 0) return 1;</code> alone won't compile — what if x ≤ 0? Add an else, or a return after the if.</li><li><strong>Accessor naming:</strong> <code>getName()</code>, <code>getBalance()</code>, and for booleans <code>isActive()</code>, <code>hasItems()</code>. The exam follows these conventions, and FRQ 2 prompts often specify the exact names.</li><li><strong>Mutator with validation:</strong> a setter can reject bad values: <code>public void setAge(int a) { if (a &gt;= 0) age = a; }</code>. This is why encapsulation matters — the class controls what's valid.</li><li><strong>Mutators that return a status:</strong> <code>public boolean withdraw(double amt)</code> that returns whether it succeeded. Common in FRQ 2. Read the prompt for what it should return.</li><li><code>toString()</code> must be <code>public String toString()</code> exactly — that signature is what <code>println</code> and string concatenation look for. It <em>returns</em> the description. If it prints instead, <code>println(obj)</code> prints the description and then prints the returned null or empty — wrong.</li><li>Methods can call other methods of the same class by bare name (<code>total = computeSubtotal() + tax;</code>). This is how you avoid duplication inside a class.</li><li><strong>Local variables in methods</strong> are for intermediate work. They vanish when the method returns. If something needs to persist between calls, it's an instance variable.</li><li>A method that modifies an instance variable and one that reads it can be in the same class without conflict — they're operating on the same field of the same object.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Missing return on a path.</strong> Compile error. Every branch of a non-void method must return.</li><li><strong>Printing in toString.</strong> Return the String. Don't print it.</li><li><strong>Returning from a void method with a value.</strong> <code>return x;</code> in a void method — compile error. Bare <code>return;</code> is fine.</li><li><strong>Reading the FRQ verb wrong.</strong> "Returns" → return. "Prints" → println. They're different rubric points.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following methods will cause a compile-time error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>public int f(int x) { if (x &gt; 0) { return 1; } return -1; }</code></li><li><span class="opt-letter">B</span> <code>public int g(int x) { if (x &gt; 0) { return 1; } }</code></li><li><span class="opt-letter">C</span> <code>public void h(int x) { if (x &gt; 0) { return; } }</code></li><li><span class="opt-letter">D</span> <code>public boolean k(int x) { return x &gt; 0; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> If x ≤ 0, g reaches the end without returning an int — missing return statement.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A class has the method <code>public String toString() { return "Item: " + name; }</code>. What does <code>System.out.println(item);</code> print, where <code>item</code> has name "pen"?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Item: pen</li><li><span class="opt-letter">B</span> A memory address</li><li><span class="opt-letter">C</span> pen</li><li><span class="opt-letter">D</span> Nothing; toString must be called explicitly</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> println calls toString on the object automatically.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Accessor method</dt><dd>returns the value of an instance variable without changing it</dd></div><div><dt>Mutator method</dt><dd>changes an instance variable; typically void</dd></div><div><dt>toString</dt><dd>a method returning a String representation of the object, called automatically by println</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-4.html"><span class="dir">Previous</span>3.4 Constructors</a>
+  <a class="to-right" href="3-6.html"><span class="dir">Next</span>3.6 Methods: Passing and Returning References of an Object</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

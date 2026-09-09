@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.3 Computing Bias — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/5-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-5.html">BIG IDEA 5: IMPACT OF COMPUTING</a> &middot; TOPIC 5.3</div>
+<h1 class="article-title"><span class="title-num">5.3</span> Computing Bias</h1>
+<p class="article-lede">Programs reflect the data they're built on and the assumptions of the people who built them. Bias is often unintentional, which is exactly why it needs to be looked for.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Computing bias</strong> occurs when a computing innovation systematically produces unfair or skewed outcomes for certain groups.</li><li>Bias can enter through the <strong>data</strong>: if training data underrepresents a group, the system performs worse for that group (e.g., facial recognition trained mostly on one demographic).</li><li>Bias can enter through <strong>design choices</strong>: which features are included, what the defaults are, what's considered "normal" — reflecting the assumptions of the developers.</li><li>Bias can be <strong>intentional or unintentional</strong>. Most exam scenarios are unintentional — a well-meaning team that didn't test with diverse users.</li><li>Bias may exist at <strong>every level</strong> of development, from problem selection to data collection to testing.</li><li>Programmers should <strong>take action to reduce bias</strong>: audit data for representativeness, test with diverse users, involve diverse teams (this is why 1.1 emphasizes diverse collaboration), and examine outcomes by group.</li><li>Bias in a system used at scale — hiring, lending, policing — can amplify existing inequality dramatically.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A company builds a résumé-screening tool by training it on a decade of past hiring decisions. Those past decisions favored one gender for engineering roles. The tool learns the pattern and down-ranks résumés with signals associated with the other gender. Nobody at the company <em>intended</em> that — the bias was in the historical data. Detecting it required checking the tool's outcomes by group, and fixing it required different data, not just different code.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Look for the source. If the scenario mentions training data, the bias came from the data. If it mentions who was on the team or what they assumed, it's design. Options claiming bias can be eliminated by "using more advanced algorithms" alone are wrong — you have to address the data and the assumptions.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Computing bias</strong> is when a system produces systematically unfair results for certain groups. The CED's key claim: bias in a computing innovation reflects the biases in its <strong>data</strong>, its <strong>design</strong>, and its <strong>developers</strong> — and it can be unintentional.</li><li><strong>Bias from data:</strong> systems trained on historical data learn historical patterns, including unfair ones. A hiring tool trained on past hires learns past discrimination. A facial recognition system trained mostly on one demographic works worse on others. The data doesn't have to be labeled "biased" — it just has to be unrepresentative.</li><li><strong>Bias from design:</strong> defaults, categories, and assumptions encode the designers' worldview. A form with only two gender options, a voice assistant tested only with one accent, a health app that assumes a particular body type — each excludes people the designers didn't picture.</li><li><strong>Bias from developers:</strong> teams that lack diversity have blind spots. This is why 1.1 emphasizes diverse collaboration — it's a direct countermeasure to bias.</li><li>Bias can exist at <strong>every level</strong>: which problem to solve (whose needs matter?), what data to collect, how to clean it, what to test, who to test with, and how to interpret results. It's not one step you can check off.</li><li><strong>Amplification at scale:</strong> a biased human decision affects one person. A biased algorithm used for millions of decisions affects millions — consistently and invisibly. That's why algorithmic bias is treated as more dangerous than individual bias.</li><li><strong>Reducing bias</strong> is an active responsibility: audit data for representation, test outcomes across groups, involve affected communities, build diverse teams, and be willing to not ship something that can't be made fair. The CED says programmers "should take action to reduce bias."</li><li>Bias is often <strong>invisible from inside</strong>: developers who share the blind spot don't see the problem. External testing and diverse perspectives are how it gets found.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Thinking bias requires intent.</strong> Most computing bias is unintentional. "The developers didn't mean to" doesn't make a system unbiased.</li><li><strong>Believing a better algorithm alone fixes biased data.</strong> If the data is unrepresentative, the algorithm learns from unrepresentative data. The data must be fixed.</li><li><strong>Assuming computers are objective.</strong> "An algorithm can't be biased because it's math" is a common belief and a wrong answer. Algorithms encode human choices.</li><li><strong>Missing the connection to collaboration.</strong> "Why would a diverse team reduce bias?" — because they catch each other's blind spots. This links 5.3 back to 1.1.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A voice assistant was tested only with speakers of one regional accent and performs poorly for users with other accents. Which of the following best describes this situation?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A syntax error in the program</li><li><span class="opt-letter">B</span> Computing bias resulting from unrepresentative data and testing</li><li><span class="opt-letter">C</span> An example of the digital divide</li><li><span class="opt-letter">D</span> Lossy compression of audio</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Underrepresentation in data/testing leading to worse performance for a group is computing bias.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is the most effective way for a development team to reduce bias in a program that recommends loan approvals?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Use a larger number of processors.</li><li><span class="opt-letter">B</span> Examine the training data for underrepresented groups and test outcomes across demographic groups before deployment.</li><li><span class="opt-letter">C</span> Remove all comments from the code.</li><li><span class="opt-letter">D</span> Compress the data before analysis.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Auditing data and testing outcomes by group directly targets the sources of bias.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Computing bias</dt><dd>systematic unfairness in a computing system's outcomes toward certain groups</dd></div><div><dt>Training data</dt><dd>the data used to build a system's behavior; unrepresentative data produces biased results</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="5-2.html"><span class="dir">Previous</span>5.2 Digital Divide</a>
+  <a class="to-right" href="5-4.html"><span class="dir">Next</span>5.4 Crowdsourcing</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

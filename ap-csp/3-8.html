@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.8 Iteration — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-8.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.8</div>
+<h1 class="article-title"><span class="title-num">3.8</span> Iteration</h1>
+<p class="article-lede">Iteration repeats code. The exam's favorite questions: how many times does the loop run, and what's the final value when it stops?</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Iteration</strong> (looping) is the third building block of algorithms. The code inside the loop is the <strong>loop body</strong>.</li><li><code>REPEAT n TIMES { body }</code> runs the body exactly <em>n</em> times.</li><li><code>REPEAT UNTIL (condition) { body }</code> checks the condition <em>before each pass</em>. If the condition is already true at the start, the body runs <strong>zero times</strong>. Otherwise it runs, then re-checks, until the condition becomes true.</li><li><code>FOR EACH item IN list { body }</code> runs the body once per element, in order, with <code>item</code> holding the current element (covered more in 3.10).</li><li>An <strong>infinite loop</strong> occurs when a REPEAT UNTIL condition can never become true. The exam asks you to spot the variable that never changes.</li><li>The typical pattern: initialize a counter or accumulator before the loop, update it inside, and use it after. Tracing = table with one row per iteration.</li><li>Loop variables retain their final value after the loop ends. If a REPEAT UNTIL stops when <code>i = 5</code>, <code>i</code> is 5 afterward.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">i ← 1
+sum ← 0
+REPEAT UNTIL (i > 4)
+{
+    sum ← sum + i
+    i ← i + 1
+}
+DISPLAY(sum)
+DISPLAY(i)</pre>
+<table class="trace"><tr><th>check i &gt; 4?</th><th>sum</th><th>i after</th></tr>
+<tr><td>1 &gt; 4 false</td><td>1</td><td>2</td></tr>
+<tr><td>2 &gt; 4 false</td><td>3</td><td>3</td></tr>
+<tr><td>3 &gt; 4 false</td><td>6</td><td>4</td></tr>
+<tr><td>4 &gt; 4 false</td><td>10</td><td>5</td></tr>
+<tr><td>5 &gt; 4 true → stop</td><td></td><td></td></tr></table>
+<p>Output: <strong>10 5</strong>. Four iterations; <code>i</code> ends at 5, not 4.</p>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csp-repeat-until"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> REPEAT UNTIL runs while the condition is <em>false</em>. Students constantly flip this. Read it as "keep going until this becomes true." And always check the initial condition — a loop that's already satisfied runs zero times.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>REPEAT UNTIL</code> checks its condition <strong>before</strong> each iteration, including the first. If the condition is already true, the body runs zero times. (Some real languages have do-while loops that run the body at least once; AP pseudocode's REPEAT UNTIL does not.)</li><li>The condition is a <strong>stopping</strong> condition: the loop continues while it's false and stops when it becomes true. Students used to "while" loops must mentally negate. <code>REPEAT UNTIL (i &gt; 4)</code> is the same as "while i ≤ 4."</li><li><code>REPEAT n TIMES</code> runs exactly n times; there's no loop variable you can read. If you need a counter, declare and increment one yourself.</li><li><strong>Infinite loop detection:</strong> find the variables in the stopping condition, then check whether the body ever changes them in the direction that would make the condition true. If the condition is <code>i &gt; 10</code> and the body does <code>i ← i - 1</code>, it never stops (assuming i starts ≤ 10).</li><li>The <strong>final value</strong> of a loop variable after the loop is the value that made the condition true — one step past the last iteration's value. If the body ran with i = 1, 2, 3, 4, then i is 5 afterward.</li><li>The exam's block-based pseudocode draws REPEAT UNTIL as a shape with the condition on top. Same semantics.</li><li>Combining a loop with an accumulator (<code>sum ← sum + i</code>) is how sums, counts, and products are computed. The accumulator must be initialized <em>before</em> the loop.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Running the body while the condition is true.</strong> REPEAT UNTIL is the opposite — body runs while false. This one flip is responsible for a large share of wrong loop answers.</li><li><strong>Forgetting the zero-iteration case.</strong> If the stopping condition is true before the loop starts, nothing inside runs. Check the initial state first.</li><li><strong>Reporting the last iteration's value instead of the final value.</strong> The variable's final value is the one that stopped the loop, which is one step beyond.</li><li><strong>Not initializing the accumulator.</strong> A <code>sum</code> that's never set to 0 before the loop is undefined. On the exam it's a logic error to spot.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> How many times is "hi" displayed by the following code?
+<pre class="code">count ← 10
+REPEAT UNTIL (count &lt; 4)
+{
+    DISPLAY("hi")
+    count ← count - 2
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 3</li><li><span class="opt-letter">B</span> 4</li><li><span class="opt-letter">C</span> 5</li><li><span class="opt-letter">D</span> The loop never ends</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> count goes 10 → 8 → 6 → 4 → 2. The body runs while count ≥ 4: for values 10, 8, 6, 4 — four times. When count is 2, the condition is true and the loop stops.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following loops will never terminate?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>x ← 0</code><br><code>REPEAT UNTIL (x ≥ 5) { x ← x + 1 }</code></li><li><span class="opt-letter">B</span> <code>x ← 10</code><br><code>REPEAT UNTIL (x = 0) { x ← x - 2 }</code></li><li><span class="opt-letter">C</span> <code>x ← 3</code><br><code>REPEAT UNTIL (x > 100) { x ← x * 2 }</code></li><li><span class="opt-letter">D</span> <code>x ← 1</code><br><code>REPEAT UNTIL (x = 0) { x ← x + 1 }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: D.</strong> In D, x starts at 1 and only increases, so x = 0 can never become true. Option B does terminate: 10, 8, 6, 4, 2, 0.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is the value of <code>total</code> after the following code runs?
+<pre class="code">total ← 0
+REPEAT 3 TIMES
+{
+    total ← total + 5
+    total ← total * 2
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 30</li><li><span class="opt-letter">B</span> 50</li><li><span class="opt-letter">C</span> 70</li><li><span class="opt-letter">D</span> 150</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Pass 1: 0+5=5, ×2=10. Pass 2: 15, ×2=30. Pass 3: 35, ×2=70.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Iteration</dt><dd>repeating a block of code</dd></div><div><dt>Loop body</dt><dd>the statements inside a loop that are repeated</dd></div><div><dt>REPEAT UNTIL</dt><dd>a loop that runs while its condition is false and stops once it becomes true</dd></div><div><dt>Infinite loop</dt><dd>a loop whose exit condition is never met</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-7.html"><span class="dir">Previous</span>3.7 Nested Conditionals</a>
+  <a class="to-right" href="3-9.html"><span class="dir">Next</span>3.9 Developing Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csp-repeat-until": {"id": "csp-repeat-until", "title": "REPEAT UNTIL — sum 1 through 4", "course": "ap-csp", "code": ["i ← 1", "sum ← 0", "REPEAT UNTIL (i > 4)", "{", "    sum ← sum + i", "    i ← i + 1", "}", "DISPLAY(sum)", "DISPLAY(i)"], "steps": [{"line": 0, "vars": [["i", "1"]], "out": "", "note": "i starts at 1"}, {"line": 1, "vars": [["i", "1"], ["sum", "0"]], "out": "", "note": "sum starts at 0"}, {"line": 2, "vars": [["i", "1"], ["sum", "0"]], "out": "", "note": "check: is i > 4? 1 > 4 is false → run body"}, {"line": 4, "vars": [["i", "1"], ["sum", "1"]], "out": "", "note": "sum = 0 + 1"}, {"line": 5, "vars": [["i", "2"], ["sum", "1"]], "out": "", "note": "i becomes 2"}, {"line": 2, "vars": [["i", "2"], ["sum", "1"]], "out": "", "note": "check: is i > 4? 2 > 4 is false → run body"}, {"line": 4, "vars": [["i", "2"], ["sum", "3"]], "out": "", "note": "sum = 1 + 2"}, {"line": 5, "vars": [["i", "3"], ["sum", "3"]], "out": "", "note": "i becomes 3"}, {"line": 2, "vars": [["i", "3"], ["sum", "3"]], "out": "", "note": "check: is i > 4? 3 > 4 is false → run body"}, {"line": 4, "vars": [["i", "3"], ["sum", "6"]], "out": "", "note": "sum = 3 + 3"}, {"line": 5, "vars": [["i", "4"], ["sum", "6"]], "out": "", "note": "i becomes 4"}, {"line": 2, "vars": [["i", "4"], ["sum", "6"]], "out": "", "note": "check: is i > 4? 4 > 4 is false → run body"}, {"line": 4, "vars": [["i", "4"], ["sum", "10"]], "out": "", "note": "sum = 6 + 4"}, {"line": 5, "vars": [["i", "5"], ["sum", "10"]], "out": "", "note": "i becomes 5"}, {"line": 2, "vars": [["i", "5"], ["sum", "10"]], "out": "", "note": "check: is i > 4? 5 > 4 is true → stop"}, {"line": 7, "vars": [["i", "5"], ["sum", "10"]], "out": "10 ", "note": "display sum"}, {"line": 8, "vars": [["i", "5"], ["sum", "10"]], "out": "10 5 ", "note": "display i — note it's 5, not 4"}], "intro": "The loop runs while the condition is false. Watch the final check where i = 5."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.4 Strings — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.4</div>
+<h1 class="article-title"><span class="title-num">3.4</span> Strings</h1>
+<p class="article-lede">Strings are ordered sequences of characters. The exam tests the concept — concatenation and substrings — rather than specific string functions.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>string</strong> is an ordered sequence of characters (letters, digits, spaces, symbols), written in quotes: <code>"Hello"</code>.</li><li><strong>Concatenation</strong> joins strings end to end. <code>"AP" + "CSP"</code> → <code>"APCSP"</code>. Note there's no automatic space.</li><li>A <strong>substring</strong> is any contiguous run of characters within a string. <code>"Comp"</code> is a substring of <code>"Computer"</code>; <code>"Cptr"</code> is not.</li><li>Strings can be compared, searched, and have their length measured. The exact operation names vary by language; the CED expects the concepts, not a specific syntax.</li><li>A string containing digits, like <code>"42"</code>, is text, not a number — concatenating <code>"4" + "2"</code> gives <code>"42"</code>, not 6.</li><li>Strings are <em>immutable</em> in many languages: operations produce a new string rather than changing the original.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">first ← "Grace"
+last ← "Hopper"
+full ← first + " " + last
+DISPLAY(full)</pre>
+<p>Concatenation with an explicit space in the middle → <strong>Grace Hopper</strong>. Without the <code>+ " " +</code>, the output would be <code>GraceHopper</code>. Questions love that missing space.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When the exam shows string operations, it defines them in the question (e.g., "the procedure SUBSTRING(str, start, end) returns…"). Read that definition carefully — in particular, whether the end index is included — and apply it literally rather than assuming a language you know.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's essential knowledge on strings is minimal: they're ordered sequences of characters, and you can <strong>concatenate</strong> and take <strong>substrings</strong>. Everything else — length, indexing, searching — the exam defines inside the question if it's needed.</li><li>Concatenation with <code>+</code> works on strings in AP pseudocode. Combining a string and a number is <em>not</em> defined on the reference sheet; if a question does it, it will explain the behavior.</li><li>A <strong>substring</strong> must be contiguous. "cat" is a substring of "concatenate" (positions 4–6). "cnt" is not, even though all three letters appear in order.</li><li>The <strong>empty string</strong> <code>""</code> is a valid string with zero characters. Concatenating it changes nothing. It's often the starting value when building a string in a loop.</li><li>When a question defines a string procedure — say, <code>SUBSTRING(str, start, length)</code> or <code>SUBSTRING(str, start, end)</code> — the parameters matter enormously. One version takes a length, one takes an end index, and the end may or may not be inclusive. Read the definition every time.</li><li>Building a string character by character in a loop is the standard pattern for reversing or filtering text: start with <code>""</code>, add one character per iteration.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Adding a space that isn't there.</strong> <code>"a" + "b"</code> is <code>"ab"</code>. If a space is needed it must be concatenated explicitly.</li><li><strong>Treating a numeric string as a number.</strong> <code>"4" + "2"</code> is <code>"42"</code> if both are strings. Arithmetic isn't happening.</li><li><strong>Assuming a substring definition.</strong> Don't apply Java's or Python's rules. Use whatever the question says, including whether indices start at 1 and whether the end is inclusive.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> The variable <code>word</code> holds the string <code>"program"</code>. Which of the following is a substring of <code>word</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> "pgm"</li><li><span class="opt-letter">B</span> "gram"</li><li><span class="opt-letter">C</span> "margorp"</li><li><span class="opt-letter">D</span> "prog ram"</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> A substring must be a contiguous run of the original characters. "gram" is the last four characters in order.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is displayed by the following code?
+<pre class="code">a ← "12"
+b ← "3"
+DISPLAY(a + b)</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 15</li><li><span class="opt-letter">B</span> 123</li><li><span class="opt-letter">C</span> 36</li><li><span class="opt-letter">D</span> An error, because strings cannot be added</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Both values are strings, so + concatenates them: "12" followed by "3" is "123".</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>String</dt><dd>an ordered sequence of characters</dd></div><div><dt>Concatenation</dt><dd>joining two strings end to end</dd></div><div><dt>Substring</dt><dd>a contiguous sequence of characters within a string</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-3.html"><span class="dir">Previous</span>3.3 Mathematical Expressions</a>
+  <a class="to-right" href="3-5.html"><span class="dir">Next</span>3.5 Boolean Expressions</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.12 Objects: Instances of Classes — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-12.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.12</div>
+<h1 class="article-title"><span class="title-num">1.12</span> Objects: Instances of Classes</h1>
+<p class="article-lede">A class is a blueprint; an object is one thing built from it. This is the mental model for the whole second half of the course.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>class</strong> defines a type: what data its objects hold (<strong>attributes</strong>, stored in instance variables) and what they can do (<strong>behaviors</strong>, defined by methods).</li><li>An <strong>object</strong> is an <strong>instance</strong> of a class — one specific thing with its own values for the attributes. <code>"hello"</code> and <code>"world"</code> are two String objects.</li><li>Objects are created with <code>new</code> (except String literals, which Java creates for you). Each <code>new</code> makes a separate object.</li><li>The class's methods are the same for every object; the instance variable values differ. Two Student objects share the <code>getName()</code> method but have different names.</li><li><strong>Object-oriented programming</strong> models a program as objects interacting by calling each other's methods.</li><li>A class can be used without seeing its code — you only need its API. That's the point of 1.7.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// Class: the blueprint (someone wrote this)
+public class Dog
+{
+    private String name;
+    private int age;
+    // ... constructor and methods
+}
+
+// Objects: individual dogs built from the blueprint
+Dog d1 = new Dog("Rex", 3);
+Dog d2 = new Dog("Bo", 5);
+// d1 and d2 are two instances with different attribute values</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Class vs. object questions are definitional: class = template/type, object = one instance with specific values. "How many objects are created" = count the <code>new</code> keywords (plus string literals).</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A <strong>class</strong> is a type you define: it says what data its objects hold and what operations they support. <strong>Objects</strong> are instances — each has its own copy of the instance variables with its own values, but all share the class's methods.</li><li><strong>Attributes</strong> (state) become instance variables. <strong>Behaviors</strong> become methods. When the exam describes a real-world thing — a bank account with a balance that can be deposited to — you should be able to map nouns to attributes and verbs to behaviors.</li><li>Objects are created with <code>new</code>. Every <code>new</code> makes a distinct object, even with identical arguments. <code>new Dog("Rex")</code> twice creates two dogs named Rex.</li><li>String is a class, but String literals are created for you: <code>"hello"</code> is a String object without <code>new</code>. Also, identical literals may share one object — which is why <code>==</code> on Strings sometimes "works" and why you should never rely on it.</li><li>You can use a class without seeing its code. FRQ 3 gives you a class (say, <code>Student</code>) with its method headers and asks you to process a list of them. You never see the class body; you use the API.</li><li><strong>Object-oriented design</strong> is thinking in terms of objects that hold state and send messages (method calls) to each other. The exam's Unit 3 is where you write classes; Unit 1 is where you learn to use them.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Counting variables as objects.</strong> <code>Dog c = a;</code> creates zero objects. Count the <code>new</code>s.</li><li><strong>Calling the blueprint an instance.</strong> Class = blueprint. Object = the thing built from it.</li><li><strong>Assuming two objects with equal state are the same object.</strong> They aren't. <code>==</code> is false; <code>.equals</code> may be true if the class defines it that way.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following best describes the relationship between a class and an object?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A class is an instance of an object.</li><li><span class="opt-letter">B</span> An object is an instance of a class, with its own attribute values.</li><li><span class="opt-letter">C</span> A class and an object are the same thing.</li><li><span class="opt-letter">D</span> An object contains multiple classes.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The class is the blueprint; each object is one instance made from it.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> How many objects are created by the following code?
+<pre class="code">Dog a = new Dog("Max", 2);
+Dog b = new Dog("Max", 2);
+Dog c = a;</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 1</li><li><span class="opt-letter">B</span> 2</li><li><span class="opt-letter">C</span> 3</li><li><span class="opt-letter">D</span> 0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Two new statements create two objects. Line 3 copies a reference — c points to the same object as a.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Class</dt><dd>a template that defines the attributes and behaviors of a type of object</dd></div><div><dt>Object</dt><dd>a specific instance of a class</dd></div><div><dt>Attribute</dt><dd>data stored in an object, held in instance variables</dd></div><div><dt>Behavior</dt><dd>what an object can do, defined by its methods</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-11.html"><span class="dir">Previous</span>1.11 Math Class</a>
+  <a class="to-right" href="1-13.html"><span class="dir">Next</span>1.13 Object Creation and Storage (Instantiation)</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

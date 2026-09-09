@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.11 Nested Iteration — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-11.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.11</div>
+<h1 class="article-title"><span class="title-num">2.11</span> Nested Iteration</h1>
+<p class="article-lede">The inner loop runs completely for each pass of the outer loop. Count total iterations, and read the loop bounds carefully when the inner depends on the outer.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>In nested loops, the <strong>inner loop runs to completion</strong> every time the outer loop's body executes.</li><li>Total body executions = (outer iterations) × (inner iterations) when the inner bounds are fixed.</li><li>When the inner bound depends on the outer variable (<code>for (int j = 0; j &lt; i; j++)</code>), the count is a sum: 0 + 1 + 2 + … — triangular numbers.</li><li>Output questions: track which loop controls rows vs. columns. A <code>println</code> after the inner loop ends the line.</li><li>Nested loops are how you compare every pair of elements, print grids, or process 2D data (Unit 4).</li><li>A <code>return</code> exits <em>both</em> loops (and the method). A <code>break</code> is not tested on the exam.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">for (int r = 1; r &lt;= 3; r++)
+{
+    for (int c = 1; c &lt;= r; c++)
+    {
+        System.out.print("*");
+    }
+    System.out.println();
+}
+// *
+// **
+// ***
+// Total stars: 1 + 2 + 3 = 6</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-nested"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> Write the outer variable's value in the margin, then list the inner loop's values for that pass. Don't try to hold both counters in your head. For "how many times" with a dependent inner loop, write out the sum explicitly.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Execution order:</strong> outer init → outer check → [inner init → inner check → inner body → inner update → …→ inner exit] → outer update → outer check → … Each outer iteration runs the entire inner loop from scratch, including its init.</li><li><strong>Independent bounds</strong> (inner doesn't depend on outer): iterations multiply. 4 × 3 = 12. <strong>Dependent bounds</strong> (inner starts or ends at the outer variable): iterations sum. <code>for j from i to n</code> gives n + (n−1) + … + 1 = n(n+1)/2. <code>for j from 0 to i</code> gives 1 + 2 + … + n.</li><li><strong>Output patterns:</strong> <code>print</code> inside the inner loop and <code>println()</code> after it produces rows. The outer loop counts rows; the inner counts columns. Triangles come from dependent bounds.</li><li><strong>Return exits everything.</strong> A <code>return</code> in the inner loop ends the method — both loops stop. Useful for searching a grid; a trap when tracing.</li><li>Nested loops are the natural structure for <strong>pairs</strong> (compare every element with every other — duplicates, closest pair), <strong>grids</strong> (2D arrays in Unit 4), and <strong>substring searches</strong> (outer picks the start, inner compares characters).</li><li><strong>Tracing technique:</strong> write the outer variable in the margin, then the full sequence of inner values for that pass. Don't interleave in your head.</li><li>Run-time: two nested loops over n → n² statement executions. This is what 2.12 counts and what makes some algorithms slow for large inputs.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Multiplying when the bound is dependent.</strong> Sum the triangular series instead.</li><li><strong>Forgetting the inner loop re-initializes.</strong> j starts over on every outer pass.</li><li><strong>Putting println in the wrong loop.</strong> Inside the inner loop → one item per line. After it → one row per line.</li><li><strong>Continuing the outer loop after a return.</strong> Return ends the method.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> How many times is "hi" printed?
+<pre class="code">for (int i = 0; i &lt; 4; i++)
+{
+    for (int j = 0; j &lt; 3; j++)
+    {
+        System.out.println("hi");
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 7</li><li><span class="opt-letter">B</span> 12</li><li><span class="opt-letter">C</span> 3</li><li><span class="opt-letter">D</span> 4</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 4 outer × 3 inner = 12.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> How many times is <code>count++</code> executed?
+<pre class="code">for (int i = 1; i &lt;= 4; i++)
+{
+    for (int j = i; j &lt;= 4; j++)
+    {
+        count++;
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 16</li><li><span class="opt-letter">B</span> 10</li><li><span class="opt-letter">C</span> 6</li><li><span class="opt-letter">D</span> 4</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> i = 1: j runs 1–4 (4 times). i = 2: 3 times. i = 3: 2. i = 4: 1. Total 4 + 3 + 2 + 1 = 10.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is printed by the following code?
+<pre class="code">for (int i = 1; i &lt;= 2; i++)
+{
+    for (int j = 1; j &lt;= 3; j++)
+    {
+        System.out.print(i * j + " ");
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 1 2 3 2 4 6</li><li><span class="opt-letter">B</span> 1 2 3 4 5 6</li><li><span class="opt-letter">C</span> 1 2 2 4 3 6</li><li><span class="opt-letter">D</span> 1 1 2 2 3 3</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> i = 1: 1 2 3. i = 2: 2 4 6.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Nested loop</dt><dd>a loop inside the body of another loop</dd></div><div><dt>Inner loop</dt><dd>the loop that runs to completion on each pass of the outer</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-10.html"><span class="dir">Previous</span>2.10 Implementing String Algorithms</a>
+  <a class="to-right" href="2-12.html"><span class="dir">Next</span>2.12 Informal Run-Time Analysis</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-nested": {"id": "csa-nested", "title": "Nested loops where the inner bound depends on the outer", "course": "ap-csa", "code": ["int count = 0;", "for (int i = 1; i <= 4; i++)", "{", "    for (int j = i; j <= 4; j++)", "    {", "        count++;", "    }", "}", "System.out.println(count);"], "steps": [{"line": 0, "vars": [["count", "0"]], "out": "", "note": "count = 0"}, {"line": 1, "vars": [["count", "0"], ["i", "1"]], "out": "", "note": "outer: i = 1"}, {"line": 3, "vars": [["count", "0"], ["i", "1"], ["j", "1"]], "out": "", "note": "inner: j = 1 (starts at i)"}, {"line": 5, "vars": [["count", "1"], ["i", "1"], ["j", "1"]], "out": "", "note": "count = 1"}, {"line": 3, "vars": [["count", "1"], ["i", "1"], ["j", "2"]], "out": "", "note": "inner: j = 2 (starts at i)"}, {"line": 5, "vars": [["count", "2"], ["i", "1"], ["j", "2"]], "out": "", "note": "count = 2"}, {"line": 3, "vars": [["count", "2"], ["i", "1"], ["j", "3"]], "out": "", "note": "inner: j = 3 (starts at i)"}, {"line": 5, "vars": [["count", "3"], ["i", "1"], ["j", "3"]], "out": "", "note": "count = 3"}, {"line": 3, "vars": [["count", "3"], ["i", "1"], ["j", "4"]], "out": "", "note": "inner: j = 4 (starts at i)"}, {"line": 5, "vars": [["count", "4"], ["i", "1"], ["j", "4"]], "out": "", "note": "count = 4"}, {"line": 3, "vars": [["count", "4"], ["i", "1"], ["j", "5"]], "out": "", "note": "j = 5 fails j <= 4; inner loop ends"}, {"line": 1, "vars": [["count", "4"], ["i", "2"]], "out": "", "note": "outer: i = 2"}, {"line": 3, "vars": [["count", "4"], ["i", "2"], ["j", "2"]], "out": "", "note": "inner: j = 2 (starts at i)"}, {"line": 5, "vars": [["count", "5"], ["i", "2"], ["j", "2"]], "out": "", "note": "count = 5"}, {"line": 3, "vars": [["count", "5"], ["i", "2"], ["j", "3"]], "out": "", "note": "inner: j = 3 (starts at i)"}, {"line": 5, "vars": [["count", "6"], ["i", "2"], ["j", "3"]], "out": "", "note": "count = 6"}, {"line": 3, "vars": [["count", "6"], ["i", "2"], ["j", "4"]], "out": "", "note": "inner: j = 4 (starts at i)"}, {"line": 5, "vars": [["count", "7"], ["i", "2"], ["j", "4"]], "out": "", "note": "count = 7"}, {"line": 3, "vars": [["count", "7"], ["i", "2"], ["j", "5"]], "out": "", "note": "j = 5 fails j <= 4; inner loop ends"}, {"line": 1, "vars": [["count", "7"], ["i", "3"]], "out": "", "note": "outer: i = 3"}, {"line": 3, "vars": [["count", "7"], ["i", "3"], ["j", "3"]], "out": "", "note": "inner: j = 3 (starts at i)"}, {"line": 5, "vars": [["count", "8"], ["i", "3"], ["j", "3"]], "out": "", "note": "count = 8"}, {"line": 3, "vars": [["count", "8"], ["i", "3"], ["j", "4"]], "out": "", "note": "inner: j = 4 (starts at i)"}, {"line": 5, "vars": [["count", "9"], ["i", "3"], ["j", "4"]], "out": "", "note": "count = 9"}, {"line": 3, "vars": [["count", "9"], ["i", "3"], ["j", "5"]], "out": "", "note": "j = 5 fails j <= 4; inner loop ends"}, {"line": 1, "vars": [["count", "9"], ["i", "4"]], "out": "", "note": "outer: i = 4"}, {"line": 3, "vars": [["count", "9"], ["i", "4"], ["j", "4"]], "out": "", "note": "inner: j = 4 (starts at i)"}, {"line": 5, "vars": [["count", "10"], ["i", "4"], ["j", "4"]], "out": "", "note": "count = 10"}, {"line": 3, "vars": [["count", "10"], ["i", "4"], ["j", "5"]], "out": "", "note": "j = 5 fails j <= 4; inner loop ends"}, {"line": 1, "vars": [["count", "10"], ["i", "5"]], "out": "", "note": "i = 5 fails i <= 4; outer loop ends"}, {"line": 8, "vars": [["count", "10"]], "out": "10\n", "note": "4 + 3 + 2 + 1 = 10"}], "intro": "The inner loop starts at i, so it runs 4, 3, 2, then 1 times."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

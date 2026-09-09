@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.3 Parallel and Distributed Computing — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/4-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">BIG IDEA 4: COMPUTER SYSTEMS AND NETWORKS</a> &middot; TOPIC 4.3</div>
+<h1 class="article-title"><span class="title-num">4.3</span> Parallel and Distributed Computing</h1>
+<p class="article-lede">Splitting a task across processors or machines. The exam's signature question here is computing the speedup — and understanding why it's never as much as you'd hope.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Sequential computing</strong> executes one operation at a time, in order. Total time = sum of all operations.</li><li><strong>Parallel computing</strong> breaks a task into parts that run <em>simultaneously</em> on multiple processors (cores) in one computer.</li><li><strong>Distributed computing</strong> uses multiple <em>separate</em> computers, connected by a network, working together on one problem — often for tasks too large for a single machine.</li><li>Parallel solutions are generally faster than sequential ones, <strong>but only if the task can be divided</strong>. Parts that depend on each other's results must still run in order.</li><li><strong>Speedup</strong> = sequential time ÷ parallel time. The exam gives you operation times and asks for the minimum time on a given number of processors.</li><li>Speedup is limited by the <strong>sequential portion</strong>: if 20% of a task can't be parallelized, no number of processors gets you more than a 5× speedup.</li><li>There's also <strong>overhead</strong> — the cost of coordinating between processors — so real speedup is always less than the ideal.</li><li>Distributed computing's advantages: scales beyond one machine's limits, and can be more fault tolerant (one machine failing doesn't stop the whole job).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A program has three independent tasks taking 40, 30, and 20 seconds, plus a final step of 10 seconds that needs all three results.</p>
+<ul class="points">
+<li><strong>Sequential:</strong> 40 + 30 + 20 + 10 = <strong>100 seconds</strong>.</li>
+<li><strong>Two processors:</strong> put the 40 on one processor, the 30 and 20 (= 50) on the other. The parallel phase takes 50 seconds (the longer of the two). Then the 10-second step. Total: <strong>60 seconds</strong>.</li>
+<li><strong>Three processors:</strong> 40, 30, 20 each on its own → 40 seconds (the max), plus 10 → <strong>50 seconds</strong>.</li>
+</ul>
+<p>Speedup with three processors = 100 ÷ 50 = 2×, not 3×, because of the 10-second sequential step and the uneven task sizes.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For the timing calculation: (1) list tasks that <em>must</em> be sequential — they add up; (2) for parallel tasks, distribute them to balance the processors and take the <em>longest</em> processor's total; (3) add the two. The answer is never the average of parallel tasks — it's the maximum.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Sequential</strong>: one processor, one operation at a time. Time = sum of all operations. <strong>Parallel</strong>: multiple processors in one machine, operations that don't depend on each other run at the same time. <strong>Distributed</strong>: multiple <em>machines</em> over a network, each handling part of the problem.</li><li><strong>The speedup calculation</strong> the exam uses: find the operations that must run sequentially (they add up), find the operations that can run in parallel, distribute those to processors as evenly as possible, and the parallel phase takes as long as the <em>busiest</em> processor. Total time = sequential + max(parallel). Speedup = sequential time ÷ parallel time.</li><li><strong>Why speedup is limited:</strong> if 10% of a task must be sequential, then even with infinite processors, that 10% takes its full time. Maximum speedup is 10×. This is Amdahl's law in spirit; the CED just says the sequential portion limits speedup.</li><li><strong>Overhead</strong>: splitting work, coordinating, and combining results all take time. Two processors don't quite halve the time even for a perfectly divisible task.</li><li>A task is <strong>parallelizable</strong> when its parts are independent — summing a list (each half can be summed separately then combined) is; a chain where each step needs the previous step's result (computing a running total step by step) is not.</li><li><strong>Distributed computing</strong> adds scalability (add more machines) and fault tolerance (one machine dying doesn't stop the job), at the cost of network communication overhead. It's how large-scale data processing (2.3) is actually done.</li><li>Parallel programs must also handle <strong>synchronization</strong> — making sure results are combined correctly. The CED doesn't go deep here, but it's part of why parallel programming is harder than sequential.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Averaging parallel tasks instead of taking the max.</strong> If two processors run tasks of 40s and 20s, the parallel phase takes 40s, not 30s. The slower processor sets the pace.</li><li><strong>Forgetting the sequential part.</strong> Any step that needs all the parallel results must wait for them and then adds its own time.</li><li><strong>Claiming n processors give n× speedup.</strong> Only for a perfectly parallel task with no overhead — which doesn't exist. Real speedup is always less.</li><li><strong>Mixing up parallel and distributed.</strong> Multiple cores = parallel. Multiple computers = distributed.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A program has four independent tasks that take 8, 6, 4, and 2 seconds. Using two processors that can each run one task at a time, what is the minimum time to complete all tasks?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 8 seconds</li><li><span class="opt-letter">B</span> 10 seconds</li><li><span class="opt-letter">C</span> 12 seconds</li><li><span class="opt-letter">D</span> 20 seconds</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Sequential would be 20. Balance: processor 1 runs 8 + 2 = 10, processor 2 runs 6 + 4 = 10. Minimum time is 10 seconds.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes distributed computing?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Running a single task on one processor as fast as possible</li><li><span class="opt-letter">B</span> Using multiple processors within one computer to run parts of a task simultaneously</li><li><span class="opt-letter">C</span> Using multiple computers connected by a network to work together on a problem</li><li><span class="opt-letter">D</span> Compressing a program so it uses less memory</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Multiple separate machines over a network = distributed. Multiple cores in one machine = parallel.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> A task consists of a 30-second step that must run first, followed by parts that can run in parallel. Even with an unlimited number of processors, the task cannot complete in less than 30 seconds. Which of the following best explains why?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Parallel computing always takes longer than sequential computing.</li><li><span class="opt-letter">B</span> The sequential portion of a task limits the total speedup that parallelization can achieve.</li><li><span class="opt-letter">C</span> Processors cannot run at the same time.</li><li><span class="opt-letter">D</span> The task has a run-time error.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The non-parallelizable part sets a floor on total time. This is the core limit of parallel speedup.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Sequential computing</dt><dd>operations executed one after another on a single processor</dd></div><div><dt>Parallel computing</dt><dd>splitting a task across multiple processors running at the same time</dd></div><div><dt>Distributed computing</dt><dd>multiple networked computers cooperating on one problem</dd></div><div><dt>Speedup</dt><dd>sequential time divided by parallel time</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-2.html"><span class="dir">Previous</span>4.2 Fault Tolerance</a>
+  <a class="to-right" href="unit-4.html"><span class="dir">Back to</span>Big Idea 4 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

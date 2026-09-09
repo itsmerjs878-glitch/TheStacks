@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.13 Implementing 2D Array Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-13.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.13</div>
+<h1 class="article-title"><span class="title-num">4.13</span> Implementing 2D Array Algorithms</h1>
+<p class="article-lede">FRQ 4 is always a 2D array question. The algorithms are the 1D ones applied across rows, columns, or the whole grid.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Named algorithms:</strong> sum/max/min of the whole grid, of a row, or of a column; count cells meeting a condition; find a value's position; check whether every element in a row/column meets a condition; find rows/columns with a property.</li><li><strong>Row operations:</strong> a method that takes <code>int[]</code> can be called with <code>grid[r]</code>. Reusing a 1D helper is common in FRQ 4.</li><li><strong>Column operations:</strong> there's no direct column array; loop over r with fixed c.</li><li><strong>Building a 2D array from a 1D array or list:</strong> fill in row-major (or column-major, if specified) order using a running index into the source.</li><li><strong>Searching:</strong> nested loops; return as soon as found (a return exits both loops).</li><li><strong>Modifying in place:</strong> nested loops with standard indices, assigning to <code>grid[r][c]</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// FRQ 4-style: return the index of the row with the largest sum
+public static int maxRow(int[][] g)
+{
+    int best = 0;
+    int bestSum = rowSum(g[0]);
+    for (int r = 1; r &lt; g.length; r++)
+    {
+        int s = rowSum(g[r]);
+        if (s &gt; bestSum)
+        {
+            bestSum = s;
+            best = r;
+        }
+    }
+    return best;
+}
+public static int rowSum(int[] row)
+{
+    int sum = 0;
+    for (int v : row) sum += v;
+    return sum;
+}
+
+// fill a 2D array from a 1D array in row-major order
+int k = 0;
+for (int r = 0; r &lt; g.length; r++)
+{
+    for (int c = 0; c &lt; g[0].length; c++)
+    {
+        g[r][c] = source[k];
+        k++;
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> FRQ 4 part (a) is usually a 1D-style helper on one row or column; part (b) uses it across the grid. Write the nested loops with r and c named clearly and keep row bound = <code>length</code>, column bound = <code>[0].length</code>. If a return inside nested loops is needed, remember it exits everything.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's named 2D algorithms: sum/max/min/count over the whole grid, over a row, or over a column; find a value's location; determine whether a row or column has a property; find the row/column with the largest sum; count occurrences; transform every element.</li><li><strong>Reuse 1D helpers:</strong> if you have <code>rowSum(int[] row)</code>, then the grid's max-row is a loop over r calling <code>rowSum(g[r])</code>. FRQ 4 part (a) is often the helper; part (b) uses it across the grid. Using your part (a) in part (b) is expected — and if you got (a) wrong, (b) is still graded assuming (a) works.</li><li><strong>Column operations</strong> have no helper shortcut — write the loop over r with fixed c inside a loop over c.</li><li><strong>Search with early return:</strong> nested loops; <code>return</code> when found exits both. Returning a position needs both indices — FRQ 4 may give you a Location class or ask for a formatted String.</li><li><strong>Filling from a 1D source:</strong> running index k; assign <code>g[r][c] = src[k]; k++;</code> in row-major order (or column-major if specified). k goes 0 to R×C−1.</li><li><strong>In-place transformation:</strong> nested standard loops with assignment. Enhanced for can't do this for primitives.</li><li><strong>Neighbor checks</strong> (is a cell surrounded by…): guard each neighbor's indices with bounds checks. Corners have 3 neighbors, edges 5, interior 8.</li><li><strong>Rubric reality for FRQ 4:</strong> points for correct nested loops with correct bounds, correct access <code>g[r][c]</code>, correct condition/accumulation, correct return. Get the loop structure right and you've earned most of it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Not reusing part (a).</strong> Rewriting it wastes time and invites errors.</li><li><strong>Treating a column like a row.</strong> Fixed c, loop r.</li><li><strong>Resetting the running index inside the outer loop.</strong> k continues across rows.</li><li><strong>Neighbor access without bounds checks.</strong> Exception at the edges.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What does the following method return for <code>{{1, 5}, {3, 2}, {4, 4}}</code>?
+<pre class="code">public static int count(int[][] g)
+{
+    int c = 0;
+    for (int r = 0; r &lt; g.length; r++)
+    {
+        if (g[r][0] &lt; g[r][1]) c++;
+    }
+    return c;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0</li><li><span class="opt-letter">B</span> 1</li><li><span class="opt-letter">C</span> 2</li><li><span class="opt-letter">D</span> 3</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Rows where the first is less than the second: {1,5} yes; {3,2} no; {4,4} no. Count = 1.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following correctly computes the sum of column <code>c</code> of a 2D array <code>m</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (int i = 0; i &lt; m[0].length; i++) sum += m[c][i];</code></li><li><span class="opt-letter">B</span> <code>for (int i = 0; i &lt; m.length; i++) sum += m[i][c];</code></li><li><span class="opt-letter">C</span> <code>for (int v : m[c]) sum += v;</code></li><li><span class="opt-letter">D</span> <code>for (int i = 0; i &lt; m.length; i++) sum += m[c][i];</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> A column means fixed c and varying row index i from 0 to m.length - 1. Options A, C, D all treat c as a row.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Helper method</dt><dd>a method that handles one piece (like a single row) and is called from a larger algorithm</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-12.html"><span class="dir">Previous</span>4.12 2D Array Traversals</a>
+  <a class="to-right" href="4-14.html"><span class="dir">Next</span>4.14 Searching Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

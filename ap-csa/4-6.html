@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.6 Using Text Files — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.6</div>
+<h1 class="article-title"><span class="title-num">4.6</span> Using Text Files</h1>
+<p class="article-lede">New in the revised course. Reading a text file uses the same Scanner methods as keyboard input, plus a File object and one exception you must declare.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Open a file for reading: <code>Scanner in = new Scanner(new File("data.txt"));</code>. Both <code>File</code> (java.io) and <code>Scanner</code> (java.util) need imports.</li><li>Creating a Scanner on a File can throw <strong>FileNotFoundException</strong> (a checked exception). The method must declare <code>throws FileNotFoundException</code> in its header.</li><li>Read line by line: <code>while (in.hasNextLine()) { String line = in.nextLine(); ... }</code>. Read tokens: <code>while (in.hasNext())</code> with <code>next()</code>, or <code>hasNextInt()</code> with <code>nextInt()</code>.</li><li>Close the file when done: <code>in.close();</code></li><li>Lines of text often need parsing: <code>Integer.parseInt(str)</code> and <code>Double.parseDouble(str)</code> convert String tokens to numbers.</li><li>The same nextInt/nextLine buffer trap from 1.4 applies to files.</li><li>A common pattern: read each line into an ArrayList so the data can be processed after the file is closed.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public static ArrayList&lt;Integer&gt; readScores(String filename)
+        throws FileNotFoundException
+{
+    Scanner in = new Scanner(new File(filename));
+    ArrayList&lt;Integer&gt; scores = new ArrayList&lt;Integer&gt;();
+    while (in.hasNextInt())
+    {
+        scores.add(in.nextInt());
+    }
+    in.close();
+    return scores;
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Three things the exam checks: the <code>throws FileNotFoundException</code> clause, the <code>hasNext…</code>/<code>next…</code> pair matching (hasNextLine with nextLine, hasNextInt with nextInt), and closing the Scanner. If a method opens a file and has no throws clause, it won't compile.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>The pattern:</strong> <code>Scanner in = new Scanner(new File("name.txt"));</code>. <code>File</code> represents the path; <code>Scanner</code> reads from it using the exact same methods as keyboard input. Both need imports: <code>java.io.File</code> and <code>java.util.Scanner</code>.</li><li><strong>FileNotFoundException</strong> is a <em>checked</em> exception — the compiler requires you to acknowledge it. Since you won't write try/catch on the exam, the acknowledgment is <code>throws FileNotFoundException</code> in the method header (import <code>java.io.FileNotFoundException</code>). Forget it → compile error.</li><li><strong>Reading loops:</strong> pair the check with the read. <code>hasNextLine()</code> ↔ <code>nextLine()</code>; <code>hasNext()</code> ↔ <code>next()</code>; <code>hasNextInt()</code> ↔ <code>nextInt()</code>. Mismatching (hasNext with nextLine) can miss data or throw on trailing whitespace.</li><li><strong>Parsing:</strong> file data is text. <code>Integer.parseInt(token)</code> and <code>Double.parseDouble(token)</code> convert. If a line has several values separated by spaces, <code>next()</code> reads them one at a time.</li><li><strong>The nextInt/nextLine trap</strong> applies to files exactly as to keyboard input (1.4).</li><li><strong>Close the Scanner</strong> when done: <code>in.close()</code>. Releases the file. The exam expects it.</li><li><strong>Typical structure:</strong> open → loop reading into an ArrayList → close → process the list. Separating reading from processing keeps the file open briefly and makes the processing code testable.</li><li>This topic is new in the 2025–26 CED. Expect it to be tested — it's a signal the College Board wanted students to handle real data.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>No throws clause.</strong> Compile error. Every method that opens a file needs it (or the method that calls it does).</li><li><strong>Mismatched has/next.</strong> <code>while (hasNext())</code> with <code>nextLine()</code> can behave unexpectedly on blank lines.</li><li><strong>Reading a number with nextLine and not parsing.</strong> You get a String. Parse it.</li><li><strong>Forgetting the imports.</strong> Three of them: File, FileNotFoundException, Scanner.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A method creates <code>new Scanner(new File("in.txt"))</code>. Which of the following must be true for the code to compile?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The file must exist at compile time.</li><li><span class="opt-letter">B</span> The method must declare <code>throws FileNotFoundException</code>.</li><li><span class="opt-letter">C</span> The Scanner must be static.</li><li><span class="opt-letter">D</span> The file must contain only integers.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> FileNotFoundException is a checked exception; the method header must declare it.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which loop correctly reads every line of a text file using a Scanner <code>sc</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>while (sc.hasNext()) { String s = sc.nextLine(); }</code></li><li><span class="opt-letter">B</span> <code>while (sc.hasNextLine()) { String s = sc.nextLine(); }</code></li><li><span class="opt-letter">C</span> <code>while (sc.nextLine() != null) { }</code></li><li><span class="opt-letter">D</span> <code>for (int i = 0; i &lt; sc.length(); i++) { String s = sc.nextLine(); }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> hasNextLine pairs with nextLine. Option A can throw on a trailing blank line; C throws at end of file; D doesn't compile.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>File</dt><dd>a class representing a file on disk, passed to a Scanner to read it</dd></div><div><dt>FileNotFoundException</dt><dd>a checked exception thrown when a file can't be opened; must be declared</dd></div><div><dt>hasNextLine()</dt><dd>returns true if another line remains to be read</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-5.html"><span class="dir">Previous</span>4.5 Implementing Array Algorithms</a>
+  <a class="to-right" href="4-7.html"><span class="dir">Next</span>4.7 Wrapper Classes</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

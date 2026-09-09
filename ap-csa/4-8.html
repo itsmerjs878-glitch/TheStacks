@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.8 ArrayList Methods — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-8.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.8</div>
+<h1 class="article-title"><span class="title-num">4.8</span> ArrayList Methods</h1>
+<p class="article-lede">A resizable list. Six methods on the reference sheet, and the index-shifting behavior of add and remove is where questions come from.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Create: <code>ArrayList&lt;String&gt; names = new ArrayList&lt;String&gt;();</code> (empty, size 0). Import <code>java.util.ArrayList</code>.</li><li><code>size()</code> — number of elements (a method, with parentheses — unlike array <code>length</code>).</li><li><code>add(obj)</code> — appends to the end, returns true. <code>add(index, obj)</code> — inserts at index, shifting later elements <strong>right</strong>; size grows by 1.</li><li><code>get(index)</code> — returns the element. <code>set(index, obj)</code> — replaces the element at index, returns the <em>old</em> value; size unchanged.</li><li><code>remove(index)</code> — removes and returns the element at index, shifting later elements <strong>left</strong>; size shrinks by 1.</li><li>Valid indices are 0 to <code>size() - 1</code>. <code>get(size())</code> throws <strong>IndexOutOfBoundsException</strong>. <code>add(size(), obj)</code> is legal (appends).</li><li>ArrayList holds objects only — use wrapper types for numbers (4.7).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
+a.add("x");              // [x]
+a.add("y");              // [x, y]
+a.add(1, "m");           // [x, m, y]   inserted, y shifted right
+a.set(0, "z");           // [z, m, y]   replaced
+String r = a.remove(1);  // [z, y]      r = "m"
+System.out.println(a.size());     // 2
+System.out.println(a.get(1));     // y
+// a.get(2);             // IndexOutOfBoundsException</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Rewrite the list in brackets after every call. <code>set</code> doesn't change size; <code>add(i, x)</code> and <code>remove(i)</code> do, and they shift everything after i. <code>remove</code> and <code>set</code> both return the element that was there — questions sometimes use that return value.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Declaration:</strong> <code>ArrayList&lt;Type&gt; name = new ArrayList&lt;Type&gt;();</code>. The type parameter is required for the exam. <code>new ArrayList&lt;&gt;()</code> (diamond) is also fine. Type must be a class: String, Integer, Double, your own class.</li><li><strong>The six methods on the reference sheet:</strong> <code>int size()</code>; <code>boolean add(E obj)</code> (appends); <code>void add(int index, E obj)</code> (inserts, shifts right); <code>E get(int index)</code>; <code>E set(int index, E obj)</code> (replaces, returns old); <code>E remove(int index)</code> (removes, returns removed, shifts left).</li><li><strong>Index rules:</strong> get/set/remove need 0 ≤ index &lt; size. add(index, obj) allows 0 ≤ index ≤ size — index == size appends. <code>get(size())</code> throws <code>IndexOutOfBoundsException</code>.</li><li><strong>Return values matter:</strong> <code>remove</code> and <code>set</code> return the element that was there. Questions use this: <code>String s = list.remove(0);</code> or <code>if (list.set(1, "x").equals("y"))</code>.</li><li><strong>Size changes:</strong> add (either form) +1, remove −1, set 0, get 0. Track size when tracing.</li><li><strong>Printing an ArrayList</strong> shows <code>[a, b, c]</code> — brackets, commas, spaces. Printing an array shows a memory address. The exam prints ArrayLists directly.</li><li><strong>ArrayList vs array:</strong> resizable vs fixed; <code>size()</code> vs <code>length</code>; <code>get(i)</code> vs <code>[i]</code>; objects only vs any type. Same 0-based indexing.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Not rewriting the list after add/remove.</strong> Indices shift. Write it out.</li><li><strong>get(size()).</strong> One past the end. Exception.</li><li><strong>Using [] on an ArrayList.</strong> Compile error. get and set.</li><li><strong>Ignoring set's/remove's return value when the question uses it.</strong></li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+list.add(10);
+list.add(20);
+list.add(30);
+list.add(1, 15);
+list.remove(2);
+System.out.println(list);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> [10, 15, 30]</li><li><span class="opt-letter">B</span> [10, 15, 20]</li><li><span class="opt-letter">C</span> [10, 20, 30]</li><li><span class="opt-letter">D</span> [15, 20, 30]</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> After add(1, 15): [10, 15, 20, 30]. remove(2) removes 20: [10, 15, 30].</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Given <code>ArrayList&lt;String&gt; w</code> with 4 elements, which of the following throws an exception?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>w.add(4, "e")</code></li><li><span class="opt-letter">B</span> <code>w.set(3, "e")</code></li><li><span class="opt-letter">C</span> <code>w.get(4)</code></li><li><span class="opt-letter">D</span> <code>w.remove(3)</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Valid get indices are 0–3. add(4, …) is legal because 4 == size (appends).</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What does <code>list.set(2, "new")</code> return, where <code>list</code> is <code>[a, b, c, d]</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> "new"</li><li><span class="opt-letter">B</span> "c"</li><li><span class="opt-letter">C</span> 2</li><li><span class="opt-letter">D</span> true</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> set returns the element that was replaced.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>ArrayList</dt><dd>a resizable list of objects</dd></div><div><dt>size()</dt><dd>the number of elements in an ArrayList</dd></div><div><dt>add(index, obj)</dt><dd>inserts, shifting later elements right</dd></div><div><dt>remove(index)</dt><dd>removes and returns, shifting later elements left</dd></div><div><dt>set(index, obj)</dt><dd>replaces and returns the old element; size unchanged</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-7.html"><span class="dir">Previous</span>4.7 Wrapper Classes</a>
+  <a class="to-right" href="4-9.html"><span class="dir">Next</span>4.9 ArrayList Traversals</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

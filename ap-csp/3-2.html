@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.2 Data Abstraction — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.2</div>
+<h1 class="article-title"><span class="title-num">3.2</span> Data Abstraction</h1>
+<p class="article-lede">A list lets one name refer to many related values. That's data abstraction, and it's one of the two abstraction types the Create Task explicitly grades.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Data abstraction</strong> provides a separation between the abstract properties of a data type and the concrete details of its representation. Practically: a <strong>list</strong> lets you treat a whole collection as one thing.</li><li>A list is an <strong>ordered sequence</strong> of elements. Each element is referenced by its <strong>index</strong>. In AP pseudocode, indexing starts at <strong>1</strong>, so the first element is <code>list[1]</code> and the last is <code>list[LENGTH(list)]</code>.</li><li>Lists <strong>manage complexity</strong>: instead of <code>score1</code>, <code>score2</code>, … <code>score30</code>, you use one list <code>scores</code> and loop over it. Adding a 31st score requires no code changes.</li><li>The Create Task requires you to identify a list in your program and explain how it manages complexity — this exact phrase. The answer is about handling many values with one name and code that works regardless of how many there are.</li><li>A <strong>string</strong> is also an ordered sequence (of characters), and a list can contain strings, numbers, Booleans, or even other lists.</li><li>Using a list in place of many separate variables makes the program <em>easier to develop, maintain, and read</em>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Without a list, averaging five test scores means five variables and a formula that must be rewritten if a sixth test is added. With a list:</p>
+<pre class="code">scores ← [88, 92, 79, 95, 84]
+total ← 0
+FOR EACH s IN scores
+{
+    total ← total + s
+}
+DISPLAY(total / LENGTH(scores))</pre>
+<p>Add a sixth score to the list and nothing else changes. That's the "manages complexity" argument the Create Task wants.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Index questions are a constant source of lost points. AP pseudocode is 1-indexed. <code>list[0]</code> is an error. If a question shows real-language code (Python-style), it will say so — otherwise assume 1-based.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED phrase is that data abstraction "provides a separation between the abstract properties of a data type and the concrete details of its representation." In plain terms: you think of <code>scores</code> as "the list of scores" and don't think about where each number lives in memory.</li><li>A list can hold <strong>different types</strong> in AP pseudocode — numbers, strings, Booleans, even other lists — though most exam lists are one type. A list of lists is how you'd model a grid.</li><li>The Create Task requires that your list (a) is used to <strong>store data</strong> and (b) that the program's <strong>functionality would be harder or impossible without it</strong>. The written response asks you to explain how the list manages complexity. The expected answer: without the list, you'd need a separate variable for each value, and code would have to change every time the number of values changed.</li><li><strong>Index starts at 1</strong> in AP pseudocode. <code>list[1]</code> is the first element, <code>list[LENGTH(list)]</code> is the last. Every real language you'll use starts at 0 — the exam is the exception, and it's deliberate: they test whether you read the reference sheet.</li><li>Lists are <strong>ordered</strong>: the position of each element is meaningful and stable. Two lists with the same elements in different orders are different lists.</li><li>A <strong>string</strong> is conceptually an ordered list of characters, but AP pseudocode doesn't let you index into strings the way you index lists. The exam defines any string operations it needs within the question.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Index 0.</strong> <code>list[0]</code> in AP pseudocode is an error. The first element is <code>list[1]</code>. This single fact is tested on nearly every exam.</li><li><strong>Explaining the list too vaguely on the Create Task.</strong> "The list stores my data" doesn't earn the point. You need: what the list holds, and why the program couldn't do its job without it (or would need many separate variables).</li><li><strong>Confusing data abstraction with procedural abstraction.</strong> A list is data abstraction. A procedure is procedural abstraction. Both "manage complexity," but they're different mechanisms and the Create Task asks about them separately.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> In AP pseudocode, what is displayed by the following code?
+<pre class="code">names ← ["Ava", "Ben", "Cy", "Dee"]
+DISPLAY(names[3])</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Ava</li><li><span class="opt-letter">B</span> Ben</li><li><span class="opt-letter">C</span> Cy</li><li><span class="opt-letter">D</span> Dee</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Indexing starts at 1, so names[3] is the third element, "Cy".</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A student's program stores each of 40 book titles in a separate variable. Which of the following changes would best manage the complexity of the program?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Rename each variable with a shorter name.</li><li><span class="opt-letter">B</span> Store the titles in a single list and use a loop to process them.</li><li><span class="opt-letter">C</span> Add a comment above each variable.</li><li><span class="opt-letter">D</span> Convert the titles to uppercase.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Replacing many variables with one list is the CED's definition of how data abstraction manages complexity.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data abstraction</dt><dd>using a structure like a list so a collection of values can be treated as one unit</dd></div><div><dt>List</dt><dd>an ordered sequence of elements, each accessed by index</dd></div><div><dt>Element</dt><dd>a single value in a list</dd></div><div><dt>Index</dt><dd>the position of an element in a list; starts at 1 in AP pseudocode</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-1.html"><span class="dir">Previous</span>3.1 Variables and Assignments</a>
+  <a class="to-right" href="3-3.html"><span class="dir">Next</span>3.3 Mathematical Expressions</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

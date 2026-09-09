@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.3 Program Design and Development — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/1-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">BIG IDEA 1: CREATIVE DEVELOPMENT</a> &middot; TOPIC 1.3</div>
+<h1 class="article-title"><span class="title-num">1.3</span> Program Design and Development</h1>
+<p class="article-lede">The CED describes a specific development process: investigate, design, prototype, test, repeat. Knowing the vocabulary for each piece — and what documentation is for — is worth several exam questions.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>development process</strong> can be ordered and structured or exploratory, but good ones share phases: <strong>investigating</strong> and reflecting, <strong>designing</strong>, <strong>prototyping</strong>, and <strong>testing</strong>.</li><li><strong>Iterative development</strong> means going through those phases repeatedly, improving with each cycle. <strong>Incremental development</strong> means building and testing one small piece at a time and adding to what already works.</li><li>The <em>investigating</em> phase includes understanding the users: surveys, interviews, observation, and gathering requirements about what the program needs to do and for whom.</li><li>The <em>designing</em> phase includes brainstorming, planning the user interface, and using tools such as <strong>flowcharts</strong> or <strong>pseudocode</strong> to lay out an algorithm before writing real code.</li><li><strong>Program documentation</strong> — comments inside the code plus external descriptions — explains what a program does and how, so it can be understood, maintained, and reused later by the author or others. Documentation should be written during development, not only at the end.</li><li><strong>Comments</strong> are the in-code form of documentation; the computer ignores them. Good comments explain <em>why</em> and <em>what</em>, not just restate the line.</li><li><strong>Abstraction</strong> underpins good design: managing complexity by focusing on what something does rather than how. Using a procedure or a list is a form of abstraction.</li><li>Requirements can change during development — that's normal, and iteration is how developers accommodate it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Building a grade-calculator: (1) <em>Investigate</em> — ask three classmates what they want; they all want weighted categories. (2) <em>Design</em> — sketch the screen and write pseudocode for the weighted average. (3) <em>Prototype</em> — code just the average for one category and confirm it's right. (4) <em>Test</em> — try zero grades, a 100, a missing category. Then loop back: add the second category, test again. Each loop is an <em>iteration</em>; adding one category at a time is <em>incremental</em>. The comments you write during step 3 are <em>documentation</em>.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If a question describes a team that repeatedly revisits earlier phases after testing, the answer is <em>iterative</em>. If it describes adding features one working piece at a time, the answer is <em>incremental</em>. They often happen together, but the exam tests them as separate terms.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED describes two development processes: <strong>iterative</strong> and <strong>incremental</strong>, and also notes that some processes are <em>unstructured or exploratory</em> — you try things and see what works. Exploratory development is legitimate, especially early; the exam won't call it wrong.</li><li>The four phases — <strong>investigating and reflecting</strong>, <strong>designing</strong>, <strong>prototyping</strong>, <strong>testing</strong> — aren't strictly linear. Testing reveals design flaws, which sends you back to designing. That loop is what "iterative" means.</li><li><strong>Investigating</strong> includes understanding the <em>users</em>, not just the problem: who are they, what do they need, what constraints do they have? A program designed without investigating users tends to serve the developer's assumptions instead. This links to 5.3 (bias).</li><li><strong>Program specifications</strong> — a description of what the program must do — come out of the investigating phase. The exam may call them <em>requirements</em>. They can change during development, and accommodating change is part of the process, not a failure.</li><li>Documentation serves <strong>future developers</strong>, <strong>collaborators</strong>, <strong>users</strong>, and <strong>your future self</strong>. The CED's specific claim: documentation is useful "during development" as well as after, because it helps you keep track of what you've done and why.</li><li>Two kinds of abstraction appear in design: <strong>procedural</strong> (a named procedure stands in for its steps) and <strong>data</strong> (a list stands in for many values). Good design uses both to keep the program understandable.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Treating iterative and incremental as synonyms.</strong> The exam tests them separately. Iterative = repeating the phases to refine. Incremental = building in small working pieces. A team that builds a rough full version, tests, and refines it is iterating. A team that builds feature 1, tests, then feature 2 is being incremental.</li><li><strong>Thinking documentation is written only at the end.</strong> Options saying "documentation is completed after the program is finished" are wrong per the CED. It's throughout.</li><li><strong>Believing comments affect the program.</strong> Comments are ignored by the computer. Any option claiming comments make code faster, slower, or fix errors is a distractor.</li><li><strong>Skipping investigation on the Create Task.</strong> Students jump to coding, then can't answer the written response about their program's purpose for a specific user. Decide who it's for first.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A programmer builds a small working version of a game with one level, tests it, then adds a second level and tests again, continuing until all levels are done. Which development approach does this best illustrate?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Incremental development</li><li><span class="opt-letter">B</span> Sequential execution</li><li><span class="opt-letter">C</span> Data abstraction</li><li><span class="opt-letter">D</span> Fault-tolerant design</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Building and testing one piece at a time on top of working code is incremental development.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is the primary reason to include comments in program code?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Comments make the program execute faster.</li><li><span class="opt-letter">B</span> Comments are required for the program to compile.</li><li><span class="opt-letter">C</span> Comments help programmers understand the purpose and behavior of code when they return to it later.</li><li><span class="opt-letter">D</span> Comments prevent runtime errors.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Comments are documentation for humans. They have no effect on execution or errors.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Iterative development</dt><dd>repeatedly cycling through design, build, and test phases to refine a program</dd></div><div><dt>Incremental development</dt><dd>building a program in small pieces, testing each before adding the next</dd></div><div><dt>Prototype</dt><dd>an early, partial version of a program used to test ideas</dd></div><div><dt>Documentation</dt><dd>written descriptions and comments that explain what a program does and how it works</dd></div><div><dt>Comment</dt><dd>a note inside code intended for humans and ignored by the computer</dd></div><div><dt>Requirements</dt><dd>a description of what a program must do, often gathered from users</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-2.html"><span class="dir">Previous</span>1.2 Program Function and Purpose</a>
+  <a class="to-right" href="1-4.html"><span class="dir">Next</span>1.4 Identifying and Correcting Errors</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

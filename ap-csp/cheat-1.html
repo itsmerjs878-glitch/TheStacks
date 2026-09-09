@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Idea 1 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/cheat-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">BIG IDEA 1: CREATIVE DEVELOPMENT</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Creative Development — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 4 topics in this big idea. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">1.1</span>Collaboration</h3>
+  <dl><div><dt>Pair programming</dt><dd>two programmers share one workstation; one writes (driver) while the other reviews (navigator), switching regularly</dd></div><div><dt>Collaboration</dt><dd>working together throughout development to combine perspectives and skills</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When a question asks why collaboration helped, the correct option almost always mentions <em>diverse perspectives</em>, <em>reduced bias</em>, or <em>catching errors earlier</em>. Options claiming collaboration makes programs run faster or use less memory are distractors — collaboration is about the people process, not program performance.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.2</span>Program Function and Purpose</h3>
+  <dl><div><dt>Program</dt><dd>a collection of statements a computer executes to accomplish a task</dd></div><div><dt>Input</dt><dd>data a program receives from a user, file, sensor, or another program</dd></div><div><dt>Output</dt><dd>data or behavior a program produces, such as text, graphics, or audio</dd></div><div><dt>Event</dt><dd>an action, such as a click or key press, that triggers a program response</dd></div><div><dt>Code segment</dt><dd>a portion of a program's code</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> The Create Task written response asks you to state your program's purpose and its function separately. Purpose = the human problem it addresses. Function = the behavior when it runs. Practice writing both in one sentence each for any program you look at.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.3</span>Program Design and Development</h3>
+  <dl><div><dt>Iterative development</dt><dd>repeatedly cycling through design, build, and test phases to refine a program</dd></div><div><dt>Incremental development</dt><dd>building a program in small pieces, testing each before adding the next</dd></div><div><dt>Prototype</dt><dd>an early, partial version of a program used to test ideas</dd></div><div><dt>Documentation</dt><dd>written descriptions and comments that explain what a program does and how it works</dd></div><div><dt>Comment</dt><dd>a note inside code intended for humans and ignored by the computer</dd></div><div><dt>Requirements</dt><dd>a description of what a program must do, often gathered from users</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question describes a team that repeatedly revisits earlier phases after testing, the answer is <em>iterative</em>. If it describes adding features one working piece at a time, the answer is <em>incremental</em>. They often happen together, but the exam tests them as separate terms.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.4</span>Identifying and Correcting Errors</h3>
+  <dl><div><dt>Syntax error</dt><dd>a mistake in the code's structure that prevents it from running</dd></div><div><dt>Logic error</dt><dd>a mistake in the algorithm that produces incorrect output while the program still runs</dd></div><div><dt>Run-time error</dt><dd>an error that occurs during execution and stops the program</dd></div><div><dt>Overflow error</dt><dd>a result too large to be represented in the available bits</dd></div><div><dt>Round-off error</dt><dd>an error from real numbers that cannot be represented exactly in binary</dd></div><div><dt>Hand-tracing</dt><dd>stepping through code manually, tracking each variable's value</dd></div><div><dt>Debugging</dt><dd>finding and fixing errors in a program</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Classify by symptom. Won't run at all → syntax. Runs, then crashes partway → run-time. Runs to the end with the wrong answer → logic. Result is a nonsense huge/tiny number → overflow. The exam rarely asks you to name the error type without giving you one of these symptoms.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-1.html"><span class="dir">Back to</span>Big Idea 1 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

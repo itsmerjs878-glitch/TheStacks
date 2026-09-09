@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.1 Introduction to Algorithms, Programming, and Compilers — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.1</div>
+<h1 class="article-title"><span class="title-num">1.1</span> Introduction to Algorithms, Programming, and Compilers</h1>
+<p class="article-lede">The vocabulary you need before the first line of Java: what a compiler does, what a syntax error is, and why some errors only appear when the program runs.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>An <strong>algorithm</strong> is a finite set of instructions that accomplishes a task. A <strong>program</strong> expresses an algorithm in a programming language so a computer can run it.</li><li>Java source code is written in <code>.java</code> files and <strong>compiled</strong> into bytecode. The <strong>compiler</strong> translates and checks the code before it can run.</li><li>A <strong>syntax error</strong> (compile-time error) is a violation of Java's grammar — the compiler refuses to produce a program. A <strong>run-time error</strong> (exception) happens while the program executes, such as dividing an int by zero. A <strong>logic error</strong> compiles and runs but produces the wrong result.</li><li><strong>Sequence</strong>, <strong>selection</strong>, and <strong>iteration</strong> are the three control structures every algorithm is built from.</li><li>A Java program's entry point is <code>public static void main(String[] args)</code>. Statements end with semicolons; blocks are enclosed in braces <code>{ }</code>.</li><li>Comments (<code>//</code> single line, <code>/* */</code> block) are ignored by the compiler and exist for people.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Hello
+{
+    public static void main(String[] args)
+    {
+        System.out.println("Hello, AP CSA");
+        int x = 10 / 0;   // compiles fine, then ArithmeticException at run time
+    }
+}</pre>
+<p>The missing-semicolon version of line 5 would be a <strong>compile-time</strong> error — nothing runs. As written, it compiles, prints the greeting, then throws a <strong>run-time</strong> exception on line 6. The exam wants you to classify each.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If a question shows code and asks "what happens," check syntax first (missing semicolon, mismatched braces, undeclared variable = won't compile), then look for run-time traps (division by zero, null, bad index), then trace for logic.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>Java is <strong>compiled to bytecode</strong>, then run by the Java Virtual Machine. That two-stage design is why the same <code>.class</code> file runs on any operating system — and why the exam separates <em>compile-time</em> from <em>run-time</em>.</li><li>The compiler checks <strong>syntax</strong> (grammar) and <strong>types</strong> (is that an int where an int is expected?). It cannot check logic. A program that compiles cleanly can still be completely wrong.</li><li><strong>Exceptions</strong> are Java's run-time errors. The ones the exam names: <code>ArithmeticException</code> (int division by zero), <code>ArrayIndexOutOfBoundsException</code>, <code>IndexOutOfBoundsException</code> (ArrayList), <code>NullPointerException</code>, <code>StringIndexOutOfBoundsException</code>, <code>ConcurrentModificationException</code>. You won't write exception handling; you'll identify which one a code segment throws.</li><li>The <strong>main method</strong> header is exact: <code>public static void main(String[] args)</code>. You don't need to explain each word yet, but you should recognize it as the entry point.</li><li>Statements end with <code>;</code>. Blocks use <code>{ }</code>. Indentation is for humans only — Java ignores it. Case matters: <code>Count</code> and <code>count</code> are different variables.</li><li>An <strong>algorithm</strong> exists independent of language. The same algorithm in AP CSP pseudocode and in Java is the same algorithm. The exam sometimes describes an algorithm in English and asks which Java implements it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Saying a program with a syntax error "produces wrong output."</strong> It produces no output — it never runs. Wrong output means it compiled and ran.</li><li><strong>Saying a crash is a logic error.</strong> A crash (exception) is a run-time error. Logic errors finish silently with the wrong answer.</li><li><strong>Expecting the compiler to catch division by zero.</strong> It doesn't; the values aren't known until run time.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following is a compile-time error in Java?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Dividing an integer by zero</li><li><span class="opt-letter">B</span> Accessing an array index that is out of bounds</li><li><span class="opt-letter">C</span> Omitting the semicolon at the end of a statement</li><li><span class="opt-letter">D</span> Calling a method on a variable whose value is <code>null</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> A missing semicolon violates syntax, so the compiler rejects it. The other three compile and fail at run time.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A program compiles and runs to completion but prints an incorrect total because the loop stops one iteration early. This is best described as which type of error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Compile-time error</li><li><span class="opt-letter">B</span> Run-time error</li><li><span class="opt-letter">C</span> Logic error</li><li><span class="opt-letter">D</span> Syntax error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Runs fine, wrong answer — that's a logic error.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Compiler</dt><dd>translates Java source code into a form the computer can run, reporting syntax errors</dd></div><div><dt>Compile-time error</dt><dd>an error the compiler detects; the program cannot run</dd></div><div><dt>Run-time error</dt><dd>an error that occurs during execution, such as an exception</dd></div><div><dt>Logic error</dt><dd>code that runs but produces incorrect results</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-1.html"><span class="dir">Up</span>Unit 1 overview</a>
+  <a class="to-right" href="1-2.html"><span class="dir">Next</span>1.2 Variables and Data Types</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

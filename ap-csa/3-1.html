@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.1 Abstraction and Program Design — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.1</div>
+<h1 class="article-title"><span class="title-num">3.1</span> Abstraction and Program Design</h1>
+<p class="article-lede">Before writing a class, decide what it represents and what it should be able to do. Abstraction is the discipline of hiding everything else.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Abstraction</strong> means focusing on what something does and hiding how. <strong>Data abstraction</strong>: representing a concept as a class with attributes. <strong>Procedural abstraction</strong>: a method's name and header stand in for its implementation.</li><li>Designing a class: identify the <strong>attributes</strong> (what it needs to remember — become instance variables) and the <strong>behaviors</strong> (what it needs to do — become methods).</li><li><strong>Encapsulation</strong> keeps instance variables <code>private</code> and exposes controlled access through <code>public</code> methods. Outside code can't corrupt the object's state.</li><li>Breaking a program into classes and methods makes it easier to write, test, debug, and reuse — the same reasoning as for procedures.</li><li>A class should represent one clear concept. Its public methods are its API to the rest of the program.</li><li>Design happens before code: reading an FRQ 2 prompt, list attributes and behaviors first, then write.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Prompt: "Write a class representing a bank account with an owner, a balance, deposits, withdrawals that can't overdraw, and a way to get the balance."</p>
+<ul class="points">
+<li><strong>Attributes:</strong> owner (String), balance (double) → private instance variables.</li>
+<li><strong>Behaviors:</strong> deposit(amount), withdraw(amount) returning whether it succeeded, getBalance() → public methods.</li>
+<li><strong>Constructor:</strong> takes owner and starting balance.</li>
+</ul>
+<p>That outline <em>is</em> the design. The code follows in 3.3–3.5.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> On FRQ 2, underline every noun that's a piece of state (becomes an instance variable) and every verb (becomes a method). The prompt tells you the class's design; your job is to translate it faithfully, not invent extras.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Data abstraction</strong> = modeling a real thing as a class: a <code>Student</code> with a name and GPA, rather than loose variables. Users of the class think "a student" not "a String and a double." <strong>Procedural abstraction</strong> = a method's name and header standing for its body. Both hide detail; they hide different kinds.</li><li><strong>Designing a class from a description:</strong> nouns that describe state → instance variables. Verbs that describe what it does → methods. Adjectives describing the state at creation → constructor parameters. Every FRQ 2 prompt is written to be decomposed this way.</li><li><strong>Encapsulation</strong> has two halves: <code>private</code> instance variables (nobody outside can touch them directly) and <code>public</code> methods (the only way in). This guarantees the object's state can only change in ways the class allows — a <code>BankAccount</code> can enforce "no negative balance" because <code>withdraw</code> is the only way to reduce it.</li><li><strong>Why encapsulation matters for the exam:</strong> if a question shows a class with a public instance variable, the "what's wrong with this design" answer is that outside code can set invalid state. If it shows a private variable with no getter, the answer to "how can other code read it" is "it can't — add an accessor."</li><li>Good class design is <strong>cohesive</strong> (one clear concept) and has a <strong>minimal public interface</strong> (only the methods clients need). Extra public methods are extra ways to break things.</li><li>Classes are also <strong>reuse</strong>: once <code>Student</code> exists, any program that needs students uses it. Libraries (1.7) are collections of well-designed classes.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Adding features the prompt didn't ask for.</strong> FRQ 2 rubrics score exactly what's described. Extra methods earn nothing and can introduce errors.</li><li><strong>Making instance variables public.</strong> Breaks encapsulation and costs a rubric point.</li><li><strong>Mixing up the two abstractions.</strong> A list or class = data abstraction. A method = procedural abstraction.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A programmer designs a <code>Playlist</code> class with a private list of songs and public methods <code>addSong</code>, <code>removeSong</code>, and <code>getSongCount</code>. Which of the following best describes this design choice?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Encapsulation: the data is hidden and accessed only through public methods.</li><li><span class="opt-letter">B</span> Inheritance: the class extends another class.</li><li><span class="opt-letter">C</span> Recursion: the methods call themselves.</li><li><span class="opt-letter">D</span> Overloading: the methods share a name.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Private data with public methods controlling access is encapsulation.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is an example of procedural abstraction?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Storing a student's grades in a private array</li><li><span class="opt-letter">B</span> Calling <code>Math.sqrt(x)</code> without knowing the algorithm it uses</li><li><span class="opt-letter">C</span> Declaring an instance variable as private</li><li><span class="opt-letter">D</span> Creating two objects from the same class</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Using a method by its interface without knowing its implementation is procedural abstraction. Option A is data abstraction.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data abstraction</dt><dd>modeling a concept as a class with attributes</dd></div><div><dt>Procedural abstraction</dt><dd>using a method without knowing its implementation</dd></div><div><dt>Encapsulation</dt><dd>keeping data private and controlling access through public methods</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-3.html"><span class="dir">Up</span>Unit 3 overview</a>
+  <a class="to-right" href="3-2.html"><span class="dir">Next</span>3.2 Impact of Program Design</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 Boolean Expressions — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.2</div>
+<h1 class="article-title"><span class="title-num">2.2</span> Boolean Expressions</h1>
+<p class="article-lede">Expressions that evaluate to true or false control everything in this unit. The == vs .equals distinction is where points are lost.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Relational operators:</strong> <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>. They produce a boolean.</li><li><code>==</code> compares <em>values</em> for primitives and <em>references</em> for objects. To compare object contents (Strings especially) use <code>.equals()</code>.</li><li>A boolean variable can hold the result: <code>boolean ok = score &gt;= 70;</code>. Then <code>if (ok)</code> — no need for <code>if (ok == true)</code>.</li><li>Arithmetic is evaluated before relational operators: <code>x + 1 &gt; y * 2</code> computes both sides first.</li><li>Comparing doubles with <code>==</code> is unreliable due to round-off; the exam usually avoids it or uses a tolerance.</li><li><code>!=</code> means "not equal"; for Strings, use <code>!a.equals(b)</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int a = 5, b = 10;
+boolean p = a * 2 == b;          // true
+boolean q = a != b;              // true
+String s1 = "hi";
+String s2 = new String("hi");
+boolean r = s1 == s2;            // false (different objects)
+boolean t = s1.equals(s2);       // true  (same contents)</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Any time a question compares two Strings with <code>==</code>, be suspicious. If both came from literals it may happen to be true, but the exam's intended answer is that <code>==</code> is not a reliable content comparison — <code>.equals</code> is.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>For <strong>primitives</strong>, <code>==</code> and <code>!=</code> compare values. <code>5 == 5</code> is true. For <strong>doubles</strong>, exact equality is unreliable due to representation error; compare with a tolerance (<code>Math.abs(a - b) &lt; 0.0001</code>) in real code. The exam avoids the issue.</li><li>For <strong>references</strong>, <code>==</code> compares addresses. Two separate objects are never <code>==</code> even with identical contents. Use <code>.equals</code> for content comparison — String defines it by contents; your own classes inherit Object's version (address comparison) unless you write your own.</li><li>Relational operators have lower precedence than arithmetic, so <code>a + b &gt; c * d</code> does both computations first. They have higher precedence than logical operators (<code>&amp;&amp;</code>, <code>||</code>), so <code>a &gt; b &amp;&amp; c &lt; d</code> compares first, then ands.</li><li>A relational expression is a <strong>boolean value</strong> — it can be stored, returned, passed as an argument. <code>return x &gt; 0;</code> is cleaner than <code>if (x &gt; 0) return true; else return false;</code> and the exam accepts both.</li><li><code>!=</code> on booleans is XOR: <code>a != b</code> is true when exactly one is true.</li><li>Comparing a boolean to <code>true</code> (<code>if (done == true)</code>) is redundant; <code>if (done)</code> means the same. Comparing to <code>false</code> is <code>if (!done)</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>String comparison with <code>==</code>.</strong> The most common wrong answer in Unit 2. Always <code>.equals</code>.</li><li><strong>Chaining comparisons.</strong> <code>1 &lt; x &lt; 10</code> doesn't compile (the first comparison yields a boolean, which can't be compared to 10). Write <code>1 &lt; x &amp;&amp; x &lt; 10</code>.</li><li><strong>Using <code>=</code> in a condition.</strong> Compile error for non-booleans.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following expressions correctly tests whether the String <code>name</code> holds the text "Ram"?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>name == "Ram"</code></li><li><span class="opt-letter">B</span> <code>name.equals("Ram")</code></li><li><span class="opt-letter">C</span> <code>name = "Ram"</code></li><li><span class="opt-letter">D</span> <code>name.compareTo("Ram")</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> equals compares contents. == compares references; = is assignment; compareTo returns an int, not a boolean.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is the value of <code>x &gt; 3 == y &lt; 2</code> when <code>x = 5</code> and <code>y = 1</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> true</li><li><span class="opt-letter">B</span> false</li><li><span class="opt-letter">C</span> 5</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> x > 3 is true; y < 2 is true; true == true is true. (Comparing booleans with == is legal.)</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Relational operator</dt><dd><, >, <=, >=, ==, != — compares two values and yields a boolean</dd></div><div><dt>equals()</dt><dd>compares object contents</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-1.html"><span class="dir">Previous</span>2.1 Algorithms with Selection and Repetition</a>
+  <a class="to-right" href="2-3.html"><span class="dir">Next</span>2.3 if Statements</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

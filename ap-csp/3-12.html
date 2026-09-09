@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.12 Calling Procedures — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-12.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.12</div>
+<h1 class="article-title"><span class="title-num">3.12</span> Calling Procedures</h1>
+<p class="article-lede">Calling a procedure hands control to it, possibly with values, and gets control (and maybe a result) back. The vocabulary here is precise and tested.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>procedure</strong> is a named group of instructions that can be executed by calling its name. Other languages call these functions or methods.</li><li><strong>Parameters</strong> are the variables listed in the procedure's definition. <strong>Arguments</strong> are the actual values passed in when it's called. The first argument goes into the first parameter, and so on.</li><li>When a procedure is called, the program <strong>jumps</strong> into the procedure, runs it, and then <strong>returns</strong> to the line after the call. That interrupts normal sequential flow.</li><li><code>RETURN (expression)</code> ends the procedure immediately and sends the value back to the caller. Code after a RETURN in the same path never runs.</li><li>A procedure with a RETURN can be used inside an expression: <code>x ← square(4) + 1</code>. A procedure without a RETURN (one that just DISPLAYs or changes things) is called as a statement.</li><li>The same procedure can be called many times with different arguments — that's the point.</li><li><strong>Modularity:</strong> breaking a program into procedures makes each piece easier to write, test, and reuse.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">PROCEDURE double(n)
+{
+    RETURN (n * 2)
+}
+
+a ← 3
+b ← double(a) + double(5)
+DISPLAY(b)</pre>
+<p><code>double(a)</code> passes the argument 3 into parameter <code>n</code>, returns 6. <code>double(5)</code> returns 10. <code>b</code> = 16. Output: <strong>16</strong>. Note that <code>a</code> is still 3 — the procedure got a copy.</p>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csp-procedure"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> Track "where am I" during a trace. When you hit a procedure call, write down the line you'll return to, go execute the procedure with the arguments substituted for the parameters, and come back. RETURN means you stop reading the procedure instantly — even if there are lines below it.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A procedure call <strong>interrupts sequential execution</strong>: the program remembers where it was, jumps to the procedure, runs it, then returns to the line after the call. If that line was in the middle of an expression, the returned value is substituted in and evaluation continues.</li><li><strong>Parameters are local</strong> to the procedure. They're created when it's called, initialized to the argument values, and gone when it returns. Changing a parameter inside the procedure doesn't change the caller's variable (for simple values).</li><li>A procedure can have <strong>zero parameters</strong> (called with empty parentheses) or several. Arguments are matched to parameters by <strong>position</strong>, not name: the first argument fills the first parameter.</li><li><code>RETURN</code> does two things: it provides the value the call evaluates to, and it <strong>ends the procedure immediately</strong>. Any code after a RETURN that executes is skipped. Multiple RETURNs in a procedure (one per branch) is normal; exactly one runs per call.</li><li>A procedure without a RETURN produces no value — it's called for its <strong>side effect</strong> (displaying something, modifying a list). Using such a call in an expression (<code>x ← show(5) + 1</code>) is meaningless.</li><li>Procedures can call other procedures, and can call themselves (recursion isn't on the CSP exam, but nested calls are). Trace each call to completion before continuing the caller.</li><li>The AP reference sheet defines the syntax: <code>PROCEDURE name(parameter1, parameter2) { instructions }</code> and <code>RETURN (expression)</code>. Block-based pseudocode draws the same thing as shapes.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Continuing past a RETURN.</strong> Once RETURN executes, the procedure is done. Code below it on the same path never runs, even if it looks like it should.</li><li><strong>Losing your place.</strong> Write down the line number you'll return to before jumping into the procedure. Nested calls need a stack of these.</li><li><strong>Expecting the caller's variable to change.</strong> <code>double(a)</code> doesn't change a. Only the returned value matters — and only if it's stored.</li><li><strong>Matching arguments by name.</strong> Position is all that matters. If the procedure is <code>f(x, y)</code> and you call <code>f(y, x)</code>, the values are swapped.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the following procedure.
+<pre class="code">PROCEDURE mystery(a, b)
+{
+    IF (a > b)
+    {
+        RETURN (a - b)
+    }
+    RETURN (b - a)
+}</pre>What is displayed by <code>DISPLAY(mystery(4, 9))</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> -5</li><li><span class="opt-letter">B</span> 5</li><li><span class="opt-letter">C</span> 13</li><li><span class="opt-letter">D</span> Nothing is displayed</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 4 > 9 is false, so the first RETURN is skipped. The second RETURN gives 9 - 4 = 5.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> In the call <code>calculate(7, "kg")</code> to a procedure defined as <code>PROCEDURE calculate(amount, unit)</code>, which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>amount</code> and <code>unit</code> are arguments; 7 and "kg" are parameters.</li><li><span class="opt-letter">B</span> <code>amount</code> and <code>unit</code> are parameters; 7 and "kg" are arguments.</li><li><span class="opt-letter">C</span> 7 is a parameter and "kg" is an argument.</li><li><span class="opt-letter">D</span> The terms parameter and argument are interchangeable on the exam.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Parameters are the names in the definition; arguments are the values in the call.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Procedure</dt><dd>a named block of code that can be called; also called a function or method</dd></div><div><dt>Parameter</dt><dd>a variable in a procedure's definition that receives a value when called</dd></div><div><dt>Argument</dt><dd>the actual value passed to a procedure when it is called</dd></div><div><dt>Return value</dt><dd>the value a procedure sends back to the code that called it</dd></div><div><dt>Modularity</dt><dd>dividing a program into separate procedures that each handle one task</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-11.html"><span class="dir">Previous</span>3.11 Binary Search</a>
+  <a class="to-right" href="3-13.html"><span class="dir">Next</span>3.13 Developing Procedures</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csp-procedure": {"id": "csp-procedure", "title": "Calling a procedure twice", "course": "ap-csp", "code": ["PROCEDURE double(n)", "{", "    RETURN (n * 2)", "}", "", "a ← 3", "b ← double(a) + double(5)", "DISPLAY(b)"], "steps": [{"line": 5, "vars": [["a", "3"]], "out": "", "note": "a is 3"}, {"line": 6, "vars": [["a", "3"]], "out": "", "note": "evaluate right side: first call double(a) with n = 3"}, {"line": 2, "vars": [["a", "3"], ["n", "3"]], "out": "", "note": "inside double: n = 3, return 6"}, {"line": 6, "vars": [["a", "3"]], "out": "", "note": "double(a) = 6; now call double(5)"}, {"line": 2, "vars": [["a", "3"], ["n", "5"]], "out": "", "note": "inside double: n = 5, return 10"}, {"line": 6, "vars": [["a", "3"], ["b", "16"]], "out": "", "note": "6 + 10 = 16 stored in b"}, {"line": 7, "vars": [["a", "3"], ["b", "16"]], "out": "16 ", "note": "display 16; a is still 3"}], "intro": "Control jumps into the procedure and back. The parameter n gets a copy of each argument."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

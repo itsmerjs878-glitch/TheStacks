@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Idea 3: Algorithms and Programming — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/unit-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow">BIG IDEA 3 &middot; 30–35% OF THE EXAM &middot; 18 TOPICS</div>
+<h1 class="article-title">Algorithms and Programming</h1>
+<p class="article-lede">The largest Big Idea by far, and the one that's mostly code. Variables, expressions, conditionals, loops, lists, procedures, then algorithm efficiency and its limits. Every topic here builds on the one before it — read them in order the first time.</p>
+
+<section class="block">
+  <h2>What the College Board expects you to walk away understanding</h2>
+  <ul class="points"><li>Programs store and manipulate values with variables, expressions, and lists; data abstraction manages complexity.</li><li>Algorithms are built from sequencing, selection, and iteration, and can be expressed in many forms.</li><li>Procedures with parameters provide procedural abstraction, and libraries let programmers reuse others' procedures.</li><li>Randomness and simulation let programs model uncertain and real-world processes.</li><li>Algorithms differ in efficiency; some problems have no reasonable-time solution, and some have no solution at all.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Topics in this Big Idea</h2>
+  <nav aria-label="Topics"><a class="toc-entry" href="3-1.html">
+  <span class="toc-num">3.1</span>
+  <span class="toc-label">Variables and Assignments</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">storing and updating values</span>
+</a><a class="toc-entry" href="3-2.html">
+  <span class="toc-num">3.2</span>
+  <span class="toc-label">Data Abstraction</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">lists as a way to manage complexity</span>
+</a><a class="toc-entry" href="3-3.html">
+  <span class="toc-num">3.3</span>
+  <span class="toc-label">Mathematical Expressions</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">arithmetic and MOD</span>
+</a><a class="toc-entry" href="3-4.html">
+  <span class="toc-num">3.4</span>
+  <span class="toc-label">Strings</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">text, concatenation, substrings</span>
+</a><a class="toc-entry" href="3-5.html">
+  <span class="toc-num">3.5</span>
+  <span class="toc-label">Boolean Expressions</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">true/false, AND, OR, NOT</span>
+</a><a class="toc-entry" href="3-6.html">
+  <span class="toc-num">3.6</span>
+  <span class="toc-label">Conditionals</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">IF and IF/ELSE, selection</span>
+</a><a class="toc-entry" href="3-7.html">
+  <span class="toc-num">3.7</span>
+  <span class="toc-label">Nested Conditionals</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">conditionals inside conditionals</span>
+</a><a class="toc-entry" href="3-8.html">
+  <span class="toc-num">3.8</span>
+  <span class="toc-label">Iteration</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">REPEAT n TIMES, REPEAT UNTIL, loops</span>
+</a><a class="toc-entry" href="3-9.html">
+  <span class="toc-num">3.9</span>
+  <span class="toc-label">Developing Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">building blocks, common patterns</span>
+</a><a class="toc-entry" href="3-10.html">
+  <span class="toc-num">3.10</span>
+  <span class="toc-label">Lists</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">list operations, traversal</span>
+</a><a class="toc-entry" href="3-11.html">
+  <span class="toc-num">3.11</span>
+  <span class="toc-label">Binary Search</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">halving a sorted list</span>
+</a><a class="toc-entry" href="3-12.html">
+  <span class="toc-num">3.12</span>
+  <span class="toc-label">Calling Procedures</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">arguments, parameters, return values</span>
+</a><a class="toc-entry" href="3-13.html">
+  <span class="toc-num">3.13</span>
+  <span class="toc-label">Developing Procedures</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">procedural abstraction</span>
+</a><a class="toc-entry" href="3-14.html">
+  <span class="toc-num">3.14</span>
+  <span class="toc-label">Libraries</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">reusing code, APIs</span>
+</a><a class="toc-entry" href="3-15.html">
+  <span class="toc-num">3.15</span>
+  <span class="toc-label">Random Values</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">RANDOM(a, b)</span>
+</a><a class="toc-entry" href="3-16.html">
+  <span class="toc-num">3.16</span>
+  <span class="toc-label">Simulations</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">modeling the real world</span>
+</a><a class="toc-entry" href="3-17.html">
+  <span class="toc-num">3.17</span>
+  <span class="toc-label">Algorithmic Efficiency</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">reasonable vs. unreasonable time, heuristics</span>
+</a><a class="toc-entry" href="3-18.html">
+  <span class="toc-num">3.18</span>
+  <span class="toc-label">Undecidable Problems</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">problems no algorithm can solve</span>
+</a></nav>
+</section>
+
+<section class="block">
+  <h2>Night-before review</h2>
+  <p class="block-note">Every key term and exam tip from this big idea on one printable page.</p>
+  <a class="toc-entry" href="cheat-3.html"><span class="toc-num">&#9633;</span><span class="toc-label">Big Idea 3 cheat sheet</span><span class="toc-leader"></span><span class="toc-page">print</span></a>
+</section>
+
+<div class="pager">
+  <a href="unit-2.html"><span class="dir">Previous</span>Big Idea 2: Data</a>
+  <a class="to-right" href="unit-4.html"><span class="dir">Next</span>Big Idea 4: Computer Systems and Networks</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.8 Scope and Access — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-8.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.8</div>
+<h1 class="article-title"><span class="title-num">3.8</span> Scope and Access</h1>
+<p class="article-lede">Where a variable can be used depends on where it was declared. Local variables shadow instance variables, and blocks end scope.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Instance variables</strong> are in scope throughout the class's methods and constructors.</li><li><strong>Local variables</strong> (declared inside a method, including parameters) exist only within the block where they're declared — from the declaration to the closing brace.</li><li>A variable declared inside a loop body or if block is gone after that block. A for loop's header variable is gone after the loop.</li><li><strong>Shadowing:</strong> a local variable or parameter with the same name as an instance variable hides it. Inside that method, the name refers to the local. Use <code>this.name</code> (3.9) to reach the instance variable.</li><li>Two local variables with the same name in the same scope is a compile error. In separate scopes (two different methods) it's fine.</li><li><strong>Access modifiers</strong> control visibility across classes: <code>private</code> = this class only, <code>public</code> = everywhere.</li><li>A method's parameter is a local variable initialized by the argument.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Demo
+{
+    private int x = 10;            // instance variable
+
+    public void run(int x)         // parameter shadows instance x
+    {
+        System.out.println(x);     // prints the parameter
+        int y = 5;
+        if (x &gt; 0)
+        {
+            int z = 1;             // z only exists in this block
+            y += z;
+        }
+        // System.out.println(z);  // ERROR: z out of scope
+        System.out.println(y);     // 6
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Find the closing brace of the block a variable was declared in — that's the end of its life. If a question uses a variable after that brace, it's a compile error. For shadowing, the closest declaration wins.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Scope by declaration site:</strong> instance variable → the whole class. Method parameter → the whole method. Local variable → from its declaration to the end of the enclosing block <code>{ }</code>. For-header variable → the loop only.</li><li><strong>Blocks nest scope:</strong> a variable declared in an if block is gone after the if. A variable declared in a loop body is recreated each iteration and gone after. Declaring a variable inside a loop and reading it after the loop is a compile error the exam uses often.</li><li><strong>Shadowing:</strong> when a local or parameter has the same name as an instance variable, the local wins inside its scope. The instance variable is hidden, not changed. <code>this.name</code> reaches it (3.9).</li><li><strong>No redeclaration in the same scope:</strong> <code>int x = 1; int x = 2;</code> in one method is a compile error. But two different methods can each have their own <code>x</code>, and a for loop can reuse <code>i</code> after a previous for loop ended.</li><li><strong>Access</strong> (public/private) is about visibility <em>between classes</em>. Scope is about visibility <em>within code</em>. Both determine whether a name can be used at a given point, but they're different rules.</li><li>Lifetime follows scope: a local variable's memory is released when its block ends. Instance variables live as long as the object.</li><li>Reading a question: for every variable use, find the declaration. If it's outside the current block or hasn't happened yet, compile error.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Using a loop-body variable after the loop.</strong> Out of scope.</li><li><strong>Using a for-header variable after the loop.</strong> Out of scope.</li><li><strong>Assuming a shadowed instance variable was changed.</strong> The local was changed. The field wasn't.</li><li><strong>Redeclaring a variable in the same scope.</strong> Compile error.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following will cause a compile-time error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (int i = 0; i &lt; 5; i++) { int sq = i * i; } </code></li><li><span class="opt-letter">B</span> <code>int total = 0; for (int i = 0; i &lt; 5; i++) { total += i; } System.out.println(total);</code></li><li><span class="opt-letter">C</span> <code>for (int i = 0; i &lt; 5; i++) { int sq = i * i; } System.out.println(sq);</code></li><li><span class="opt-letter">D</span> <code>int n = 3; if (n &gt; 0) { int m = n * 2; System.out.println(m); }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> sq is declared inside the loop body and is out of scope after it.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A class has <code>private int value = 8;</code> and the method <code>public int get(int value) { return value; }</code>. What does <code>obj.get(3)</code> return?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 8</li><li><span class="opt-letter">B</span> 3</li><li><span class="opt-letter">C</span> 11</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The parameter shadows the instance variable, so value refers to the argument 3.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Scope</dt><dd>the region of code in which a variable is accessible</dd></div><div><dt>Local variable</dt><dd>a variable declared inside a method or block</dd></div><div><dt>Shadowing</dt><dd>a local variable or parameter hiding an instance variable of the same name</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-7.html"><span class="dir">Previous</span>3.7 Class Variables and Methods</a>
+  <a class="to-right" href="3-9.html"><span class="dir">Next</span>3.9 this Keyword</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

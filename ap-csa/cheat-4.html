@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/cheat-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Data Collections — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 17 topics in this unit. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">4.1</span>Ethical and Social Issues Around Data Collection</h3>
+  <dl><div><dt>Personal data</dt><dd>information that identifies or could identify an individual</dd></div><div><dt>Informed consent</dt><dd>users agreeing to data collection after understanding what and why</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Same rule as CSP's Big Idea 5: the correct answer minimizes collection, requires consent, considers who's harmed, and acknowledges bias. Absolute or one-sided options are distractors.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.2</span>Introduction to Using Data Sets</h3>
+  <dl><div><dt>Data set</dt><dd>a collection of related records, each with fields</dd></div><div><dt>Record</dt><dd>one item in a data set, such as one row</dd></div><div><dt>Data cleaning</dt><dd>fixing or removing invalid, duplicate, or missing data before analysis</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions here are conceptual: which structure fits which data, and what step (cleaning, filtering, aggregating) a description refers to. The code for all of it comes in the following topics.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.3</span>Array Creation and Access</h3>
+  <dl><div><dt>Array</dt><dd>a fixed-size, ordered collection of elements of one type</dd></div><div><dt>Index</dt><dd>an element's position, from 0 to length - 1</dd></div><div><dt>length</dt><dd>the field giving the number of elements in an array</dd></div><div><dt>ArrayIndexOutOfBoundsException</dt><dd>the run-time error from using an invalid index</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Every array question: what's the first index (0), the last index (length − 1), and what's the default value? An index equal to length is the exam's favorite exception. And <code>length</code> without parentheses — with parentheses it won't compile.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.4</span>Array Traversals</h3>
+  <dl><div><dt>Traversal</dt><dd>visiting every element of an array</dd></div><div><dt>Enhanced for loop</dt><dd>for (type x : arr) — iterates over elements without an index</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If the question modifies the array through the loop variable of an enhanced for loop, the array is unchanged — that's the trick. If it calls a mutator method on an object element, the object <em>is</em> changed. Index needed? Standard loop.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.5</span>Implementing Array Algorithms</h3>
+  <dl><div><dt>In-place</dt><dd>modifying the array itself rather than building a new one</dd></div><div><dt>Mode</dt><dd>the value that appears most often</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Any algorithm touching <code>arr[i + 1]</code> must stop at <code>length - 1</code>; touching <code>arr[i - 1]</code> must start at 1. For "any" vs "all," the return inside the loop is the opposite of the return after it.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.6</span>Using Text Files</h3>
+  <dl><div><dt>File</dt><dd>a class representing a file on disk, passed to a Scanner to read it</dd></div><div><dt>FileNotFoundException</dt><dd>a checked exception thrown when a file can't be opened; must be declared</dd></div><div><dt>hasNextLine()</dt><dd>returns true if another line remains to be read</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Three things the exam checks: the <code>throws FileNotFoundException</code> clause, the <code>hasNext…</code>/<code>next…</code> pair matching (hasNextLine with nextLine, hasNextInt with nextInt), and closing the Scanner. If a method opens a file and has no throws clause, it won't compile.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.7</span>Wrapper Classes</h3>
+  <dl><div><dt>Wrapper class</dt><dd>an object type (Integer, Double) that holds a primitive value</dd></div><div><dt>Autoboxing</dt><dd>automatic conversion from a primitive to its wrapper</dd></div><div><dt>Unboxing</dt><dd>automatic conversion from a wrapper to its primitive</dd></div><div><dt>Integer.parseInt</dt><dd>converts a String to an int</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> You can't write <code>ArrayList&lt;int&gt;</code> — that's a guaranteed compile-error question. Everywhere else, treat Integer like int and let autoboxing work, except: never compare Integers with <code>==</code>, and remember a null Integer crashes when unboxed.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.8</span>ArrayList Methods</h3>
+  <dl><div><dt>ArrayList</dt><dd>a resizable list of objects</dd></div><div><dt>size()</dt><dd>the number of elements in an ArrayList</dd></div><div><dt>add(index, obj)</dt><dd>inserts, shifting later elements right</dd></div><div><dt>remove(index)</dt><dd>removes and returns, shifting later elements left</dd></div><div><dt>set(index, obj)</dt><dd>replaces and returns the old element; size unchanged</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Rewrite the list in brackets after every call. <code>set</code> doesn't change size; <code>add(i, x)</code> and <code>remove(i)</code> do, and they shift everything after i. <code>remove</code> and <code>set</code> both return the element that was there — questions sometimes use that return value.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.9</span>ArrayList Traversals</h3>
+  <dl><div><dt>ConcurrentModificationException</dt><dd>the error from modifying an ArrayList inside an enhanced for loop</dd></div><div><dt>Backward traversal</dt><dd>looping from size - 1 down to 0, safe for removals</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question removes elements in a forward loop, trace it literally — the answer usually has "leftover" elements that were skipped. If asked for the correct version, pick the backward loop or the one with <code>i--</code> after remove.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.10</span>Implementing ArrayList Algorithms</h3>
+  <dl><div><dt>Filter</dt><dd>building a new list from elements that meet a condition</dd></div><div><dt>Insert in order</dt><dd>adding an element at the position that keeps the list sorted</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> FRQ 3 rubrics typically award: correct loop over the list, correct accessor call on each element, correct condition, correct add/remove/return. Write the enhanced for loop first, then the if, then what happens inside. Don't forget to return the new list.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.11</span>2D Array Creation and Access</h3>
+  <dl><div><dt>2D array</dt><dd>an array whose elements are arrays; rows of columns</dd></div><div><dt>Row-major</dt><dd>the convention that the first index is the row</dd></div><div><dt>Rectangular array</dt><dd>a 2D array where every row has the same length</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Read <code>m[a][b]</code> as "row a, column b" every time — never reverse it. <code>length</code> counts rows; <code>[0].length</code> counts columns. A question that flips these is the standard distractor.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.12</span>2D Array Traversals</h3>
+  <dl><div><dt>Row-major traversal</dt><dd>outer loop over rows, inner over columns</dd></div><div><dt>Column-major traversal</dt><dd>outer loop over columns, inner over rows</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Look at which index the outer loop controls. Outer over r → row-major. Outer over c → column-major. When asked for the printed output, write out the grid and read it in that order.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.13</span>Implementing 2D Array Algorithms</h3>
+  <dl><div><dt>Helper method</dt><dd>a method that handles one piece (like a single row) and is called from a larger algorithm</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> FRQ 4 part (a) is usually a 1D-style helper on one row or column; part (b) uses it across the grid. Write the nested loops with r and c named clearly and keep row bound = <code>length</code>, column bound = <code>[0].length</code>. If a return inside nested loops is needed, remember it exits everything.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.14</span>Searching Algorithms</h3>
+  <dl><div><dt>Linear search</dt><dd>checking elements one by one until the target is found</dd></div><div><dt>Binary search</dt><dd>repeatedly halving a sorted range to locate a target</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For "how many times is the target compared," trace mid: write low, high, mid, and the element at mid on each pass. For "which search should be used," unsorted → linear; sorted and large → binary. And binary search's <code>mid</code> uses integer division — truncation matters.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.15</span>Sorting Algorithms</h3>
+  <dl><div><dt>Selection sort</dt><dd>repeatedly select the smallest remaining element and swap it into place</dd></div><div><dt>Insertion sort</dt><dd>insert each element into its correct position within the sorted prefix</dd></div><div><dt>Pass</dt><dd>one full iteration of the outer loop of a sort</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Given a mid-sort snapshot: if the first few elements are the globally smallest values in order, it's selection sort. If the first few are in order but a smaller value still sits later in the array, it's insertion sort.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.16</span>Recursion</h3>
+  <dl><div><dt>Recursion</dt><dd>a method calling itself</dd></div><div><dt>Base case</dt><dd>the condition under which a recursive method returns without recursing</dd></div><div><dt>Recursive call</dt><dd>the call to the same method with an argument closer to the base case</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Write the calls in a column, arguments decreasing, until the base case returns a concrete value. Then fill in upward. For methods that print, note whether the print happens <em>before</em> or <em>after</em> the recursive call — that reverses the order of output.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.17</span>Recursive Searching and Sorting</h3>
+  <dl><div><dt>Merge sort</dt><dd>recursively sort halves, then merge them</dd></div><div><dt>Merge</dt><dd>combining two sorted sequences into one sorted sequence</dd></div><div><dt>Divide and conquer</dt><dd>split a problem into smaller instances, solve recursively, combine</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For merge sort traces, the snapshot after the recursive sorts but before the final merge shows two independently sorted halves — that's the give-away. For recursive binary search, count the calls the same way as 4.14 counts comparisons.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-4.html"><span class="dir">Back to</span>Unit 4 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

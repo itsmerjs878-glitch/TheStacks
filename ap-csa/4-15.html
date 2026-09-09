@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.15 Sorting Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-15.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.15</div>
+<h1 class="article-title"><span class="title-num">4.15</span> Sorting Algorithms</h1>
+<p class="article-lede">Two sorts to know by mechanism, not memorized code: what each pass does and what the array looks like after k passes.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Selection sort:</strong> for each position i from 0, find the smallest element in the unsorted part (i to end) and swap it into position i. After k passes, the first k elements are the k smallest, in order.</li><li>Selection sort always does the same number of comparisons regardless of input order: about n²/2. It does at most n − 1 swaps.</li><li><strong>Insertion sort:</strong> for each element from index 1 onward, shift it left past larger elements until it's in place among the already-sorted prefix. After k passes, the first k + 1 elements are sorted <em>relative to each other</em> (but may not be the k + 1 smallest overall).</li><li>Insertion sort is fast on nearly-sorted data (few shifts) and slow on reverse-sorted data (many shifts).</li><li>The exam shows an array after some number of passes and asks which algorithm produced it, or asks for the array state after a given pass.</li><li>Both are O(n²) in the worst case; merge sort (4.17) is faster for large inputs.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Sort <code>{5, 2, 8, 1, 9}</code>:</p>
+<table class="trace"><tr><th>Pass</th><th>Selection sort</th><th>Insertion sort</th></tr>
+<tr><td>1</td><td>{1, 2, 8, 5, 9} — 1 swapped to front</td><td>{2, 5, 8, 1, 9} — 2 inserted before 5</td></tr>
+<tr><td>2</td><td>{1, 2, 8, 5, 9} — 2 already in place</td><td>{2, 5, 8, 1, 9} — 8 already in place</td></tr>
+<tr><td>3</td><td>{1, 2, 5, 8, 9} — 5 swapped in</td><td>{1, 2, 5, 8, 9} — 1 shifted to front</td></tr>
+<tr><td>4</td><td>{1, 2, 5, 8, 9}</td><td>{1, 2, 5, 8, 9}</td></tr></table>
+<p>Tell-tale: after pass k, selection has the k smallest at the front; insertion has the first k + 1 in order but not necessarily the smallest.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Given a mid-sort snapshot: if the first few elements are the globally smallest values in order, it's selection sort. If the first few are in order but a smaller value still sits later in the array, it's insertion sort.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Selection sort, pass i:</strong> scan positions i through end, find the index of the minimum, swap it into position i. After pass i, positions 0..i hold the i+1 smallest values in order. Exactly one swap per pass (or zero if the minimum is already there).</li><li><strong>Insertion sort, pass i:</strong> take element i, move it left past larger elements until it's in place among 0..i. After pass i, positions 0..i are sorted <em>relative to each other</em> — but a smaller value may still exist later in the array.</li><li><strong>Identifying from a snapshot:</strong> if the sorted prefix consists of the globally smallest values → selection. If the prefix is sorted but some later element is smaller than something in the prefix → insertion.</li><li><strong>Work:</strong> selection always does ~n²/2 comparisons regardless of input, and at most n−1 swaps. Insertion does few shifts on nearly-sorted input and ~n²/2 on reverse-sorted. So insertion is faster on nearly-sorted data; selection does fewer writes.</li><li><strong>Both are stable in the sense the exam cares about:</strong> they sort in place, need no extra array, and are O(n²). Merge sort (4.17) is O(n log n) but needs extra space.</li><li><strong>Sorting Strings or objects</strong> uses <code>compareTo</code> or an accessor in the comparison — the algorithm doesn't change.</li><li><strong>Descending order:</strong> flip the comparison. Everything else identical.</li><li>You don't write these on the exam; you trace them and identify them. But knowing the mechanics well enough to reproduce a pass is what tracing requires.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Confusing the two from a mid-sort array.</strong> Check whether the prefix has the smallest values overall.</li><li><strong>Thinking selection sort swaps every pass.</strong> Only if the min isn't already in place.</li><li><strong>Assuming insertion sort's prefix has the smallest values.</strong> It's sorted, not minimal.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> The array <code>{6, 3, 9, 1, 7}</code> is being sorted in ascending order. After two passes it is <code>{1, 3, 9, 6, 7}</code>. Which algorithm is being used?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Selection sort</li><li><span class="opt-letter">B</span> Insertion sort</li><li><span class="opt-letter">C</span> Binary search</li><li><span class="opt-letter">D</span> Merge sort</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> The two smallest values (1, 3) are in the first two positions — selection sort. Insertion sort after two passes would be {3, 6, 9, 1, 7}.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is true of insertion sort?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> It always performs the same number of comparisons regardless of input.</li><li><span class="opt-letter">B</span> It performs fewer shifts when the input is already nearly sorted.</li><li><span class="opt-letter">C</span> It requires the array to be sorted before it begins.</li><li><span class="opt-letter">D</span> It cannot be used on arrays of Strings.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Insertion sort's work depends on how far each element must shift; nearly-sorted input needs few shifts.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Selection sort</dt><dd>repeatedly select the smallest remaining element and swap it into place</dd></div><div><dt>Insertion sort</dt><dd>insert each element into its correct position within the sorted prefix</dd></div><div><dt>Pass</dt><dd>one full iteration of the outer loop of a sort</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-14.html"><span class="dir">Previous</span>4.14 Searching Algorithms</a>
+  <a class="to-right" href="4-16.html"><span class="dir">Next</span>4.16 Recursion</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

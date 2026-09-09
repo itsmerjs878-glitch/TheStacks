@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.6 Methods: Passing and Returning References of an Object — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.6</div>
+<h1 class="article-title"><span class="title-num">3.6</span> Methods: Passing and Returning References of an Object</h1>
+<p class="article-lede">When you pass an object to a method, you pass its address. The method can change the object — and the caller sees it. Primitives don't work that way.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Java passes all arguments <strong>by value</strong>. For primitives, the value is the number. For objects, the value is the <strong>reference</strong> — so the parameter and the argument point to the <em>same object</em>.</li><li>A method can <strong>modify the object</strong> a reference parameter points to (call its mutators, change array elements), and the caller sees the change.</li><li>A method <strong>cannot</strong> make the caller's variable point to a different object. Reassigning the parameter (<code>p = new Thing()</code>) only changes the local copy of the reference.</li><li>Changing a primitive parameter never affects the caller.</li><li>Returning an object returns its reference. The caller can then modify that object through the returned reference.</li><li>Returning a reference to a private instance variable that is a mutable object breaks encapsulation — outside code can change internal state. Strings are safe because they're immutable.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public static void bump(Counter c, int n)
+{
+    c.increment();      // affects the caller's object
+    n++;                // affects only the local n
+    c = new Counter("other");   // caller's variable still points to original
+    c.increment();      // this increments the new local object only
+}
+
+Counter myC = new Counter("a");   // count 0
+int myN = 5;
+bump(myC, myN);
+System.out.println(myC.getCount());   // 1
+System.out.println(myN);              // 5</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Draw the arrow. Parameter and argument arrows point to the same box; mutating the box is visible to both. Reassigning the parameter moves only the parameter's arrow. Primitives are just copied numbers.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Java is always pass-by-value.</strong> The value of a reference variable is an address. So passing an object passes a copy of the address — the parameter points to the same object. The phrase "pass by reference" is misleading in Java; it's pass-by-value where the value is a reference.</li><li><strong>Consequence 1:</strong> a method can call mutators on a parameter object and the caller sees the changes. <code>void bump(Counter c) { c.increment(); }</code> — the caller's Counter is incremented.</li><li><strong>Consequence 2:</strong> a method <em>cannot</em> replace the caller's object. <code>c = new Counter();</code> inside the method just repoints the local parameter. The caller's variable still points to the original.</li><li><strong>Arrays are objects</strong>, so passing an array lets the method modify its elements (<code>arr[0] = 5</code> is visible to the caller) but not replace the array (<code>arr = new int[10]</code> is not). This is the basis for many Unit 4 questions.</li><li><strong>Strings are objects but immutable</strong>, so a method receiving a String can't change it — every String method makes a new String, and reassigning the parameter doesn't affect the caller. Strings behave like primitives for practical purposes.</li><li><strong>Returning a reference</strong> gives the caller access to the object. If a class returns a reference to its private mutable field (an ArrayList, say), the caller can modify the object's internals — an encapsulation leak. Returning a String or primitive is safe. FRQ 2 sometimes asks you to return a copy for this reason.</li><li><strong>Draw it.</strong> Boxes for objects, arrows for every variable and parameter. Mutation = change inside a box (visible everywhere). Reassignment = move one arrow (visible only there).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Expecting reassignment to propagate.</strong> <code>param = new Thing()</code> changes only the parameter.</li><li><strong>Expecting a primitive parameter to change the caller.</strong> Never.</li><li><strong>Thinking a String parameter can be modified.</strong> Immutable. Reassigning it locally does nothing to the caller.</li><li><strong>Forgetting that array elements are shared.</strong> Modifying <code>arr[i]</code> in a method changes the caller's array.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the following method, where <code>Score</code> has a mutator <code>add(int p)</code> and accessor <code>getPoints()</code>.
+<pre class="code">public static void update(Score s, int pts)
+{
+    s.add(pts);
+    pts = 0;
+}</pre>After <code>Score sc = new Score(); int p = 10; update(sc, p);</code>, what are <code>sc.getPoints()</code> and <code>p</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0 and 0</li><li><span class="opt-letter">B</span> 10 and 10</li><li><span class="opt-letter">C</span> 10 and 0</li><li><span class="opt-letter">D</span> 0 and 10</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> s and sc share the object, so add(10) is visible: 10 points. pts is a local copy; setting it to 0 doesn't change p.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Consider the following.
+<pre class="code">public static void reset(Counter c)
+{
+    c = new Counter("new");
+}
+Counter x = new Counter("old");
+x.increment();
+reset(x);
+System.out.println(x.getCount());</pre>What is printed?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0</li><li><span class="opt-letter">B</span> 1</li><li><span class="opt-letter">C</span> null</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> reset only reassigns its local parameter. x still points to the original object with count 1.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Pass by value</dt><dd>Java copies the argument's value; for objects that value is a reference</dd></div><div><dt>Reference parameter</dt><dd>a parameter that holds the address of the caller's object</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-5.html"><span class="dir">Previous</span>3.5 Methods: How to Write Them</a>
+  <a class="to-right" href="3-7.html"><span class="dir">Next</span>3.7 Class Variables and Methods</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

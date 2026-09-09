@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.1 Variables and Assignments — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.1</div>
+<h1 class="article-title"><span class="title-num">3.1</span> Variables and Assignments</h1>
+<p class="article-lede">The foundation of every code-tracing question. A variable holds one value at a time, and assignment replaces it.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>variable</strong> is a named abstraction for a value stored in memory. It holds <em>one</em> value at a time; assigning a new value replaces the old one.</li><li>AP pseudocode uses <code>a ← expression</code> for assignment. The right side is evaluated <em>first</em>, then the result is stored in the variable on the left.</li><li>Because the right side is evaluated first, <code>x ← x + 1</code> means "take the current value of x, add 1, store it back in x."</li><li><strong>Data types</strong> matter: numbers, Booleans (true/false), strings (text), and lists. Operations behave differently depending on type.</li><li>Assigning a variable's value to another variable <em>copies</em> the value at that moment. Later changes to one don't affect the other.</li><li>Good variable names (<code>totalScore</code>, not <code>t</code>) are a form of documentation and reduce logic errors.</li><li>Swapping two values requires a third, temporary variable: <code>temp ← a</code>, <code>a ← b</code>, <code>b ← temp</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">a ← 5
+b ← a
+a ← a + 3
+DISPLAY(a)
+DISPLAY(b)</pre>
+<p>Trace it: <code>a</code> = 5. <code>b</code> gets a copy of 5. Then <code>a</code> becomes 5 + 3 = 8. <code>b</code> is still 5 — copying happened before <code>a</code> changed. Output: <strong>8 5</strong>. (<code>DISPLAY</code> outputs its value followed by a space.)</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> On any tracing question, draw a two-column table: variable name, current value. Update one row per line of code. Nearly every wrong answer on these questions comes from doing the update in your head and slipping.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A variable's <strong>value can change</strong> (that's what makes it a variable) but its <strong>name and type</strong> don't. In AP pseudocode types aren't declared, but the exam still expects you to know what type a value is: 5 is a number, "5" is a string, true is a Boolean.</li><li>Assignment is <strong>not symmetric</strong>. <code>a ← b</code> changes a and leaves b alone. <code>b ← a</code> is the opposite. Read the arrow: the value flows into the variable at the arrowhead's base.</li><li>The <strong>order of statements</strong> is the order of evaluation. <code>x ← 5</code> then <code>x ← x * 2</code> gives 10. Reversed, x would be 5 (the first line would use whatever x was before). Sequencing questions test exactly this.</li><li>Copying a value into a second variable creates an <em>independent</em> copy for simple values. Later changes to either don't affect the other. (Lists behave differently in some languages, but AP pseudocode questions generally treat list assignment as a copy too.)</li><li><strong>Swapping</strong> needs three assignments and a temporary. Two assignments (<code>a ← b</code>, <code>b ← a</code>) leave both variables with b's original value — the first line destroyed a's value before it was saved.</li><li>Variable names should describe what the variable holds. The exam's own questions use descriptive names (<code>total</code>, <code>count</code>, <code>isFound</code>), and reading them tells you the algorithm's intent before you trace.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Tracing in your head.</strong> The single biggest source of wrong answers in Big Idea 3. A table with one row per statement takes 30 seconds and removes the errors.</li><li><strong>Reading ← as equals.</strong> <code>x ← x + 1</code> isn't a false equation; it's an instruction. Evaluate the right side with the current x, store the result in x.</li><li><strong>Assuming the copy updates.</strong> After <code>b ← a</code>, changing a does <em>not</em> change b. Students expect b to "follow" a. It doesn't.</li><li><strong>Botching the swap.</strong> If a question asks which code segment swaps two values, the answer uses a temp variable. Any two-line answer is wrong.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the following code segment.
+<pre class="code">x ← 10
+y ← x
+x ← 20
+DISPLAY(y)</pre>What is displayed?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 10</li><li><span class="opt-letter">B</span> 20</li><li><span class="opt-letter">C</span> 30</li><li><span class="opt-letter">D</span> Nothing; the code has an error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> y received a copy of x's value (10) at the time of assignment. Changing x afterward does not change y.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following code segments correctly swaps the values of variables <code>a</code> and <code>b</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>a ← b</code><br><code>b ← a</code></li><li><span class="opt-letter">B</span> <code>temp ← a</code><br><code>a ← b</code><br><code>b ← temp</code></li><li><span class="opt-letter">C</span> <code>a ← b</code><br><code>b ← temp</code></li><li><span class="opt-letter">D</span> <code>b ← a</code><br><code>a ← b</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Without a temporary variable, the first assignment overwrites one of the values before it can be copied. Option B saves a first.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Variable</dt><dd>a named storage location that holds one value at a time</dd></div><div><dt>Assignment</dt><dd>storing the result of an expression in a variable, written with ← in AP pseudocode</dd></div><div><dt>Data type</dt><dd>the kind of value a variable holds: number, Boolean, string, or list</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-3.html"><span class="dir">Up</span>Big Idea 3 overview</a>
+  <a class="to-right" href="3-2.html"><span class="dir">Next</span>3.2 Data Abstraction</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

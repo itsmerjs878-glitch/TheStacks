@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.6 Safe Computing — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/5-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-5.html">BIG IDEA 5: IMPACT OF COMPUTING</a> &middot; TOPIC 5.6</div>
+<h1 class="article-title"><span class="title-num">5.6</span> Safe Computing</h1>
+<p class="article-lede">The longest topic in the Big Idea and a frequent source of questions: what data is at risk, how it gets stolen, and how it's protected.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Personally identifiable information (PII)</strong> is information that can be used to identify a person: name, address, Social Security number, date of birth, biometric data, medical and financial records, and more.</li><li>PII is collected through <strong>search history, location, cookies, and app activity</strong>. Combining seemingly harmless pieces can identify someone. Once online, information is hard to remove.</li><li>PII enables useful personalization but can be used for <strong>stalking, identity theft, and targeted manipulation</strong>. It is often collected and sold without users' full awareness.</li><li><strong>Authentication</strong> proves identity. <strong>Strong passwords</strong> are long and not reused. <strong>Multifactor authentication</strong> requires two or more of: something you <em>know</em> (password), something you <em>have</em> (phone, key), something you <em>are</em> (fingerprint).</li><li><strong>Encryption</strong> scrambles data so it's unreadable without a key. <strong>Symmetric</strong> encryption uses one shared key for both encrypting and decrypting. <strong>Public key (asymmetric)</strong> encryption uses a public key to encrypt and a private key to decrypt — anyone can send you a secret message, only you can read it.</li><li><strong>Certificate authorities</strong> issue digital certificates that verify a website's public key really belongs to that site. This is what makes HTTPS trustworthy.</li><li><strong>Attacks to know:</strong> <strong>malware</strong> (software designed to damage or gain unauthorized access), <strong>virus</strong> (malware that attaches to other programs and spreads), <strong>phishing</strong> (fake messages that trick people into revealing information), <strong>keylogging</strong> (recording keystrokes), <strong>rogue access points</strong> (fake Wi-Fi that intercepts traffic).</li><li>Data traveling over an unsecured network can be intercepted; encryption (like HTTPS) protects it in transit.</li><li><strong>Software updates</strong> patch known security vulnerabilities — running old versions leaves known holes open.</li><li>Users should read what data an app collects, limit permissions, and recognize that free services are often paid for with personal data.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p><strong>Public key encryption in one paragraph:</strong> Alice publishes her public key anywhere. Bob uses it to encrypt a message. Only Alice's private key — which she never shares — can decrypt it. Even if someone intercepts the message and has Alice's public key, they can't read it, because the public key only <em>locks</em>. That asymmetry is what lets strangers communicate securely over an open network without first meeting to share a password.</p>
+<p><strong>Multifactor in one line:</strong> password (know) + code texted to your phone (have) = two factors. Two passwords is still one factor.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Vocabulary questions dominate here. Phishing is the person being tricked; keylogging is the keystrokes being recorded; a virus spreads by attaching to programs; a rogue access point is a fake network. For encryption: symmetric = one shared key; public key = a public lock and a private unlock. And multifactor means different <em>categories</em>, not just multiple steps.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>PII</strong> — personally identifiable information — includes name, address, SSN, date of birth, phone, email, biometrics, medical and financial records, and anything that in combination can identify a person. The CED emphasizes <em>combination</em>: ZIP code + birthdate + gender identifies most Americans uniquely.</li><li>PII is collected through <strong>search history</strong>, <strong>location data</strong>, <strong>cookies</strong> (small files sites store in your browser to recognize you), <strong>app permissions</strong>, purchase records, and social media activity. Much of it is collected automatically and combined by data brokers.</li><li>The CED's concern: PII can be used to <strong>enhance the user experience</strong> (personalization) but also to <strong>stalk</strong>, <strong>steal identities</strong>, and <strong>manipulate</strong> (targeted ads, targeted misinformation). Once information is public, it's essentially impossible to remove.</li><li><strong>Authentication</strong> verifies identity. Three factor types: something you <strong>know</strong> (password, PIN), something you <strong>have</strong> (phone, hardware key), something you <strong>are</strong> (fingerprint, face). <strong>Multifactor authentication</strong> uses two or more <em>different</em> types. Two passwords = one factor.</li><li><strong>Strong passwords</strong> are long, not reused across sites, and not based on personal information. Length matters more than complexity. Password managers exist because humans can't remember dozens of unique long passwords.</li><li><strong>Encryption</strong> transforms data so it's unreadable without a key. <strong>Symmetric</strong>: one shared key encrypts and decrypts — fast, but you have to get the key to the other party securely. <strong>Public key (asymmetric)</strong>: a public key (shared freely) encrypts; only the matching private key decrypts. Solves the key-exchange problem.</li><li><strong>Public key in practice:</strong> your browser gets a website's public key, encrypts a message only the site can read, and they use that to set up a fast symmetric session. That's HTTPS. <strong>Certificate authorities</strong> vouch that the public key really belongs to that site, so an attacker can't substitute their own.</li><li><strong>Attacks to distinguish:</strong> <strong>malware</strong> is the umbrella (software intended to harm). A <strong>virus</strong> is malware that attaches to other programs and spreads when they run. <strong>Phishing</strong> tricks the user into giving up information via fake messages or sites. <strong>Keylogging</strong> records keystrokes to capture passwords. A <strong>rogue access point</strong> is a fake Wi-Fi network that intercepts everything you send. <strong>Unencrypted traffic</strong> on any network can be read by anyone on that network.</li><li><strong>Software updates</strong> matter because they patch known vulnerabilities. An unpatched system has holes that attackers know about. Delaying updates is a security decision.</li><li><strong>Free services</strong> are typically paid for with your data. Reading what an app collects, limiting permissions, and being skeptical of unexpected requests for information are the user-side defenses the CED expects you to know.</li><li>Security is a <strong>cost-benefit</strong> question, not absolute. No system is perfectly secure; the goal is to make attacks expensive enough that they're not worth attempting for the value at stake.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Calling two passwords multifactor.</strong> Same factor type. Multifactor needs different types: know + have, know + are, etc.</li><li><strong>Sharing the private key.</strong> In public key encryption, the private key is never shared. The public key is the one you give out.</li><li><strong>Mislabeling attacks.</strong> Fake email asking for your password = phishing. Software recording keystrokes = keylogging. Fake Wi-Fi = rogue access point. Each has one definition.</li><li><strong>Thinking encryption is compression.</strong> Encryption hides; compression shrinks. Different goals, different tools.</li><li><strong>Assuming individual data points are harmless.</strong> The exam's point is that combination identifies. ZIP + birthday + gender is PII in combination.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A user receives an email that appears to be from their bank, asking them to click a link and enter their password to "verify their account." The link leads to a fake site. This is an example of which of the following?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Keylogging</li><li><span class="opt-letter">B</span> Phishing</li><li><span class="opt-letter">C</span> A rogue access point</li><li><span class="opt-letter">D</span> A virus</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Deceptive messages that trick people into giving up information are phishing.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is an example of multifactor authentication?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Entering a password and then a second, different password</li><li><span class="opt-letter">B</span> Entering a password and then a code sent to the user's phone</li><li><span class="opt-letter">C</span> Entering the same password twice</li><li><span class="opt-letter">D</span> Choosing a very long password</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Password (something you know) + phone code (something you have) uses two different factor categories.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> In public key encryption, which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The same key is used to encrypt and decrypt a message.</li><li><span class="opt-letter">B</span> The public key is used to encrypt, and only the corresponding private key can decrypt.</li><li><span class="opt-letter">C</span> The private key must be shared with anyone who wants to send a message.</li><li><span class="opt-letter">D</span> Public key encryption cannot be used over the internet.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Asymmetric encryption: public key locks, private key unlocks, and the private key is never shared.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q4</span> Which of the following is considered personally identifiable information (PII)?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The current temperature in a city</li><li><span class="opt-letter">B</span> A person's date of birth combined with their home address</li><li><span class="opt-letter">C</span> The number of users of a website</li><li><span class="opt-letter">D</span> A public domain image</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Information that can identify a specific individual — especially in combination — is PII.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>PII</dt><dd>personally identifiable information — data that can identify an individual</dd></div><div><dt>Multifactor authentication</dt><dd>verifying identity with two or more categories of evidence: know, have, are</dd></div><div><dt>Encryption</dt><dd>converting data into a form unreadable without a key</dd></div><div><dt>Symmetric encryption</dt><dd>one shared key encrypts and decrypts</dd></div><div><dt>Public key encryption</dt><dd>a public key encrypts; only the matching private key decrypts</dd></div><div><dt>Certificate authority</dt><dd>a trusted organization that verifies a site's public key via a digital certificate</dd></div><div><dt>Malware</dt><dd>software designed to damage a system or gain unauthorized access</dd></div><div><dt>Virus</dt><dd>malware that attaches to programs and spreads when they run</dd></div><div><dt>Phishing</dt><dd>tricking people into revealing information through fake messages or sites</dd></div><div><dt>Keylogging</dt><dd>secretly recording a user's keystrokes</dd></div><div><dt>Rogue access point</dt><dd>a fake wireless network set up to intercept traffic</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="5-5.html"><span class="dir">Previous</span>5.5 Legal and Ethical Concerns</a>
+  <a class="to-right" href="unit-5.html"><span class="dir">Back to</span>Big Idea 5 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 Ethical and Social Issues Around Data Collection — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.1</div>
+<h1 class="article-title"><span class="title-num">4.1</span> Ethical and Social Issues Around Data Collection</h1>
+<p class="article-lede">Before the technical content, the CED's second ethics topic: collecting data at scale has consequences.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Programs today collect and process enormous amounts of data about people. <strong>Personal data</strong> can identify someone directly or in combination with other data.</li><li><strong>Privacy:</strong> people have a reasonable expectation about how their data is used. Collecting more than needed, keeping it longer than needed, or sharing it without consent violates that.</li><li><strong>Security:</strong> stored data can be breached; the more collected, the greater the harm from a breach.</li><li><strong>Bias in data:</strong> a dataset that under-represents some groups leads to programs that serve them worse. Analysis is only as fair as the data.</li><li><strong>Consent and transparency:</strong> users should know what is collected and why. Terms buried in fine print are legally compliant but ethically weak.</li><li>Programmers are responsible for the systems they build — including anticipating misuse and designing to limit it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A school app records which students open which assignments and when. Useful for spotting who's struggling. But the same data could rank teachers, track students' late-night habits, or be sold to a tutoring company. Responsible design: collect only assignment-completion status, aggregate before sharing, tell students what's stored, and delete it at year end.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Same rule as CSP's Big Idea 5: the correct answer minimizes collection, requires consent, considers who's harmed, and acknowledges bias. Absolute or one-sided options are distractors.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>This mirrors CSP's 5.5 and 5.6 but through a programmer's lens: <em>you</em> are writing the code that collects and processes the data, so the responsibility is yours.</li><li><strong>Personal data</strong> is anything that identifies a person alone or in combination. Names and IDs obviously; but ZIP + birthdate + gender identifies most people too. Combination is the trap.</li><li><strong>Privacy risks in code:</strong> storing more than needed, storing longer than needed, logging sensitive fields, sharing between systems without consent, weak access control (public fields, no validation). Each is a design decision, and each can be made better.</li><li><strong>Security risks:</strong> any stored data can be breached. The consequence scales with how much you stored. Minimization limits the damage.</li><li><strong>Bias in data sets:</strong> if a data set under-represents a group, statistics computed from it (averages, models) will be wrong for that group. Programs that make decisions from biased data make biased decisions — at scale, automatically. Checking representation before analyzing is part of responsible programming.</li><li><strong>Informed consent</strong> means people understand what's collected and why, and agreed. Buried terms of service technically count legally; the CED asks you to see that they don't count ethically.</li><li><strong>Transparency</strong>: users should be able to find out what data is held about them. Programs that make it impossible are designed badly.</li><li>On the exam this is scenario questions: given a data-collection situation, which action is most responsible? Minimize, consent, anonymize, check for bias, secure it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Picking the maximal-collection option.</strong> "Store everything in case it's useful" is the wrong answer.</li><li><strong>Assuming anonymized data can't identify people.</strong> Combining fields re-identifies. The exam expects you to know this.</li><li><strong>Treating bias as a data-science-only problem.</strong> The program that uses the data inherits the bias.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A program analyzes purchase histories to recommend products. Which of the following is the most significant ethical concern?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The program may run slowly on large datasets.</li><li><span class="opt-letter">B</span> Users' personal data is being collected and used in ways they may not have agreed to or expect.</li><li><span class="opt-letter">C</span> The recommendations may use an ArrayList instead of an array.</li><li><span class="opt-letter">D</span> The program requires an import statement.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Data use without informed consent is the core privacy concern.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A dataset used to train a medical program includes very few records from older patients. Which outcome is most likely?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The program will run faster for older patients.</li><li><span class="opt-letter">B</span> The program may perform less accurately for older patients due to bias in the data.</li><li><span class="opt-letter">C</span> The program will refuse to run.</li><li><span class="opt-letter">D</span> The program will automatically correct for the missing data.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Under-representation in data produces worse performance for that group — bias.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Personal data</dt><dd>information that identifies or could identify an individual</dd></div><div><dt>Informed consent</dt><dd>users agreeing to data collection after understanding what and why</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-4.html"><span class="dir">Up</span>Unit 4 overview</a>
+  <a class="to-right" href="4-2.html"><span class="dir">Next</span>4.2 Introduction to Using Data Sets</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

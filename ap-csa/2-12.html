@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.12 Informal Run-Time Analysis — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-12.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.12</div>
+<h1 class="article-title"><span class="title-num">2.12</span> Informal Run-Time Analysis</h1>
+<p class="article-lede">Not Big-O — the exam asks you to count how many times a statement executes, and to compare two code segments by that count.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Statement execution count</strong> is the number of times a particular statement runs. It's the exam's measure of efficiency.</li><li>A single loop of n iterations executes its body n times. Nested loops multiply. Sequential loops add.</li><li>Comparing algorithms: fewer executions for the same input size = more efficient. The exam gives two versions and asks which is better or by how much.</li><li>Loops that halve their range each time (binary search) run about log₂ n times; loops that check every element run n times; comparing all pairs runs about n².</li><li>Early exit (return when found) reduces the count in the best case but not the worst.</li><li>The count can depend on the input, not just its size: searching for the first element takes 1 step; the last takes n.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// Version A
+for (int i = 0; i &lt; n; i++)
+{
+    for (int j = 0; j &lt; n; j++)
+    {
+        count++;                // runs n * n times
+    }
+}
+// Version B
+for (int i = 0; i &lt; n; i++)
+{
+    count++;                    // runs n times
+}
+for (int j = 0; j &lt; n; j++)
+{
+    count++;                    // runs n times
+}
+// B runs 2n times total. For n = 100: A = 10,000, B = 200.</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Read the loop headers, not the bodies. Nested with independent bounds → multiply. Nested with dependent bound → triangular sum (n(n+1)/2). Two loops in sequence → add. A question asking "how many times is the statement executed when n = 5" wants a number, so compute it.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The exam's efficiency measure is <strong>statement execution count</strong> — how many times a given statement runs for an input of size n — not clock time and not formal Big-O (though the ideas align).</li><li><strong>Counting rules:</strong> a loop with k iterations runs its body k times. Nested independent loops: multiply. Nested dependent loops: sum the series. Sequential loops: add. An if inside a loop: the condition runs every iteration; the body runs only when true.</li><li><strong>Common growth patterns and what produces them:</strong> constant — no loop; linear (n) — one loop over n; quadratic (n²) — two nested loops over n; logarithmic (log n) — a loop that halves its range (binary search); n log n — merge sort.</li><li><strong>Best vs. worst case:</strong> a search with early exit takes 1 step if the target is first, n if it's last or absent. "How many comparisons" questions specify the input; if they say "maximum" or "worst case," assume the target is last or missing.</li><li><strong>Comparing two implementations:</strong> the one with fewer statement executions for the same n is more efficient. The exam gives two versions and a specific n, and asks for the counts or which is better.</li><li>Efficiency isn't everything: for small n, the simpler algorithm may be preferable. But the exam's questions are about the counts, not the judgment call.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Counting loop headers as body executions.</strong> The condition check runs one more time than the body (the failing check).</li><li><strong>Assuming an if body runs every iteration.</strong> Only when the condition is true. If the question gives the data, count.</li><li><strong>Treating early-exit as always fast.</strong> Worst case is still n.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> How many times is <code>sum++</code> executed when <code>n = 6</code>?
+<pre class="code">for (int i = 0; i &lt; n; i++)
+{
+    for (int j = 0; j &lt; n; j += 2)
+    {
+        sum++;
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 12</li><li><span class="opt-letter">B</span> 18</li><li><span class="opt-letter">C</span> 36</li><li><span class="opt-letter">D</span> 9</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Outer: 6 iterations. Inner: j = 0, 2, 4 → 3 iterations. 6 × 3 = 18.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Two methods search a list of n items for a value. Method X checks every item and returns the count of matches. Method Y returns true as soon as the first match is found. Which statement is true about their execution counts?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Y always executes fewer statements than X.</li><li><span class="opt-letter">B</span> X always executes n comparisons; Y executes between 1 and n depending on where the match is.</li><li><span class="opt-letter">C</span> X and Y always execute the same number of statements.</li><li><span class="opt-letter">D</span> Y always executes exactly 1 comparison.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> X has no early exit. Y's count depends on the data — best case 1, worst case n.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Statement execution count</dt><dd>how many times a statement runs; the exam's measure of efficiency</dd></div><div><dt>Run-time analysis</dt><dd>estimating an algorithm's work as a function of input size</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-11.html"><span class="dir">Previous</span>2.11 Nested Iteration</a>
+  <a class="to-right" href="unit-2.html"><span class="dir">Back to</span>Unit 2 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

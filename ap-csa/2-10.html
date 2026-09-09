@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.10 Implementing String Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-10.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.10</div>
+<h1 class="article-title"><span class="title-num">2.10</span> Implementing String Algorithms</h1>
+<p class="article-lede">Combine loops with substring and indexOf to process text. FRQs love "count how many times," "reverse," and "find all occurrences."</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Iterate over characters with <code>for (int i = 0; i &lt; s.length(); i++)</code> and get each one as a String: <code>s.substring(i, i + 1)</code>.</li><li><strong>Named algorithms:</strong> count occurrences of a substring; find all positions of a substring; reverse a String; check for a palindrome; build a new String from selected characters.</li><li><strong>Counting substrings:</strong> loop i from 0 to <code>s.length() - sub.length()</code> (inclusive) and check <code>s.substring(i, i + sub.length()).equals(sub)</code>. The upper bound prevents an out-of-bounds substring call.</li><li><strong>Reverse:</strong> start with an empty String and prepend each character: <code>rev = s.substring(i, i + 1) + rev;</code></li><li><strong>Building a String:</strong> start with <code>""</code> and concatenate. Strings are immutable, so you're creating a new one each time — fine at exam scale.</li><li><code>indexOf</code> finds the <em>first</em> occurrence only. To find all, loop or use <code>substring</code> to search the remainder.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// count occurrences of sub in s (overlapping allowed)
+public static int countOf(String s, String sub)
+{
+    int count = 0;
+    for (int i = 0; i &lt;= s.length() - sub.length(); i++)
+    {
+        if (s.substring(i, i + sub.length()).equals(sub))
+        {
+            count++;
+        }
+    }
+    return count;
+}
+// countOf("banana", "ana") → 2 (indices 1 and 3)
+
+// reverse
+String rev = "";
+for (int i = 0; i &lt; s.length(); i++)
+{
+    rev = s.substring(i, i + 1) + rev;
+}</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-string-count"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> The loop bound for substring searching is <code>i &lt;= s.length() - sub.length()</code> — get that off by one and you either miss the last match or throw an exception. Always use <code>.equals</code> inside the loop, never <code>==</code>.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's <strong>named String algorithms:</strong> find whether a String contains a substring; count occurrences of a substring; find all positions of a substring; reverse a String; determine if a String is a palindrome; create a new String from selected characters of another.</li><li><strong>Character-by-character loop:</strong> <code>for (int i = 0; i &lt; s.length(); i++)</code> with <code>String c = s.substring(i, i + 1);</code>. Since there's no <code>charAt</code> on the reference sheet, every character is a one-length String. Compare with <code>.equals</code>.</li><li><strong>Substring-window loop:</strong> to check every substring of length k, loop <code>i</code> from 0 to <code>s.length() - k</code> <em>inclusive</em> and examine <code>s.substring(i, i + k)</code>. The bound is the single most-tested detail: too high throws an exception; too low misses the last window.</li><li><strong>Reverse:</strong> prepend each character to an accumulator: <code>rev = s.substring(i, i + 1) + rev;</code>. Or loop from the end appending. Both work.</li><li><strong>Palindrome:</strong> compare <code>s</code> with its reverse using <code>.equals</code>, or compare characters from both ends moving inward with a loop to the middle.</li><li><strong>Find all occurrences:</strong> loop the window and record each i where the window equals the target. Overlapping matches ("aa" in "aaa" at 0 and 1) are found by this method; <code>indexOf</code> alone only finds the first.</li><li><strong>Building a filtered String:</strong> start with <code>""</code>, loop characters, append those that pass the test. Remove vowels, keep digits, etc.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Off-by-one on the window bound.</strong> <code>i &lt;= s.length() - k</code>. Not <code>&lt;</code>, not <code>- k + 1</code>.</li><li><strong>Using == to compare the window.</strong> Always <code>.equals</code>.</li><li><strong>Appending instead of prepending for reverse.</strong> <code>rev += c</code> copies; <code>rev = c + rev</code> reverses.</li><li><strong>Forgetting Strings are immutable.</strong> Every operation needs its result stored.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">String s = "abcde";
+String r = "";
+for (int i = 0; i &lt; s.length(); i += 2)
+{
+    r = s.substring(i, i + 1) + r;
+}
+System.out.println(r);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> ace</li><li><span class="opt-letter">B</span> eca</li><li><span class="opt-letter">C</span> abcde</li><li><span class="opt-letter">D</span> edcba</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> i = 0, 2, 4 gives a, c, e; each is prepended: "a", "ca", "eca".</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> The method below is intended to return true if <code>s</code> contains the substring <code>"ab"</code>. Which loop condition is correct?
+<pre class="code">for (int i = 0; /* condition */ ; i++)
+{
+    if (s.substring(i, i + 2).equals("ab")) return true;
+}
+return false;</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>i &lt; s.length()</code></li><li><span class="opt-letter">B</span> <code>i &lt;= s.length()</code></li><li><span class="opt-letter">C</span> <code>i &lt; s.length() - 1</code></li><li><span class="opt-letter">D</span> <code>i &lt; s.length() - 2</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> substring(i, i + 2) needs i + 2 ≤ length, so i ≤ length - 2, i.e., i < length - 1. Option A throws an exception on the last iteration; D misses a match at the end.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Palindrome</dt><dd>a String that reads the same forward and backward</dd></div><div><dt>Substring search</dt><dd>checking each window of a String against a target</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-9.html"><span class="dir">Previous</span>2.9 Implementing Selection and Iteration Algorithms</a>
+  <a class="to-right" href="2-11.html"><span class="dir">Next</span>2.11 Nested Iteration</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-string-count": {"id": "csa-string-count", "title": "Counting substring occurrences", "course": "ap-csa", "code": ["String s = \"banana\";", "int count = 0;", "for (int i = 0; i <= s.length() - 3; i++)", "{", "    if (s.substring(i, i + 3).equals(\"ana\"))", "    {", "        count++;", "    }", "}", "System.out.println(count);"], "steps": [{"line": 0, "vars": [["s", "\"banana\""]], "out": "", "note": "length 6"}, {"line": 1, "vars": [["s", "\"banana\""], ["count", "0"]], "out": "", "note": "count = 0"}, {"line": 2, "vars": [["s", "\"banana\""], ["count", "0"], ["i", "0"]], "out": "", "note": "check i <= 3: 0 <= 3 is true"}, {"line": 4, "vars": [["s", "\"banana\""], ["count", "0"], ["i", "0"], ["sub", "\"ban\""]], "out": "", "note": "substring(0, 3) = \"ban\"; equals \"ana\"? no"}, {"line": 2, "vars": [["s", "\"banana\""], ["count", "0"], ["i", "1"]], "out": "", "note": "check i <= 3: 1 <= 3 is true"}, {"line": 4, "vars": [["s", "\"banana\""], ["count", "0"], ["i", "1"], ["sub", "\"ana\""]], "out": "", "note": "substring(1, 4) = \"ana\"; equals \"ana\"? yes"}, {"line": 6, "vars": [["s", "\"banana\""], ["count", "1"], ["i", "1"], ["sub", "\"ana\""]], "out": "", "note": "count = 1"}, {"line": 2, "vars": [["s", "\"banana\""], ["count", "1"], ["i", "2"]], "out": "", "note": "check i <= 3: 2 <= 3 is true"}, {"line": 4, "vars": [["s", "\"banana\""], ["count", "1"], ["i", "2"], ["sub", "\"nan\""]], "out": "", "note": "substring(2, 5) = \"nan\"; equals \"ana\"? no"}, {"line": 2, "vars": [["s", "\"banana\""], ["count", "1"], ["i", "3"]], "out": "", "note": "check i <= 3: 3 <= 3 is true"}, {"line": 4, "vars": [["s", "\"banana\""], ["count", "1"], ["i", "3"], ["sub", "\"ana\""]], "out": "", "note": "substring(3, 6) = \"ana\"; equals \"ana\"? yes"}, {"line": 6, "vars": [["s", "\"banana\""], ["count", "2"], ["i", "3"], ["sub", "\"ana\""]], "out": "", "note": "count = 2"}, {"line": 2, "vars": [["s", "\"banana\""], ["count", "2"], ["i", "4"]], "out": "", "note": "check i <= 3: 4 <= 3 is false → exit"}, {"line": 9, "vars": [["s", "\"banana\""], ["count", "2"]], "out": "2\n", "note": "overlapping matches at 1 and 3"}], "intro": "The loop bound is length − 3 so substring(i, i+3) never goes out of bounds."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

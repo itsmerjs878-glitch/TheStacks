@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.3 Anatomy of a Class — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.3</div>
+<h1 class="article-title"><span class="title-num">3.3</span> Anatomy of a Class</h1>
+<p class="article-lede">The parts of a class in the order the exam expects them, and the access modifiers that make encapsulation work.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A class declaration: <code>public class Name { ... }</code>. Inside, in conventional order: <strong>instance variables</strong>, <strong>constructors</strong>, <strong>methods</strong>.</li><li><strong>Instance variables</strong> hold each object's state. Declare them <code>private</code>: <code>private String name;</code> Each object gets its own copy.</li><li><code>private</code> members are accessible only inside the class. <code>public</code> members are accessible from anywhere. The exam expects private instance variables and public methods/constructors.</li><li>Instance variables have <strong>default values</strong> if not initialized: 0 for int, 0.0 for double, false for boolean, <code>null</code> for references. Local variables have no defaults.</li><li>Accessing a private variable from outside the class (<code>obj.name</code>) is a compile-time error. Use an accessor method instead.</li><li>The class's data type name is the class name; you can declare variables of that type: <code>Student s;</code></li><li><code>final</code> on an instance variable means it's set once (in the declaration or constructor) and never changed.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Student
+{
+    // instance variables — private, one set per object
+    private String name;
+    private int grade;
+    private double gpa;
+
+    // constructor(s) — 3.4
+    public Student(String n, int g, double gp)
+    {
+        name = n;
+        grade = g;
+        gpa = gp;
+    }
+
+    // methods — 3.5
+    public String getName()
+    {
+        return name;
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> FRQ 2 rubrics award a point for declaring instance variables private. Forgetting <code>private</code> costs it every year. Also, a class with instance variables but no constructor is legal — Java provides a default one — but on the FRQ you'll be asked to write one.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>Conventional order inside a class: instance variables → constructors → methods. Java doesn't require this order, but the exam uses it and FRQ graders expect it. Put private fields at the top.</li><li><strong>Instance variables</strong> exist once per object. Two <code>Student</code> objects have two separate <code>name</code> fields. Methods, by contrast, exist once per class and operate on whichever object they were called on.</li><li><strong>Default values</strong> apply only to instance (and static) variables: int → 0, double → 0.0, boolean → false, any reference → null. Local variables inside methods have <em>no</em> default and must be assigned before use. This asymmetry is a favorite compile-vs-runtime question.</li><li><code>private</code> means "visible only inside this class." Not subclasses, not other classes in the same file, not anywhere else. Attempting <code>obj.privateField</code> from outside is a compile error — the exam's standard "which line won't compile" answer.</li><li><code>public</code> means visible everywhere. The exam expects <strong>private variables, public methods and constructors</strong>. That combination is encapsulation.</li><li>A class's <strong>type name</strong> is its name: you can declare <code>Student s;</code>, pass a <code>Student</code> as a parameter, return one, store them in an array or ArrayList. Your class becomes a type as real as String.</li><li><code>final</code> instance variables are set in the declaration or the constructor and never again. Useful for things that shouldn't change after creation (an ID number).</li><li>The <strong>class header</strong>: <code>public class Name</code>. The file must be named <code>Name.java</code>. One public class per file.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Forgetting <code>private</code> on instance variables.</strong> A rubric point on every FRQ 2.</li><li><strong>Assuming a local variable defaults to 0.</strong> Only fields do.</li><li><strong>Accessing a private field from outside.</strong> Won't compile. Use the getter.</li><li><strong>Declaring instance variables inside a method.</strong> That makes them local. Fields go directly in the class body.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider a class <code>Box</code> with <code>private int width;</code>. Which of the following statements outside the class will compile?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>Box b = new Box(); b.width = 5;</code></li><li><span class="opt-letter">B</span> <code>Box b = new Box(); int w = b.width;</code></li><li><span class="opt-letter">C</span> <code>Box b = new Box(); int w = b.getWidth();</code> where <code>getWidth</code> is a public method</li><li><span class="opt-letter">D</span> <code>Box b = new Box(); System.out.println(b.width);</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Private variables can't be accessed outside the class. A public accessor method is the correct route.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A class declares <code>private int count;</code> and has a constructor that does not assign to it. What is the value of <code>count</code> in a newly created object?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A compile-time error occurs</li><li><span class="opt-letter">B</span> 0</li><li><span class="opt-letter">C</span> null</li><li><span class="opt-letter">D</span> Undefined; it must be assigned before use</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Instance variables get default values; int defaults to 0. (Local variables are the ones that must be assigned first.)</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Instance variable</dt><dd>a variable declared in a class that each object has its own copy of</dd></div><div><dt>private</dt><dd>accessible only within the class</dd></div><div><dt>public</dt><dd>accessible from any class</dd></div><div><dt>Default value</dt><dd>the automatic initial value of an instance variable: 0, 0.0, false, or null</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-2.html"><span class="dir">Previous</span>3.2 Impact of Program Design</a>
+  <a class="to-right" href="3-4.html"><span class="dir">Next</span>3.4 Constructors</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

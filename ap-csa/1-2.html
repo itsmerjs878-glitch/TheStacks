@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.2 Variables and Data Types — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.2</div>
+<h1 class="article-title"><span class="title-num">1.2</span> Variables and Data Types</h1>
+<p class="article-lede">Java is statically typed: every variable is declared with a type that never changes. The exam's primitive types are int, double, and boolean; everything else is a reference.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>variable</strong> is a named memory location with a declared <strong>type</strong>. Declaration: <code>int count;</code>. Declaration with initialization: <code>double price = 9.99;</code></li><li><strong>Primitive types</strong> on the exam: <code>int</code> (whole numbers), <code>double</code> (decimals), <code>boolean</code> (<code>true</code>/<code>false</code>). A primitive variable stores the value itself.</li><li><strong>Reference types</strong> (like <code>String</code> and every other class) store the <em>address</em> of an object, not the object. Two reference variables can point to the same object.</li><li><code>int</code> has a fixed range: <code>Integer.MIN_VALUE</code> (−2,147,483,648) to <code>Integer.MAX_VALUE</code> (2,147,483,647). Exceeding it causes <strong>overflow</strong> — it wraps around silently, no error.</li><li>The <code>final</code> keyword makes a variable a constant: <code>final int MAX = 100;</code>. Assigning to it again is a compile-time error.</li><li>Naming: variables start with a lowercase letter (<code>totalScore</code>); constants are all caps (<code>MAX_SIZE</code>); classes start uppercase (<code>String</code>). Names must be declared before use and are case-sensitive.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int age = 17;
+double gpa = 3.85;
+boolean isSenior = true;
+String name = "Ram";
+final double TAX = 0.07;
+age = 18;        // fine
+TAX = 0.08;      // compile-time error: cannot assign to final</pre>
+<p>Four types, four kinds of value. <code>name</code> holds a reference to a String object; the other three hold their values directly. That distinction matters in 1.13 and 3.6.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions on ranges are usually about overflow: <code>Integer.MAX_VALUE + 1</code> equals <code>Integer.MIN_VALUE</code>, not an error. And a variable declared but never assigned can't be used — that's a compile error, not a default of 0.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The exam's three primitives are <code>int</code>, <code>double</code>, and <code>boolean</code>. Java has others (<code>char</code>, <code>long</code>, <code>float</code>…) but the CED excludes them. If you see <code>char</code> on the exam, it's in a String context and the question will explain.</li><li><strong>int</strong> is a 32-bit signed integer: exactly −2,147,483,648 to 2,147,483,647. <code>Integer.MAX_VALUE</code> and <code>Integer.MIN_VALUE</code> are on the reference sheet. Overflow wraps silently: MAX + 1 = MIN. No exception.</li><li><strong>double</strong> holds decimals with about 15–16 significant digits of precision. Not every decimal is exact — <code>0.1 + 0.2</code> is <code>0.30000000000000004</code>. This is why comparing doubles with <code>==</code> is unreliable.</li><li>A variable must be <strong>declared before use</strong> and <strong>initialized before its value is read</strong>. A declared-but-unassigned local variable is a compile error when read. (Instance variables are different — they get defaults. That's 3.3.)</li><li><strong>Naming rules:</strong> start with a letter, <code>_</code>, or <code>$</code>; no spaces; case-sensitive; can't be a keyword. <strong>Conventions:</strong> camelCase for variables and methods, PascalCase for classes, ALL_CAPS for constants. Conventions aren't enforced by the compiler but the exam follows them and expects you to.</li><li><code>final</code> variables must be initialized exactly once. Attempting a second assignment is a compile error. Constants make code readable (<code>MAX_SPEED</code> instead of <code>120</code>) and safe from accidental change.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Assigning a double to an int.</strong> <code>int x = 3.7;</code> won't compile. Needs a cast. The reverse (<code>double d = 3;</code>) is fine.</li><li><strong>Expecting overflow to throw.</strong> It wraps. <code>Integer.MAX_VALUE + 1</code> is a large negative number.</li><li><strong>Assuming a local variable defaults to 0.</strong> It has no default. Reading it before assignment is a compile error.</li><li><strong>Using a keyword as a name.</strong> <code>int class = 5;</code> won't compile.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following declarations will cause a compile-time error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>int count = 5;</code></li><li><span class="opt-letter">B</span> <code>double avg = 3;</code></li><li><span class="opt-letter">C</span> <code>int total = 3.5;</code></li><li><span class="opt-letter">D</span> <code>boolean done = false;</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> A double literal can't be assigned to an int without a cast. Assigning an int to a double (option B) is fine — it widens automatically.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is the result of evaluating <code>Integer.MAX_VALUE + 1</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A compile-time error</li><li><span class="opt-letter">B</span> A run-time exception</li><li><span class="opt-letter">C</span> <code>Integer.MIN_VALUE</code></li><li><span class="opt-letter">D</span> <code>Integer.MAX_VALUE</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Integer overflow wraps around silently to the minimum value. Java doesn't throw an error.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Primitive type</dt><dd>int, double, boolean — stores the value directly</dd></div><div><dt>Reference type</dt><dd>a variable that stores the address of an object</dd></div><div><dt>final</dt><dd>keyword that makes a variable's value unchangeable after initialization</dd></div><div><dt>Overflow</dt><dd>an int calculation exceeding the representable range wraps around</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-1.html"><span class="dir">Previous</span>1.1 Introduction to Algorithms, Programming, and Compilers</a>
+  <a class="to-right" href="1-3.html"><span class="dir">Next</span>1.3 Expressions and Output</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

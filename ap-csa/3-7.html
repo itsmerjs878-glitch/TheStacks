@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.7 Class Variables and Methods — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-7.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.7</div>
+<h1 class="article-title"><span class="title-num">3.7</span> Class Variables and Methods</h1>
+<p class="article-lede">static members belong to the class, not to any single object. One copy, shared by everyone, accessible without creating an object.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>class variable</strong> (static variable) is declared with <code>static</code>: <code>private static int count;</code> There is <em>one</em> copy shared by all objects of the class.</li><li>Common uses: counting how many objects have been created, or constants: <code>public static final double RATE = 0.05;</code></li><li>A <strong>class method</strong> (static method) is declared with <code>static</code> and called on the class: <code>ClassName.method()</code>. It can be called without any object existing.</li><li>Static methods <strong>cannot</strong> access instance variables or call instance methods directly — there's no object to refer to. They can access static variables.</li><li>Instance methods <em>can</em> access static variables and methods.</li><li>Static variables are initialized when the class is first loaded, before any object is created. Their default values are the same as instance variables.</li><li>Access a static variable from an instance method or from outside (if public) via the class name: <code>Student.count</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Ticket
+{
+    private static int nextId = 1;        // shared by all tickets
+    public static final double FEE = 2.50; // constant
+    private int id;                        // each ticket has its own
+
+    public Ticket()
+    {
+        id = nextId;
+        nextId++;
+    }
+    public static int getNextId() { return nextId; }   // OK: static uses static
+    public int getId() { return id; }
+    // public static int getId() { return id; }  // ERROR: no object
+}
+Ticket a = new Ticket();   // id 1
+Ticket b = new Ticket();   // id 2
+System.out.println(Ticket.getNextId());   // 3</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> "Which variable should be static?" — anything that's the same for every object or tracks the class as a whole. "Why won't this compile?" — a static method touching an instance variable. Trace static variables as one shared cell, not one per object.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>static</code> = belongs to the class. <strong>One copy</strong> for all objects, existing even if zero objects have been created. Non-static = belongs to each object.</li><li><strong>Uses for static variables:</strong> counters across all instances (how many Tickets sold), shared configuration, and constants (<code>public static final double TAX = 0.07;</code>). Constants are the most common on the exam.</li><li><strong>Static methods</strong> can't use <code>this</code>, can't access instance variables, and can't call instance methods without an object — because there may be no object. They <em>can</em> access static variables and call other static methods. <code>main</code> is static, which is why it needs to create objects to call instance methods.</li><li><strong>Instance methods can use static members freely.</strong> A <code>getPrice()</code> instance method can read a static <code>TAX</code> constant. The restriction is one-directional.</li><li><strong>Accessing static members:</strong> <code>ClassName.member</code> from anywhere it's visible. <code>object.staticMember</code> compiles but is misleading and the exam avoids it. Inside the class, bare name.</li><li><strong>Static initialization:</strong> static variables are set when the class loads, once. A static <code>count = 0</code> then incremented in the constructor counts all objects ever created.</li><li><strong>Tracing static state:</strong> keep one row for the static variable, separate from any object's rows. Every object shares that row.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Static method touching an instance variable.</strong> Compile error. The single most common static question.</li><li><strong>Thinking each object has its own copy of a static variable.</strong> One copy, shared.</li><li><strong>Using <code>this</code> in a static method.</strong> Compile error.</li><li><strong>Calling an instance method from main without an object.</strong> Compile error. Create an object first.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A class <code>Player</code> has <code>private static int numPlayers = 0;</code> incremented in its constructor. After creating three Player objects, what is <code>numPlayers</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0</li><li><span class="opt-letter">B</span> 1</li><li><span class="opt-letter">C</span> 3</li><li><span class="opt-letter">D</span> Each object has its own value</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> One shared variable, incremented three times.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following will not compile inside a class with <code>private int size;</code> and <code>private static int total;</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>public int getSize() { return size; }</code></li><li><span class="opt-letter">B</span> <code>public static int getTotal() { return total; }</code></li><li><span class="opt-letter">C</span> <code>public static int getSize() { return size; }</code></li><li><span class="opt-letter">D</span> <code>public int getTotal() { return total; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> A static method can't access an instance variable — there's no object.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Class variable / static variable</dt><dd>a single variable shared by all objects of a class</dd></div><div><dt>Class method / static method</dt><dd>a method called on the class that can't use instance variables</dd></div><div><dt>Constant</dt><dd>a static final variable whose value never changes</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-6.html"><span class="dir">Previous</span>3.6 Methods: Passing and Returning References of an Object</a>
+  <a class="to-right" href="3-8.html"><span class="dir">Next</span>3.8 Scope and Access</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

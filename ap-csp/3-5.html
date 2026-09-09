@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.5 Boolean Expressions — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-5.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.5</div>
+<h1 class="article-title"><span class="title-num">3.5</span> Boolean Expressions</h1>
+<p class="article-lede">Every conditional and loop depends on a Boolean expression. You have to evaluate them exactly, including the ones designed to be misread.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>Boolean</strong> value is either <code>true</code> or <code>false</code>. A Boolean expression evaluates to one of those two.</li><li><strong>Relational operators</strong> compare values: <code>=</code>, <code>≠</code>, <code>&gt;</code>, <code>&lt;</code>, <code>≥</code>, <code>≤</code>. Note: in AP pseudocode <code>=</code> is comparison, not assignment (assignment is <code>←</code>).</li><li><strong>Logical operators:</strong> <code>NOT a</code> is true when a is false. <code>a AND b</code> is true only when both are true. <code>a OR b</code> is true when at least one is true (including both).</li><li>Precedence: <code>NOT</code> is evaluated before <code>AND</code>, which is before <code>OR</code>. Use parentheses when in doubt — the exam does.</li><li><strong>De Morgan's laws</strong> show up as "equivalent expression" questions: <code>NOT (a AND b)</code> = <code>(NOT a) OR (NOT b)</code>, and <code>NOT (a OR b)</code> = <code>(NOT a) AND (NOT b)</code>.</li><li>Two Boolean expressions are <strong>equivalent</strong> if they have the same value for every combination of inputs. A truth table proves it.</li><li>The negation of <code>x &gt; 5</code> is <code>x ≤ 5</code>, not <code>x &lt; 5</code>. Missing the boundary case is a classic distractor.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Let <code>age ← 16</code> and <code>hasLicense ← false</code>.</p>
+<ul class="points">
+<li><code>age ≥ 16 AND hasLicense</code> → true AND false → <strong>false</strong></li>
+<li><code>age ≥ 16 OR hasLicense</code> → true OR false → <strong>true</strong></li>
+<li><code>NOT (age &lt; 18)</code> → NOT true → <strong>false</strong></li>
+<li><code>NOT (age ≥ 16 AND hasLicense)</code> → NOT false → <strong>true</strong>, which by De Morgan equals <code>age &lt; 16 OR NOT hasLicense</code> → false OR true → true. ✓</li>
+</ul>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For "which expression is equivalent" questions, don't reason abstractly — plug in all four combinations of true/false (or a few boundary numbers) and compare outputs. It takes 30 seconds and is essentially error-proof.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Truth tables</strong> are the reliable tool. For two Booleans a and b there are four rows: TT, TF, FT, FF. Evaluate both expressions on each row; if all four match, they're equivalent. For three Booleans, eight rows. It's mechanical and it works.</li><li><strong>Short-circuit evaluation</strong> isn't formally in the CSP CED, but understanding that <code>false AND anything</code> is false and <code>true OR anything</code> is true speeds up evaluation and helps you see equivalences.</li><li><strong>De Morgan's laws in practice:</strong> to negate "x is between 1 and 10" — which is <code>x ≥ 1 AND x ≤ 10</code> — you get <code>x &lt; 1 OR x &gt; 10</code>. Flip AND to OR, flip each comparison to its opposite (including the boundary).</li><li>The <strong>negation of a comparison</strong> flips to the opposite operator, which always includes the boundary the original excluded: NOT(&gt;) is ≤, NOT(≥) is &lt;, NOT(=) is ≠. Students who write NOT(x &gt; 5) as x &lt; 5 miss the case x = 5.</li><li>Relational operators return a Boolean, so <code>x &gt; 5</code> by itself is a complete Boolean expression that can be assigned: <code>isBig ← x &gt; 5</code>. Then <code>IF (isBig)</code> works without writing <code>IF (isBig = true)</code>.</li><li>Precedence: relational operators evaluate first, then NOT, then AND, then OR. So <code>NOT a AND b</code> is <code>(NOT a) AND b</code>. The exam uses parentheses generously, but knows students misgroup when it doesn't.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Dropping the boundary when negating.</strong> NOT(score ≥ 90) is score &lt; 90, not score ≤ 90 or score &lt; 89.</li><li><strong>De Morgan half-done.</strong> NOT(a AND b) becomes (NOT a) OR (NOT b). Students negate the parts but forget to flip AND to OR (giving NOT a AND NOT b, which is wrong).</li><li><strong>Treating OR as exclusive.</strong> <code>a OR b</code> is true when <em>both</em> are true, too. It's inclusive or.</li><li><strong>Grouping NOT loosely.</strong> <code>NOT a OR b</code> is <code>(NOT a) OR b</code>. NOT applies only to the thing right after it unless parentheses say otherwise.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following expressions is equivalent to <code>NOT (x &gt; 10 AND y = 3)</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>x ≤ 10 AND y ≠ 3</code></li><li><span class="opt-letter">B</span> <code>x ≤ 10 OR y ≠ 3</code></li><li><span class="opt-letter">C</span> <code>x &lt; 10 OR y ≠ 3</code></li><li><span class="opt-letter">D</span> <code>x &gt; 10 OR y = 3</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> De Morgan: NOT (A AND B) = (NOT A) OR (NOT B). NOT (x > 10) is x ≤ 10 (include the boundary), NOT (y = 3) is y ≠ 3.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> The variables <code>a</code> and <code>b</code> are Boolean. For which values is the expression <code>(a OR b) AND (NOT a)</code> true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> a = true, b = true</li><li><span class="opt-letter">B</span> a = true, b = false</li><li><span class="opt-letter">C</span> a = false, b = true</li><li><span class="opt-letter">D</span> a = false, b = false</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> NOT a requires a = false. Then (a OR b) requires b = true. Only option C satisfies both.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Boolean</dt><dd>a value that is either true or false</dd></div><div><dt>Relational operator</dt><dd>an operator that compares two values, such as = or <</dd></div><div><dt>Logical operator</dt><dd>NOT, AND, or OR — combines or negates Boolean values</dd></div><div><dt>Equivalent expressions</dt><dd>expressions that evaluate to the same value for every possible input</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-4.html"><span class="dir">Previous</span>3.4 Strings</a>
+  <a class="to-right" href="3-6.html"><span class="dir">Next</span>3.6 Conditionals</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

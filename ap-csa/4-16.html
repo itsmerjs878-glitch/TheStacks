@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.16 Recursion — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-16.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.16</div>
+<h1 class="article-title"><span class="title-num">4.16</span> Recursion</h1>
+<p class="article-lede">A method that calls itself. On the revised exam you trace recursion — you don't write it. Know the base case, count the calls, and follow the returns back up.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>recursive method</strong> calls itself. It needs a <strong>base case</strong> (a condition where it returns without recursing) and a <strong>recursive call</strong> that moves toward the base case.</li><li>Without a reachable base case, recursion never ends — a run-time stack overflow.</li><li>Each call has its own copies of parameters and local variables. Changes in one call don't affect the others.</li><li><strong>Tracing:</strong> write each call with its argument, stop at the base case, then substitute return values back up the chain. Or draw the calls as a stack.</li><li><strong>Number of calls</strong> is a common question: count every invocation including the original.</li><li>Any recursive method can be rewritten with a loop, and vice versa; recursion often mirrors the structure of the problem (factorial, sum of a list, string reversal).</li><li>The revised CED says you will <em>trace</em> recursive code, not write it — FRQs won't require recursion.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public static int f(int n)
+{
+    if (n &lt;= 1) return 1;          // base case
+    return n * f(n - 1);           // recursive call
+}
+// f(4) = 4 * f(3)
+//      = 4 * (3 * f(2))
+//      = 4 * (3 * (2 * f(1)))
+//      = 4 * (3 * (2 * 1)) = 24
+// Calls made: f(4), f(3), f(2), f(1) → 4 calls
+
+public static void printDown(int n)
+{
+    if (n == 0) return;
+    System.out.print(n + " ");
+    printDown(n - 1);
+}
+// printDown(3) prints: 3 2 1</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-recursion"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> Write the calls in a column, arguments decreasing, until the base case returns a concrete value. Then fill in upward. For methods that print, note whether the print happens <em>before</em> or <em>after</em> the recursive call — that reverses the order of output.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Structure:</strong> base case(s) first (return without recursing), then recursive case(s) (call with a smaller/closer argument, combine the result). If the argument doesn't get closer to a base case, infinite recursion → StackOverflowError.</li><li><strong>Each call has its own frame:</strong> its own parameters and locals. When f(4) calls f(3), f(4)'s n is still 4; f(3)'s n is 3. Changes in the inner call don't affect the outer.</li><li><strong>Two tracing techniques.</strong> <em>Substitution:</em> expand f(4) = 4 * f(3) = 4 * 3 * f(2) … until base, then multiply back. <em>Stack:</em> list the calls in a column as they happen; when the base returns, cross off from the bottom up, writing each return value.</li><li><strong>Order of side effects:</strong> a print <em>before</em> the recursive call happens on the way down (n, n−1, …). A print <em>after</em> happens on the way up (…, n−1, n). Same code, reversed output.</li><li><strong>Counting calls:</strong> include the original. f(n) with f(n−1) makes n calls to reach f(1)… or n+1 to reach f(0). Halving (f(n/2)) makes about log₂ n + 1 calls.</li><li><strong>Base case correctness:</strong> the recursion must hit it exactly. <code>if (n == 0)</code> with <code>f(n - 2)</code> from an odd n skips 0 and never stops. <code>if (n &lt;= 0)</code> is the safe form.</li><li><strong>Recursion on Strings and arrays:</strong> process the first character, recurse on the rest (<code>s.substring(1)</code>); or use an index parameter that increments. Base case: empty string / index == length.</li><li><strong>Any loop can be recursion and vice versa.</strong> The exam may show a recursive method and ask which loop is equivalent.</li><li>The 2025–26 CED says recursion is <em>traced</em>, not <em>written</em>. FRQs won't require it. Multiple choice will trace it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Not tracking each frame's own variables.</strong> Inner calls don't change outer variables.</li><li><strong>Printing in the wrong order.</strong> Before the call = descending. After = ascending.</li><li><strong>Miscounting calls.</strong> Include the first call and the base-case call.</li><li><strong>Missing a skipped base case.</strong> Check whether the argument sequence actually hits it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is returned by <code>g(5)</code>?
+<pre class="code">public static int g(int n)
+{
+    if (n == 0) return 0;
+    return n + g(n - 2);
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 9</li><li><span class="opt-letter">B</span> 15</li><li><span class="opt-letter">C</span> 5</li><li><span class="opt-letter">D</span> The method never terminates</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: D.</strong> g(5) calls g(3), which calls g(1), which calls g(-1). The base case checks n == 0 exactly, and n goes 5, 3, 1, -1, -3, … skipping 0 entirely. The base case is never reached, so the recursion never stops. (A base case of n <= 0 would fix it and return 9.)</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is printed by <code>p(3)</code>?
+<pre class="code">public static void p(int n)
+{
+    if (n &gt; 0)
+    {
+        p(n - 1);
+        System.out.print(n + " ");
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 3 2 1</li><li><span class="opt-letter">B</span> 1 2 3</li><li><span class="opt-letter">C</span> 3 2 1 0</li><li><span class="opt-letter">D</span> 0 1 2 3</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The print happens after the recursive call, so the deepest call prints first: 1, then 2, then 3.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> How many times is the method <code>h</code> called (including the initial call) when <code>h(8)</code> is executed?
+<pre class="code">public static int h(int n)
+{
+    if (n &lt; 1) return 0;
+    return 1 + h(n / 2);
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 3</li><li><span class="opt-letter">B</span> 4</li><li><span class="opt-letter">C</span> 5</li><li><span class="opt-letter">D</span> 8</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> h(8) → h(4) → h(2) → h(1) → h(0). Five calls.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Recursion</dt><dd>a method calling itself</dd></div><div><dt>Base case</dt><dd>the condition under which a recursive method returns without recursing</dd></div><div><dt>Recursive call</dt><dd>the call to the same method with an argument closer to the base case</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-15.html"><span class="dir">Previous</span>4.15 Sorting Algorithms</a>
+  <a class="to-right" href="4-17.html"><span class="dir">Next</span>4.17 Recursive Searching and Sorting</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-recursion": {"id": "csa-recursion", "title": "Recursion — factorial, calls and returns", "course": "ap-csa", "code": ["public static int f(int n)", "{", "    if (n <= 1) return 1;", "    return n * f(n - 1);", "}", "// call: f(4)"], "steps": [{"line": 0, "vars": [["call_stack", "\"f(4)\""], ["n", "4"]], "out": "", "note": "enter f(4)"}, {"line": 2, "vars": [["call_stack", "\"f(4)\""], ["n", "4"]], "out": "", "note": "is 4 <= 1? no"}, {"line": 3, "vars": [["call_stack", "\"f(4)\""], ["n", "4"]], "out": "", "note": "need f(3) first; 4 * f(3) waits"}, {"line": 0, "vars": [["call_stack", "\"f(4) → f(3)\""], ["n", "3"]], "out": "", "note": "enter f(3)"}, {"line": 2, "vars": [["call_stack", "\"f(4) → f(3)\""], ["n", "3"]], "out": "", "note": "is 3 <= 1? no"}, {"line": 3, "vars": [["call_stack", "\"f(4) → f(3)\""], ["n", "3"]], "out": "", "note": "need f(2) first; 3 * f(2) waits"}, {"line": 0, "vars": [["call_stack", "\"f(4) → f(3) → f(2)\""], ["n", "2"]], "out": "", "note": "enter f(2)"}, {"line": 2, "vars": [["call_stack", "\"f(4) → f(3) → f(2)\""], ["n", "2"]], "out": "", "note": "is 2 <= 1? no"}, {"line": 3, "vars": [["call_stack", "\"f(4) → f(3) → f(2)\""], ["n", "2"]], "out": "", "note": "need f(1) first; 2 * f(1) waits"}, {"line": 0, "vars": [["call_stack", "\"f(4) → f(3) → f(2) → f(1)\""], ["n", "1"]], "out": "", "note": "enter f(1)"}, {"line": 2, "vars": [["call_stack", "\"f(4) → f(3) → f(2) → f(1)\""], ["n", "1"]], "out": "", "note": "is 1 <= 1? yes → return 1"}, {"line": 3, "vars": [["call_stack", "\"f(4) → f(3) → f(2)\""], ["n", "2"], ["result", "2"]], "out": "", "note": "f(1) returned 1; return 2 * 1 = 2"}, {"line": 3, "vars": [["call_stack", "\"f(4) → f(3)\""], ["n", "3"], ["result", "6"]], "out": "", "note": "f(2) returned 2; return 3 * 2 = 6"}, {"line": 3, "vars": [["call_stack", "\"f(4)\""], ["n", "4"], ["result", "24"]], "out": "", "note": "f(3) returned 6; return 4 * 6 = 24"}, {"line": 5, "vars": [["result", "24"]], "out": "", "note": "f(4) = 24"}], "intro": "Each call waits for the one below it. Watch the call stack grow to f(1), then unwind."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

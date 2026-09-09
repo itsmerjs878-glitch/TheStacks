@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.10 Lists — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-10.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.10</div>
+<h1 class="article-title"><span class="title-num">3.10</span> Lists</h1>
+<p class="article-lede">The reference sheet gives you a small set of list operations. Combined with FOR EACH, they're behind a big share of the code questions.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>AP pseudocode list operations (all 1-indexed): <code>list[i]</code> accesses element i; <code>list[i] ← value</code> assigns it; <code>LENGTH(list)</code> gives the number of elements.</li><li><code>APPEND(list, value)</code> adds to the end and increases length by 1. <code>INSERT(list, i, value)</code> puts value at index i, shifting later elements right. <code>REMOVE(list, i)</code> deletes the element at i, shifting later elements left.</li><li>After INSERT or REMOVE, indices of later elements <em>change</em>. A question that removes index 2 and then reads index 3 is reading what used to be index 4.</li><li><strong>Traversal</strong> means visiting every element. <code>FOR EACH item IN list</code> is the complete traversal; a REPEAT UNTIL with an index can do partial traversals.</li><li>Common list algorithms: linear search (check each element until found), filtering into a new list, counting, sum/average, min/max, reversing, checking for duplicates.</li><li>A list can be empty: <code>[]</code>, with LENGTH 0. Accessing <code>list[1]</code> on an empty list is a run-time error.</li><li>Lists can contain lists, allowing grids or tables — but the CED keeps most questions to one dimension.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">a ← [10, 20, 30, 40]
+REMOVE(a, 2)
+APPEND(a, 50)
+INSERT(a, 1, 5)
+DISPLAY(a[3])
+DISPLAY(LENGTH(a))</pre>
+<p>Step through: start <code>[10,20,30,40]</code> → REMOVE index 2 → <code>[10,30,40]</code> → APPEND 50 → <code>[10,30,40,50]</code> → INSERT 5 at index 1 → <code>[5,10,30,40,50]</code>. Then <code>a[3]</code> = 30, LENGTH = 5. Output: <strong>30 5</strong>.</p>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csp-list-ops"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> Rewrite the list after every INSERT/REMOVE/APPEND — literally write it out with brackets. Tracking index shifts in your head is where these go wrong. And in a FOR EACH loop, changing the loop variable does <em>not</em> change the list.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The complete list of operations on the AP reference sheet: <code>list[i]</code> (access), <code>list[i] ← value</code> (assign), <code>LENGTH(list)</code>, <code>APPEND(list, value)</code>, <code>INSERT(list, i, value)</code>, <code>REMOVE(list, i)</code>, and <code>FOR EACH</code>. That's all. Anything else is defined in the question.</li><li><strong>INSERT shifts right:</strong> the element at index i and everything after it moves to i + 1, i + 2, … and the new value goes at i. Length grows by 1. <strong>REMOVE shifts left:</strong> the element at i is gone, and everything after moves down. Length shrinks by 1. <strong>APPEND</strong> is INSERT at LENGTH + 1.</li><li>After a REMOVE, the index you just removed now holds what <em>used to be</em> the next element. This causes the classic "remove every matching element in a forward loop" bug: matching elements adjacent to each other get skipped. (The Java version of this bug is in CSA 4.9.)</li><li><code>FOR EACH item IN list</code> visits every element in order. The variable <code>item</code> holds a copy of the current element. Changing <code>item</code> inside the loop does not change the list. To change list elements you need an index loop with <code>list[i] ← …</code>.</li><li><strong>Linear search</strong> — checking each element until you find the target — is the only search you can do on an unsorted list. It's O(n) in the worst case: n elements means up to n comparisons.</li><li><strong>Building a new list</strong> by filtering: start with an empty list, FOR EACH over the original, APPEND matches. The original is unchanged. This is how "return a list of all elements that…" is done.</li><li>An <strong>empty list</strong> has LENGTH 0, and accessing any index is an error. Algorithms that read <code>list[1]</code> before checking length will fail on empty input — a testable edge case.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Not rewriting the list after each operation.</strong> Index shifts are invisible unless you write the list out. Do it every time.</li><li><strong>Reading the wrong index after INSERT/REMOVE.</strong> After <code>REMOVE(a, 2)</code>, what was <code>a[3]</code> is now <code>a[2]</code>. Questions are built around this.</li><li><strong>Modifying the FOR EACH variable and expecting the list to change.</strong> It won't.</li><li><strong>Using index 0.</strong> Still 1-based. Still tested.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is displayed after the following code runs?
+<pre class="code">nums ← [3, 8, 1, 6]
+INSERT(nums, 2, 9)
+REMOVE(nums, 4)
+DISPLAY(nums)</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> [3, 9, 8, 6]</li><li><span class="opt-letter">B</span> [3, 9, 8, 1]</li><li><span class="opt-letter">C</span> [9, 3, 8, 6]</li><li><span class="opt-letter">D</span> [3, 8, 9, 6]</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> INSERT 9 at index 2 → [3, 9, 8, 1, 6]. REMOVE index 4 (the 1) → [3, 9, 8, 6].</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> The following procedure is intended to return true if <code>target</code> appears in <code>list</code>.
+<pre class="code">PROCEDURE contains(list, target)
+{
+    FOR EACH item IN list
+    {
+        IF (item = target)
+        {
+            RETURN true
+        }
+    }
+    RETURN false
+}</pre>Which best describes the algorithm used?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Binary search</li><li><span class="opt-letter">B</span> Linear search</li><li><span class="opt-letter">C</span> Sorting</li><li><span class="opt-letter">D</span> Data compression</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Checking each element in order until a match is found is a linear (sequential) search.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> The list <code>data</code> has 7 elements. After <code>REMOVE(data, 1)</code> and then <code>APPEND(data, 100)</code>, what is <code>LENGTH(data)</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 6</li><li><span class="opt-letter">B</span> 7</li><li><span class="opt-letter">C</span> 8</li><li><span class="opt-letter">D</span> 9</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Remove one (6), append one (7).</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Traversal</dt><dd>visiting each element of a list, usually with FOR EACH</dd></div><div><dt>APPEND</dt><dd>adds a value to the end of a list</dd></div><div><dt>INSERT</dt><dd>places a value at a given index, shifting later elements right</dd></div><div><dt>REMOVE</dt><dd>deletes the element at a given index, shifting later elements left</dd></div><div><dt>Linear search</dt><dd>checking elements one by one until the target is found or the list ends</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-9.html"><span class="dir">Previous</span>3.9 Developing Algorithms</a>
+  <a class="to-right" href="3-11.html"><span class="dir">Next</span>3.11 Binary Search</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csp-list-ops": {"id": "csp-list-ops", "title": "List operations — INSERT, REMOVE, APPEND", "course": "ap-csp", "code": ["a ← [10, 20, 30, 40]", "REMOVE(a, 2)", "APPEND(a, 50)", "INSERT(a, 1, 5)", "DISPLAY(a[3])", "DISPLAY(LENGTH(a))"], "steps": [{"line": 0, "vars": [["a", "[10, 20, 30, 40]"]], "out": "", "note": "four elements, indices 1–4"}, {"line": 1, "vars": [["a", "[10, 30, 40]"]], "out": "", "note": "remove index 2 (the 20); later elements shift left"}, {"line": 2, "vars": [["a", "[10, 30, 40, 50]"]], "out": "", "note": "append 50 to the end"}, {"line": 3, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "", "note": "insert 5 at index 1; everything shifts right"}, {"line": 4, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "30 ", "note": "a[3] is the third element"}, {"line": 5, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "30 5 ", "note": "LENGTH is 5"}], "intro": "AP pseudocode lists are 1-indexed. Rewrite the list after every operation."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

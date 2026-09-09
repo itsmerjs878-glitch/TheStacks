@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.7 Nested Conditionals — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-7.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.7</div>
+<h1 class="article-title"><span class="title-num">3.7</span> Nested Conditionals</h1>
+<p class="article-lede">A conditional can live inside another conditional's block. The inner one is only reached if the outer path leads there — tracing them carefully is the entire skill.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Nested conditionals</strong> are conditional statements placed inside the block of another conditional.</li><li>The inner condition is only <em>evaluated</em> when the outer branch containing it executes. If the outer condition is false, the inner one never runs at all.</li><li>Nesting lets you express "if A, then check B" logic — multiple criteria that depend on one another.</li><li>Nested IF/ELSE inside ELSE branches builds a multi-way choice (like grade ranges A/B/C/D/F). Only one leaf branch ever executes.</li><li>Many nested conditionals can be rewritten using <code>AND</code>/<code>OR</code>, and vice versa. The exam asks which rewrite is <em>equivalent</em>. Check with test values.</li><li>Deep nesting is hard to read; matching the braces to the correct IF is where tracing errors happen. Indentation in the exam's code is reliable — use it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">IF (isMember)
+{
+    IF (total > 50)
+    {
+        discount ← 20
+    }
+    ELSE
+    {
+        discount ← 10
+    }
+}
+ELSE
+{
+    discount ← 0
+}</pre>
+<p>Members with a total over 50 get 20; other members get 10; non-members get 0. An equivalent flat version: <code>IF (isMember AND total > 50)</code> → 20, <code>ELSE IF (isMember)</code> → 10, <code>ELSE</code> → 0. Same outputs for every input, so they're equivalent.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Trace nested conditionals from the outside in. Decide the outer condition, cross out the branch that doesn't run, and only then look at what's inside the surviving branch. Never evaluate an inner condition before you've confirmed its outer branch runs.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The rule for nested conditionals: an inner condition is <strong>only evaluated if execution reaches it</strong>. If the outer condition is false and the inner IF is inside the outer's true-block, the inner condition is never checked at all — not "checked and found false," simply never checked.</li><li>Nested IF/ELSE in ELSE branches builds a chain: check A; if not A, check B; if not B, check C; else D. Exactly one leaf runs. This is how grade ranges, tax brackets, and any multi-way categorization is expressed.</li><li><strong>Order in a chain matters</strong> when conditions overlap. Checking <code>score ≥ 70</code> before <code>score ≥ 90</code> sends a 95 down the 70 branch. Put the most restrictive condition first, or make them mutually exclusive with ranges.</li><li>A nested IF inside another IF's true-block, with no ELSEs, is equivalent to a single IF with AND: <code>IF (a) { IF (b) { X } }</code> ≡ <code>IF (a AND b) { X }</code>. Adding ELSEs breaks this equivalence — then you need to think about all the paths.</li><li>For "which rewrite is equivalent" questions, the technique is to enumerate paths: what inputs reach each DISPLAY or assignment in the original? Then check the candidate produces the same result for each.</li><li>Deep nesting (three or more levels) is a readability problem the exam sometimes asks about — the fix is usually a compound condition or a chain.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Evaluating an inner condition that was never reached.</strong> If the outer branch didn't run, nothing inside it did. Cross it out entirely before looking at what's inside.</li><li><strong>Mis-pairing an ELSE.</strong> In block pseudocode the braces make it unambiguous, but students still attach an ELSE to the wrong IF when tracing quickly. Match each ELSE to the IF whose closing brace immediately precedes it.</li><li><strong>Assuming equivalence after a superficial check.</strong> Testing one input isn't proof. For equivalence questions, test an input for each branch of the original.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is displayed by the following code?
+<pre class="code">x ← 5
+y ← 12
+IF (x > 3)
+{
+    IF (y &lt; 10)
+    {
+        DISPLAY("one")
+    }
+    ELSE
+    {
+        DISPLAY("two")
+    }
+}
+ELSE
+{
+    DISPLAY("three")
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> one</li><li><span class="opt-letter">B</span> two</li><li><span class="opt-letter">C</span> three</li><li><span class="opt-letter">D</span> two three</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> x > 3 is true, so the outer IF branch runs. Inside, y < 10 is false, so the inner ELSE displays "two". The outer ELSE never runs.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is equivalent to the code below?
+<pre class="code">IF (a > 0)
+{
+    IF (b > 0)
+    {
+        DISPLAY("yes")
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>IF (a > 0 OR b > 0) { DISPLAY("yes") }</code></li><li><span class="opt-letter">B</span> <code>IF (a > 0 AND b > 0) { DISPLAY("yes") }</code></li><li><span class="opt-letter">C</span> <code>IF (NOT (a > 0)) { DISPLAY("yes") }</code></li><li><span class="opt-letter">D</span> <code>IF (a > 0) { DISPLAY("yes") }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> "yes" appears only when both a > 0 and b > 0 — that's AND.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Nested conditional</dt><dd>a conditional statement placed inside the block of another conditional</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-6.html"><span class="dir">Previous</span>3.6 Conditionals</a>
+  <a class="to-right" href="3-8.html"><span class="dir">Next</span>3.8 Iteration</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

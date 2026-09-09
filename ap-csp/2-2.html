@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 Data Compression — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/2-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">BIG IDEA 2: DATA</a> &middot; TOPIC 2.2</div>
+<h1 class="article-title"><span class="title-num">2.2</span> Data Compression</h1>
+<p class="article-lede">The single most-tested distinction in this Big Idea. Compression shrinks data; the question is always whether the original can be rebuilt.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Data compression</strong> reduces the number of bits needed to store or transmit data. Fewer bits means less storage and faster transfer.</li><li><strong>Lossless compression</strong> reduces size while allowing <em>complete reconstruction</em> of the original. Used where every bit matters: text, program code, spreadsheets, and formats like PNG and ZIP. It typically achieves smaller savings.</li><li><strong>Lossy compression</strong> permanently removes some data to achieve <em>much greater</em> size reduction. The original cannot be exactly rebuilt, but the loss may be imperceptible. Used for JPEG images, MP3 audio, and streaming video.</li><li>The <strong>trade-off:</strong> lossy gives smaller files at the cost of fidelity. The right choice depends on whether exact reconstruction is required and how much quality loss is acceptable.</li><li>The amount of compression possible depends on the data: highly repetitive data compresses well losslessly (e.g., long runs of the same value); already-random data barely compresses.</li><li>Decisions about compression are made based on the purpose: archiving a legal document → lossless; sending a photo to a friend → lossy is fine.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>The text <code>AAAAAAABBBBBCCC</code> can be stored losslessly as <code>7A5B3C</code> — the original is exactly recoverable from the counts. That's the idea behind <em>run-length encoding</em>, a simple lossless technique. A photo, by contrast, might have thousands of nearly-identical blue-sky pixels; a lossy scheme averages them into fewer values, saving far more space, but the exact original pixels are gone.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If the stem says the file must be "exactly" or "perfectly" restored, or involves text/code/financial records, answer lossless. If it emphasizes minimizing size or transmission time and the data is an image, video, or audio where small quality loss is acceptable, answer lossy. Also remember: compression is about size and speed — not security.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED says the choice between lossy and lossless depends on the <em>purpose</em>: is the goal to <strong>minimize size</strong> or to <strong>preserve every detail</strong>? Questions give you a purpose and expect the matching choice.</li><li>Lossless compression exploits <strong>redundancy</strong> — patterns, repetition, predictable structure. Text has lots (common letters, repeated words), so it compresses well. Random data has none and barely compresses at all.</li><li>Lossy compression exploits <strong>perception</strong>: humans can't hear very high frequencies or see tiny color differences between adjacent pixels, so that data can be dropped without a noticeable change. The "loss" is real but designed to be invisible.</li><li>Lossy compression is <strong>irreversible</strong>. Decompressing a JPEG gives you an approximation of the original image, not the original. Compressing it again loses more. This is why editing workflows keep a lossless master.</li><li>Compression ratio and quality trade off continuously — a lossy algorithm typically has a quality setting. Higher compression = smaller file = more loss. The exam may describe this as a slider or a percentage.</li><li>Compression is about <strong>size</strong> (storage) and <strong>transmission time</strong> (bandwidth). It has nothing to do with security. Compressed data is not encrypted.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Choosing lossy for anything that must be exact.</strong> Text documents, program source code, financial records, medical scans for diagnosis, legal archives: lossless. If the stem says "exactly," "perfectly," "identical," or "no data lost," it's lossless.</li><li><strong>Assuming lossless always gives the smallest file.</strong> It's the opposite — lossy compresses far more. Lossless is the <em>safe</em> choice, not the <em>small</em> choice.</li><li><strong>Confusing compression with encryption.</strong> An option saying "compress the file so it can't be read by others" is wrong. Compression doesn't hide data.</li><li><strong>Thinking a decompressed lossy file is restored.</strong> It's not. The detail is gone permanently.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A hospital needs to store patient X-ray images so that every detail can be recovered exactly for later diagnosis, even if the files take more storage. Which compression approach is most appropriate?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Lossy compression, because it reduces file size the most</li><li><span class="opt-letter">B</span> Lossless compression, because the original image can be fully reconstructed</li><li><span class="opt-letter">C</span> No compression is possible for image data</li><li><span class="opt-letter">D</span> Encryption, because it makes the file smaller</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Exact reconstruction is required, so lossless. Encryption is about security, not size.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes a trade-off of using lossy compression for a video that will be streamed over a slow connection?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The video will be larger but higher quality.</li><li><span class="opt-letter">B</span> The video will be smaller and faster to transmit, but some detail is permanently lost.</li><li><span class="opt-letter">C</span> The video can be perfectly reconstructed, but only after transmission completes.</li><li><span class="opt-letter">D</span> The video cannot be played until decompressed by the sender.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Lossy = big size reduction (good for slow connections) at the cost of irrecoverable detail.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data compression</dt><dd>reducing the number of bits needed to represent data</dd></div><div><dt>Lossless compression</dt><dd>compression from which the original data can be completely reconstructed</dd></div><div><dt>Lossy compression</dt><dd>compression that permanently discards some data for greater size reduction</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-1.html"><span class="dir">Previous</span>2.1 Binary Numbers</a>
+  <a class="to-right" href="2-3.html"><span class="dir">Next</span>2.3 Extracting Information from Data</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

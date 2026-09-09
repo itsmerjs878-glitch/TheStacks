@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.4 Identifying and Correcting Errors — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/1-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">BIG IDEA 1: CREATIVE DEVELOPMENT</a> &middot; TOPIC 1.4</div>
+<h1 class="article-title"><span class="title-num">1.4</span> Identifying and Correcting Errors</h1>
+<p class="article-lede">The exam names four kinds of errors and expects you to classify a scenario into the right one, then know how to find and fix it.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Syntax error:</strong> the code violates the rules of the language (missing parenthesis, misspelled keyword). The program cannot run at all until it's fixed.</li><li><strong>Logic error:</strong> the code runs and finishes, but the result is wrong because the reasoning is flawed — e.g., using <code>&lt;</code> where <code>&le;</code> was intended, or an off-by-one loop bound.</li><li><strong>Run-time error:</strong> the code is syntactically valid but hits a problem while executing — dividing by zero, accessing index 0 or index beyond a list's length — and stops.</li><li><strong>Overflow error:</strong> the result of a calculation is too large for the computer to store in the fixed number of bits available for it. Related: <strong>round-off error</strong>, where real numbers can't be represented exactly.</li><li><strong>Testing</strong> means running the program with chosen inputs and comparing the actual output to the expected output. Good test cases include normal values, boundary values, and invalid or empty inputs.</li><li><strong>Debugging</strong> is the process of finding and fixing errors. Common strategies: <strong>hand-tracing</strong> (executing line by line on paper with a variable table), adding <strong>extra output statements</strong> to see intermediate values, and <strong>testing with different inputs</strong> to isolate the failing case.</li><li>Some errors can be caught before running (syntax); most logic errors are only found by testing.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">count ← 0
+FOR EACH score IN scores
+{
+    IF (score > 90)
+    {
+        count ← count + 1
+    }
+}
+DISPLAY(count)</pre>
+<p>Intended purpose: count scores of 90 or above. This runs with no error message, but a score of exactly 90 isn't counted because the condition uses <code>&gt;</code> instead of <code>&ge;</code>. That's a <strong>logic error</strong>. You'd only catch it by testing with a score of 90 — which is why boundary values belong in every test set.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Classify by symptom. Won't run at all → syntax. Runs, then crashes partway → run-time. Runs to the end with the wrong answer → logic. Result is a nonsense huge/tiny number → overflow. The exam rarely asks you to name the error type without giving you one of these symptoms.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED gives exactly four error types: <strong>syntax</strong>, <strong>logic</strong>, <strong>run-time</strong>, and <strong>overflow</strong>. Overflow is its own category — a number too large for the storage available. Some resources fold it into run-time errors; the exam lists it separately.</li><li>A subtle point: a <strong>logic error</strong> can produce correct output for some inputs and wrong output for others. That's why it's dangerous — testing with one input can miss it. Boundary values (0, negative, empty, max) are where logic errors hide.</li><li><strong>Testing</strong> has a specific shape in the CED: choose inputs, predict the expected output, run, compare. If they don't match, there's an error. The prediction step is what students skip — without it, you can't tell whether output is right.</li><li><strong>Debugging by hand-tracing</strong> means executing the code mentally or on paper with a specific input, recording variable values at each step. It's slow but reliable, and it's the method the exam's own code-analysis questions require you to use anyway.</li><li><strong>Extra output statements</strong> (temporary DISPLAY calls showing a variable's value mid-program) are a legitimate, CED-named debugging technique. Remove them when done.</li><li>Programs with syntax errors <em>cannot</em> be run, so their behavior is never "wrong output" — it's "no output." A question describing a program that ran and did something has ruled out syntax errors by definition.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Calling a crash a logic error.</strong> If the program <em>stops</em> with an error message partway, it's run-time. Logic errors run to completion. The word "terminates unexpectedly" or "crashes" means run-time.</li><li><strong>Calling a wrong answer a syntax error.</strong> Syntax errors prevent running. If the program produced a value, its syntax was fine.</li><li><strong>Testing only typical inputs.</strong> The exam's "which test case would reveal the error" questions almost always have the answer at a boundary — the empty list, the value exactly equal to the threshold, zero.</li><li><strong>Assuming a program that ran without errors is correct.</strong> No error message means no syntax or run-time error. It says nothing about logic.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A program is intended to calculate the average of a list of numbers. It runs to completion and displays a value, but the value is incorrect because the program divides by the wrong count. Which type of error is this?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Syntax error</li><li><span class="opt-letter">B</span> Logic error</li><li><span class="opt-letter">C</span> Run-time error</li><li><span class="opt-letter">D</span> Overflow error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The program runs and finishes but produces the wrong result, which is the signature of a logic error.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A program attempts to access the element at index 8 of a list that contains only 5 elements. The program stops executing and reports an error. Which type of error occurred?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Syntax error</li><li><span class="opt-letter">B</span> Logic error</li><li><span class="opt-letter">C</span> Run-time error</li><li><span class="opt-letter">D</span> Overflow error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> The code was valid, but a problem during execution (an out-of-range index) caused it to stop — a run-time error.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Which of the following is the most effective way to determine whether a program's loop produces the intended result for boundary values?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Read the code once quickly.</li><li><span class="opt-letter">B</span> Hand-trace the program with test inputs at the boundaries, recording each variable's value.</li><li><span class="opt-letter">C</span> Remove all comments from the program.</li><li><span class="opt-letter">D</span> Rename the variables.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Hand-tracing with specific test inputs is the CED's named debugging technique for exactly this situation.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Syntax error</dt><dd>a mistake in the code's structure that prevents it from running</dd></div><div><dt>Logic error</dt><dd>a mistake in the algorithm that produces incorrect output while the program still runs</dd></div><div><dt>Run-time error</dt><dd>an error that occurs during execution and stops the program</dd></div><div><dt>Overflow error</dt><dd>a result too large to be represented in the available bits</dd></div><div><dt>Round-off error</dt><dd>an error from real numbers that cannot be represented exactly in binary</dd></div><div><dt>Hand-tracing</dt><dd>stepping through code manually, tracking each variable's value</dd></div><div><dt>Debugging</dt><dd>finding and fixing errors in a program</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-3.html"><span class="dir">Previous</span>1.3 Program Design and Development</a>
+  <a class="to-right" href="unit-1.html"><span class="dir">Back to</span>Big Idea 1 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

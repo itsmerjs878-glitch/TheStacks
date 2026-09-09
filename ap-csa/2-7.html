@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.7 while Loops — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-7.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.7</div>
+<h1 class="article-title"><span class="title-num">2.7</span> while Loops</h1>
+<p class="article-lede">A while loop repeats as long as its condition is true. The exam asks how many iterations happen and what the variables hold when it stops.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>while (condition) { body }</code> — the condition is checked <em>before</em> each iteration. If it's false initially, the body runs zero times.</li><li>Something in the body must eventually make the condition false, or the loop is <strong>infinite</strong>.</li><li>Typical structure: initialize before the loop; test; body; update. Forgetting the update is the classic infinite loop.</li><li>After the loop, variables keep their final values. If a loop runs while <code>i &lt; 5</code> incrementing i, then <code>i</code> is 5 afterward.</li><li>while loops are the choice when the number of iterations isn't known in advance (reading input until a sentinel, searching until found).</li><li>An <code>if</code> inside a while with a <code>return</code> is a common way to exit a search loop early.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int n = 20;
+int count = 0;
+while (n &gt; 1)
+{
+    n = n / 2;
+    count++;
+}
+System.out.println(n + " " + count);</pre>
+<table class="trace"><tr><th>check n &gt; 1</th><th>n after</th><th>count</th></tr>
+<tr><td>20: true</td><td>10</td><td>1</td></tr>
+<tr><td>10: true</td><td>5</td><td>2</td></tr>
+<tr><td>5: true</td><td>2</td><td>3</td></tr>
+<tr><td>2: true</td><td>1</td><td>4</td></tr>
+<tr><td>1: false → exit</td><td></td><td></td></tr></table>
+<p>Output: <strong>1 4</strong>.</p>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-while"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> Always trace with a table and include a row for the final failed check — that's where students stop one iteration early or late. And check whether the condition is true at the start; "zero iterations" is a real answer choice.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A while loop has four parts, even when they aren't adjacent: <strong>initialization</strong> (before), <strong>condition</strong> (header), <strong>body</strong>, <strong>update</strong> (in the body). Identify all four before tracing. A missing update is an infinite loop.</li><li><strong>The condition is checked before every iteration</strong>, including the first. Zero iterations is a real outcome. The exam includes loops whose condition is false at the start.</li><li><strong>Iteration count vs. final value:</strong> the body runs once for each check that passes. The variable's final value is the one that made the check <em>fail</em>. If the body runs for i = 3, 7, 11, then the loop stops with i = 15 — four values, three iterations.</li><li><strong>Sentinel loops</strong> read input until a special value: <code>while (n != -1) { … n = input.nextInt(); }</code>. The sentinel isn't processed. The first read happens before the loop.</li><li><strong>Search loops</strong> often have compound conditions: <code>while (i &lt; arr.length &amp;&amp; arr[i] != target)</code>. The bounds check comes first (short-circuit). After the loop, <code>i &lt; arr.length</code> tells you whether it was found.</li><li>Modifying the condition's variable in unexpected ways — dividing, multiplying, non-uniform steps — is how the exam varies these. Trace with a table; don't assume a formula.</li><li>A <code>return</code> inside a while loop (in a method) exits the loop and the method at once. Common in "find the first…" methods.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Counting the failed check as an iteration.</strong> Body runs only when the check passes.</li><li><strong>Reporting the last-processed value as final.</strong> Final is one update past that.</li><li><strong>Missing the zero-iteration case.</strong> Check the condition against the initial values first.</li><li><strong>Assuming the update is +1.</strong> Read the body.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> How many times is "x" printed?
+<pre class="code">int k = 3;
+while (k &lt; 12)
+{
+    System.out.print("x");
+    k += 4;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 2</li><li><span class="opt-letter">B</span> 3</li><li><span class="opt-letter">C</span> 4</li><li><span class="opt-letter">D</span> 0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> k = 3 (print), 7 (print), 11 (print), 15 (stop). Three times.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is the value of <code>i</code> after the following loop?
+<pre class="code">int i = 0;
+while (i * i &lt; 50)
+{
+    i++;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 7</li><li><span class="opt-letter">B</span> 8</li><li><span class="opt-letter">C</span> 49</li><li><span class="opt-letter">D</span> 50</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 7 * 7 = 49 < 50, so i becomes 8. 8 * 8 = 64 is not < 50, so the loop stops with i = 8.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Which of the following loops runs forever?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>int x = 10; while (x &gt; 0) { x -= 3; }</code></li><li><span class="opt-letter">B</span> <code>int x = 1; while (x != 10) { x += 2; }</code></li><li><span class="opt-letter">C</span> <code>int x = 0; while (x &lt; 5) { x++; }</code></li><li><span class="opt-letter">D</span> <code>int x = 8; while (x &gt; 1) { x /= 2; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> x takes odd values 1, 3, 5, 7, 9, 11, … and never equals 10.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>while loop</dt><dd>repeats its body as long as the condition is true; condition checked first</dd></div><div><dt>Infinite loop</dt><dd>a loop whose condition never becomes false</dd></div><div><dt>Sentinel</dt><dd>a special input value that signals a loop to stop</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-6.html"><span class="dir">Previous</span>2.6 Comparing Boolean Expressions</a>
+  <a class="to-right" href="2-8.html"><span class="dir">Next</span>2.8 for Loops</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-while": {"id": "csa-while", "title": "while loop with integer division", "course": "ap-csa", "code": ["int n = 20;", "int count = 0;", "while (n > 1)", "{", "    n = n / 2;", "    count++;", "}", "System.out.println(n + \" \" + count);"], "steps": [{"line": 0, "vars": [["n", "20"]], "out": "", "note": "n starts at 20"}, {"line": 1, "vars": [["n", "20"], ["count", "0"]], "out": "", "note": "count starts at 0"}, {"line": 2, "vars": [["n", "20"], ["count", "0"]], "out": "", "note": "check n > 1: 20 > 1 is true"}, {"line": 4, "vars": [["n", "10"], ["count", "0"]], "out": "", "note": "20 / 2 = 10 (integer division)"}, {"line": 5, "vars": [["n", "10"], ["count", "1"]], "out": "", "note": "count becomes 1"}, {"line": 2, "vars": [["n", "10"], ["count", "1"]], "out": "", "note": "check n > 1: 10 > 1 is true"}, {"line": 4, "vars": [["n", "5"], ["count", "1"]], "out": "", "note": "10 / 2 = 5 (integer division)"}, {"line": 5, "vars": [["n", "5"], ["count", "2"]], "out": "", "note": "count becomes 2"}, {"line": 2, "vars": [["n", "5"], ["count", "2"]], "out": "", "note": "check n > 1: 5 > 1 is true"}, {"line": 4, "vars": [["n", "2"], ["count", "2"]], "out": "", "note": "5 / 2 = 2 (integer division)"}, {"line": 5, "vars": [["n", "2"], ["count", "3"]], "out": "", "note": "count becomes 3"}, {"line": 2, "vars": [["n", "2"], ["count", "3"]], "out": "", "note": "check n > 1: 2 > 1 is true"}, {"line": 4, "vars": [["n", "1"], ["count", "3"]], "out": "", "note": "2 / 2 = 1 (integer division)"}, {"line": 5, "vars": [["n", "1"], ["count", "4"]], "out": "", "note": "count becomes 4"}, {"line": 2, "vars": [["n", "1"], ["count", "4"]], "out": "", "note": "check n > 1: 1 > 1 is false → exit"}, {"line": 7, "vars": [["n", "1"], ["count", "4"]], "out": "1 4\n", "note": "print"}], "intro": "Integer division truncates. Count how many halvings it takes to get n to 1."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

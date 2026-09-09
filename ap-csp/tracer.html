@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code tracer — AP Computer Science Principles — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/tracer.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="course-eyebrow">AP COMPUTER SCIENCE PRINCIPLES</div>
+<h1 class="course-title">Code tracer</h1>
+<div class="course-intro"><p>Step through real exam-style code one line at a time and watch every variable change. This is the skill behind most of the multiple-choice section — every trace below was recorded by actually running the program, so what you see is exactly what happens.</p></div>
+
+<section class="block">
+  <h2>REPEAT UNTIL — sum 1 through 4</h2>
+  <div class="tracer" data-trace-id="csp-repeat-until"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<section class="block">
+  <h2>List operations — INSERT, REMOVE, APPEND</h2>
+  <div class="tracer" data-trace-id="csp-list-ops"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<section class="block">
+  <h2>Calling a procedure twice</h2>
+  <div class="tracer" data-trace-id="csp-procedure"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<section class="block">
+  <h2>Find the maximum with FOR EACH</h2>
+  <div class="tracer" data-trace-id="csp-max"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="pager">
+  <a href="index.html"><span class="dir">Back to</span>AP Computer Science Principles</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csp-repeat-until": {"id": "csp-repeat-until", "title": "REPEAT UNTIL — sum 1 through 4", "course": "ap-csp", "code": ["i ← 1", "sum ← 0", "REPEAT UNTIL (i > 4)", "{", "    sum ← sum + i", "    i ← i + 1", "}", "DISPLAY(sum)", "DISPLAY(i)"], "steps": [{"line": 0, "vars": [["i", "1"]], "out": "", "note": "i starts at 1"}, {"line": 1, "vars": [["i", "1"], ["sum", "0"]], "out": "", "note": "sum starts at 0"}, {"line": 2, "vars": [["i", "1"], ["sum", "0"]], "out": "", "note": "check: is i > 4? 1 > 4 is false → run body"}, {"line": 4, "vars": [["i", "1"], ["sum", "1"]], "out": "", "note": "sum = 0 + 1"}, {"line": 5, "vars": [["i", "2"], ["sum", "1"]], "out": "", "note": "i becomes 2"}, {"line": 2, "vars": [["i", "2"], ["sum", "1"]], "out": "", "note": "check: is i > 4? 2 > 4 is false → run body"}, {"line": 4, "vars": [["i", "2"], ["sum", "3"]], "out": "", "note": "sum = 1 + 2"}, {"line": 5, "vars": [["i", "3"], ["sum", "3"]], "out": "", "note": "i becomes 3"}, {"line": 2, "vars": [["i", "3"], ["sum", "3"]], "out": "", "note": "check: is i > 4? 3 > 4 is false → run body"}, {"line": 4, "vars": [["i", "3"], ["sum", "6"]], "out": "", "note": "sum = 3 + 3"}, {"line": 5, "vars": [["i", "4"], ["sum", "6"]], "out": "", "note": "i becomes 4"}, {"line": 2, "vars": [["i", "4"], ["sum", "6"]], "out": "", "note": "check: is i > 4? 4 > 4 is false → run body"}, {"line": 4, "vars": [["i", "4"], ["sum", "10"]], "out": "", "note": "sum = 6 + 4"}, {"line": 5, "vars": [["i", "5"], ["sum", "10"]], "out": "", "note": "i becomes 5"}, {"line": 2, "vars": [["i", "5"], ["sum", "10"]], "out": "", "note": "check: is i > 4? 5 > 4 is true → stop"}, {"line": 7, "vars": [["i", "5"], ["sum", "10"]], "out": "10 ", "note": "display sum"}, {"line": 8, "vars": [["i", "5"], ["sum", "10"]], "out": "10 5 ", "note": "display i — note it's 5, not 4"}], "intro": "The loop runs while the condition is false. Watch the final check where i = 5."},"csp-list-ops": {"id": "csp-list-ops", "title": "List operations — INSERT, REMOVE, APPEND", "course": "ap-csp", "code": ["a ← [10, 20, 30, 40]", "REMOVE(a, 2)", "APPEND(a, 50)", "INSERT(a, 1, 5)", "DISPLAY(a[3])", "DISPLAY(LENGTH(a))"], "steps": [{"line": 0, "vars": [["a", "[10, 20, 30, 40]"]], "out": "", "note": "four elements, indices 1–4"}, {"line": 1, "vars": [["a", "[10, 30, 40]"]], "out": "", "note": "remove index 2 (the 20); later elements shift left"}, {"line": 2, "vars": [["a", "[10, 30, 40, 50]"]], "out": "", "note": "append 50 to the end"}, {"line": 3, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "", "note": "insert 5 at index 1; everything shifts right"}, {"line": 4, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "30 ", "note": "a[3] is the third element"}, {"line": 5, "vars": [["a", "[5, 10, 30, 40, 50]"]], "out": "30 5 ", "note": "LENGTH is 5"}], "intro": "AP pseudocode lists are 1-indexed. Rewrite the list after every operation."},"csp-procedure": {"id": "csp-procedure", "title": "Calling a procedure twice", "course": "ap-csp", "code": ["PROCEDURE double(n)", "{", "    RETURN (n * 2)", "}", "", "a ← 3", "b ← double(a) + double(5)", "DISPLAY(b)"], "steps": [{"line": 5, "vars": [["a", "3"]], "out": "", "note": "a is 3"}, {"line": 6, "vars": [["a", "3"]], "out": "", "note": "evaluate right side: first call double(a) with n = 3"}, {"line": 2, "vars": [["a", "3"], ["n", "3"]], "out": "", "note": "inside double: n = 3, return 6"}, {"line": 6, "vars": [["a", "3"]], "out": "", "note": "double(a) = 6; now call double(5)"}, {"line": 2, "vars": [["a", "3"], ["n", "5"]], "out": "", "note": "inside double: n = 5, return 10"}, {"line": 6, "vars": [["a", "3"], ["b", "16"]], "out": "", "note": "6 + 10 = 16 stored in b"}, {"line": 7, "vars": [["a", "3"], ["b", "16"]], "out": "16 ", "note": "display 16; a is still 3"}], "intro": "Control jumps into the procedure and back. The parameter n gets a copy of each argument."},"csp-max": {"id": "csp-max", "title": "Find the maximum with FOR EACH", "course": "ap-csp", "code": ["nums ← [4, 9, 2, 7]", "biggest ← nums[1]", "FOR EACH n IN nums", "{", "    IF (n > biggest)", "    {", "        biggest ← n", "    }", "}", "DISPLAY(biggest)"], "steps": [{"line": 0, "vars": [["nums", "[4, 9, 2, 7]"]], "out": "", "note": "the list"}, {"line": 1, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"]], "out": "", "note": "start with the first element"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "4"]], "out": "", "note": "next element: n = 4"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "4"]], "out": "", "note": "is 4 > 4? no"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "9"]], "out": "", "note": "next element: n = 9"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "9"]], "out": "", "note": "is 9 > 4? yes"}, {"line": 6, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "9"]], "out": "", "note": "new biggest: 9"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "2"]], "out": "", "note": "next element: n = 2"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "2"]], "out": "", "note": "is 2 > 9? no"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "", "note": "next element: n = 7"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "", "note": "is 7 > 9? no"}, {"line": 9, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "9 ", "note": "loop done; display 9"}], "intro": "The standard max pattern. Note biggest is initialized to the first element, never to 0."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

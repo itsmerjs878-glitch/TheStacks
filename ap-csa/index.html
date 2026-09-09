@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP Computer Science A — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/index.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="course-eyebrow">AP COMPUTER SCIENCE</div>
+<h1 class="course-title">AP Computer Science A</h1>
+<div class="course-intro">
+<p>Java, from first program to recursion, organized exactly as the College Board's <em>revised</em> 2025–26 Course and Exam Description lays it out: four units, 53 numbered topics. This is the new framework — inheritance is gone, text files and data sets are in, and everything is typed into Bluebook. Each topic page has the essential knowledge, a worked code example, an exam tip, practice questions in the exam's style, and vocabulary.</p>
+</div>
+
+<section class="block">
+  <h2>The 4 units</h2>
+  <p class="block-note">Weight shown is that unit's share of the multiple-choice exam.</p>
+  <nav aria-label="units"><a class="toc-entry" href="unit-1.html">
+  <span class="toc-num">1</span>
+  <span class="toc-label">Using Objects and Methods</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">15–25%</span>
+</a><a class="toc-entry" href="unit-2.html">
+  <span class="toc-num">2</span>
+  <span class="toc-label">Selection and Iteration</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">25–35%</span>
+</a><a class="toc-entry" href="unit-3.html">
+  <span class="toc-num">3</span>
+  <span class="toc-label">Class Creation</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">10–18%</span>
+</a><a class="toc-entry" href="unit-4.html">
+  <span class="toc-num">4</span>
+  <span class="toc-label">Data Collections</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">30–40%</span>
+</a></nav>
+</section>
+
+
+<section class="block">
+  <h2>How the exam works</h2>
+  <ul class="points">
+    <li><strong>Section I — Multiple choice.</strong> 42 questions, 90 minutes, 50% of your score. Heavy on code reading: predict output, count iterations, find the bug, pick the equivalent code.</li>
+    <li><strong>Section II — Free response.</strong> 4 questions, 90 minutes, 50% of your score. The four types are fixed every year: <strong>Q1 Methods and Control Structures</strong>, <strong>Q2 Class Design</strong> (write an entire class), <strong>Q3 Data Analysis with ArrayList</strong>, <strong>Q4 2D Array</strong>. Each is scored on a 9-point rubric.</li>
+    <li>The exam is <strong>fully digital</strong> in the Bluebook app — you type Java directly. No paper, no handwritten code.</li>
+    <li>A <strong>Java Quick Reference</strong> is provided with the exact String, Math, ArrayList, Integer, Double, and Object methods you can use. If a method isn't on it, don't assume it exists on the exam.</li>
+    <li>No penalty for guessing on multiple choice. On FRQs, partial credit is real — a correct loop with a wrong condition still earns points, and a blank earns nothing.</li>
+  </ul>
+</section>
+
+
+<section class="block">
+  <h2>What separates a 5 from a 3</h2>
+  <ul class="points">
+    <li><strong>Trace with a table, every time.</strong> Variables, loop counters, array contents after each pass. Most multiple-choice misses are tracing slips, not knowledge gaps.</li>
+    <li><strong>Know the three String traps cold:</strong> <code>substring</code>'s end index is exclusive, <code>==</code> compares references not contents (use <code>.equals</code>), and <code>compareTo</code> returns an int, not a boolean.</li>
+    <li><strong>Write FRQs in a fixed shape.</strong> Method header exactly as given → declare a result variable → loop → conditional → update → return. Practice until it's automatic; rubric points reward each piece independently.</li>
+    <li><strong>Off-by-one is the whole game in Unit 4.</strong> Arrays start at 0 and end at <code>length - 1</code>. Removing from an ArrayList inside a forward loop skips elements. Row-major vs. column-major traversal of a 2D array changes the output order.</li>
+    <li><strong>Unit 4 is 30–40% of the exam.</strong> Arrays, ArrayLists, 2D arrays, and the two algorithms (search, sort) plus recursion tracing. Study time should reflect that.</li>
+  </ul>
+</section>
+
+
+<section class="block">
+  <h2>Practice tracing</h2>
+  <p class="block-note">Interactive, step-by-step walkthroughs of the loops, lists, and recursion the exam asks you to trace by hand.</p>
+  <a class="toc-entry" href="tracer.html"><span class="toc-num">&#9654;</span><span class="toc-label">Code tracer</span><span class="toc-leader"></span><span class="toc-page">interactive</span></a>
+</section>
+
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

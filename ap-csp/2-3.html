@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 Extracting Information from Data — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/2-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">BIG IDEA 2: DATA</a> &middot; TOPIC 2.3</div>
+<h1 class="article-title"><span class="title-num">2.3</span> Extracting Information from Data</h1>
+<p class="article-lede">Raw data isn't knowledge. This topic is about the steps between a pile of records and an actual conclusion — and the traps along the way.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Information</strong> is the collection of facts and patterns extracted from data. Data becomes information when it's processed, organized, and interpreted.</li><li>Programs make it possible to find patterns in datasets far too large for a person to read — this is why computing transformed fields from medicine to sports.</li><li><strong>Metadata</strong> is data about data: a photo's timestamp and location, a file's author, an email's routing headers. Metadata can be used to organize, search, and filter data, and changing or deleting it does not change the underlying data.</li><li>Common operations for extracting information: <strong>filtering</strong> (keeping records that meet a condition), <strong>sorting</strong>, <strong>searching</strong>, <strong>aggregating</strong> (sum, average, count), and <strong>visualizing</strong> (charts, graphs) to make patterns visible.</li><li>Combining data from <strong>multiple sources</strong> can reveal relationships not visible in any single source.</li><li><strong>Correlation is not causation.</strong> Two things trending together doesn't mean one causes the other. The exam tests this directly.</li><li>Data can be <strong>incomplete, invalid, or biased</strong> — from how it was collected, who was included, or how it was cleaned. Conclusions inherit those flaws.</li><li>The <strong>scale</strong> of data matters: large datasets may need distributed or parallel processing, and challenges include storage size, transfer time, and cleaning.</li><li><strong>Privacy concerns</strong> arise because metadata and combined datasets can identify or track people even when no single record seems sensitive.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A school's attendance system stores 40,000 rows: student ID, date, period, present/absent. That's <em>data</em>. A program filters to first period, groups by day of week, and computes the absence rate — revealing Mondays have 30% more absences. That's <em>information</em>. If someone then claims "Monday <em>causes</em> absences," that's the correlation/causation trap; a sports schedule or bus route could be the real driver. The row's timestamp and the ID of the device that recorded it are <em>metadata</em>.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When a question presents a dataset and a conclusion, ask: does the data actually support that, or could something else explain it? Options that claim causation from a correlation are wrong. Options that say more data or a controlled comparison is needed are usually right.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED separates <strong>data</strong> (raw facts) from <strong>information</strong> (what you learn from analyzing data) and <strong>knowledge</strong> (what you can do with that information). A list of temperatures is data. "Average temperature rose 2° over ten years" is information. "We should plan for more cooling demand" is knowledge.</li><li><strong>Metadata</strong> has a precise role in the CED: it helps <em>find, organize, and manage</em> data. A photo library sorted by date uses metadata; searching email by sender uses metadata. Changing metadata (renaming a file) doesn't change the data (the file's contents).</li><li>Metadata is also a <strong>privacy vector</strong>. A photo's GPS metadata reveals where you were. An email's header metadata reveals who you talk to and when, even if the message is encrypted. This is why "harmless" metadata can matter.</li><li><strong>Scalability</strong> of data processing: as datasets grow to millions or billions of records, single computers can't hold or process them in reasonable time. This is where parallel and distributed computing (Big Idea 4) enters — the two Big Ideas connect here.</li><li><strong>Incomplete or invalid data</strong> can come from collection errors, sensor failures, people skipping survey questions, or data corruption. The exam's point: conclusions drawn from flawed data are flawed, no matter how good the analysis.</li><li>Data can be <strong>biased at collection</strong> (who was surveyed), <strong>at cleaning</strong> (which records were removed), and <strong>at visualization</strong> (a chart with a truncated axis exaggerates differences). Each stage is a place bias can enter.</li><li>Combining datasets can reveal patterns, but it can also <strong>de-anonymize</strong> people: individually harmless datasets, when joined, can identify individuals. This is a real privacy concern the CED expects you to recognize.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Accepting causation from correlation.</strong> The most common wrong answer in this topic. If two things trend together, the correct options say "correlated" or "a third factor may explain it." Options saying "X causes Y" are wrong unless the question describes a controlled experiment.</li><li><strong>Thinking metadata is part of the data.</strong> The date a document was created isn't in the document's text. The exam treats them as separate.</li><li><strong>Assuming more data fixes bias.</strong> If the collection method is biased, more data from the same method is more biased data. The fix is a better method, not more volume.</li><li><strong>Reading a chart without checking the axes.</strong> Truncated or uneven axes are a named form of misleading visualization. If a question shows a chart, look at the scale before drawing conclusions.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A study finds that cities with more ice cream shops also have higher rates of sunburn. Which of the following is the most reasonable conclusion?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Ice cream shops cause sunburn.</li><li><span class="opt-letter">B</span> Sunburn causes people to open ice cream shops.</li><li><span class="opt-letter">C</span> There is a correlation, likely explained by a third factor such as warm, sunny weather.</li><li><span class="opt-letter">D</span> The data must be incorrect.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> This is the classic correlation-not-causation setup. A shared cause (weather) explains both.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A photograph file contains information about the date it was taken, the camera model, and the GPS location. Which of the following best describes this information?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Lossy compression</li><li><span class="opt-letter">B</span> Metadata</li><li><span class="opt-letter">C</span> An algorithm</li><li><span class="opt-letter">D</span> A run-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Data describing the photo, rather than the photo's pixels themselves, is metadata.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Which of the following best explains how a program can help extract information from a dataset of millions of customer purchases?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The program can filter, sort, and aggregate the records to reveal patterns too large for a person to find by hand.</li><li><span class="opt-letter">B</span> The program guarantees the data contains no bias.</li><li><span class="opt-letter">C</span> The program converts the data into a smaller file so it can be read manually.</li><li><span class="opt-letter">D</span> The program removes the need for data cleaning.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Filtering, sorting, and aggregating at scale is exactly what programs add. They do not remove bias or the need to clean data.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Information</dt><dd>facts and patterns extracted from data through processing and interpretation</dd></div><div><dt>Metadata</dt><dd>data that describes other data, such as a file's creation date or location</dd></div><div><dt>Correlation</dt><dd>two variables tending to change together, which does not by itself prove one causes the other</dd></div><div><dt>Filtering</dt><dd>selecting only the records that meet a condition</dd></div><div><dt>Cleaning data</dt><dd>fixing or removing incomplete, invalid, or inconsistent records</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-2.html"><span class="dir">Previous</span>2.2 Data Compression</a>
+  <a class="to-right" href="2-4.html"><span class="dir">Next</span>2.4 Using Programs with Data</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

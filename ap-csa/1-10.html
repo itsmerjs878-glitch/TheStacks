@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.10 Calling Class Methods — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-10.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.10</div>
+<h1 class="article-title"><span class="title-num">1.10</span> Calling Class Methods</h1>
+<p class="article-lede">Class (static) methods belong to the class, not to an object. You call them with the class name, and the call transfers control until the method returns.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>class method</strong> (or static method) is declared with <code>static</code> and called using the class name: <code>Math.abs(-3)</code>, <code>Integer.parseInt("42")</code>.</li><li>Inside the same class, a static method can be called by name alone: <code>helper(5)</code>.</li><li>A method call <strong>transfers control</strong> to the method. When it hits a <code>return</code> statement (or the end of a void method), control comes back to the line after the call.</li><li>If the method returns a value, the call expression <em>is</em> that value: <code>int m = Math.max(3, 9);</code> stores 9.</li><li>A void method's call is a statement by itself. Using it in an expression is a compile error.</li><li>Arguments are evaluated before the call; the parameter receives a <strong>copy</strong> of each argument's value.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Calc
+{
+    public static int square(int n)
+    {
+        return n * n;
+    }
+    public static void main(String[] args)
+    {
+        int r = square(4) + Calc.square(2);   // 16 + 4
+        System.out.println(r);                // 20
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Trace method calls by writing down the line you're returning to, evaluating the method with the argument values, then substituting the return value back. Multiple calls on one line are evaluated left to right.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A call to a static method: <code>ClassName.methodName(args)</code>. Inside the same class, the <code>ClassName.</code> prefix is optional. Both are common on the exam.</li><li><strong>Control transfer:</strong> the call suspends the current method, runs the called method to its return, then resumes. If the called method itself calls another, that nests. A trace must track a stack of "where to return to."</li><li><strong>Return substitution:</strong> the entire call expression is replaced by the returned value. <code>3 + max(4, 9) * 2</code> → <code>3 + 9 * 2</code> → 21. Evaluate the call when you reach it in normal left-to-right, precedence-respecting order.</li><li><strong>Parameters get copies.</strong> For primitives, the copy is the value; the caller's variable is untouched by anything the method does. For objects (1.13, 3.6) the copy is the reference.</li><li>A method with <code>void</code> return type is called as a statement. It can still have effects — printing, modifying an object — but produces no value.</li><li><strong>Early return:</strong> a <code>return</code> inside an if ends the method immediately. Code after it (on that path) doesn't run. A method can have several returns; exactly one executes per call.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Continuing to trace after a return.</strong> Once return executes, you're back in the caller. Stop reading the method.</li><li><strong>Losing the return point.</strong> Write it down before jumping into the method.</li><li><strong>Expecting a primitive argument to change.</strong> <code>increment(x)</code> doesn't change x. Only the returned value matters.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the following method.
+<pre class="code">public static int mystery(int a, int b)
+{
+    if (a &gt; b)
+    {
+        return a - b;
+    }
+    return b - a;
+}</pre>What is printed by <code>System.out.println(mystery(3, 8) + mystery(10, 4));</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> -1</li><li><span class="opt-letter">B</span> 11</li><li><span class="opt-letter">C</span> 1</li><li><span class="opt-letter">D</span> 17</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> mystery(3, 8) → 8 - 3 = 5. mystery(10, 4) → 10 - 4 = 6. 5 + 6 = 11.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following correctly calls a static method <code>display</code> in class <code>Printer</code> that takes one String parameter and returns nothing?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>String s = Printer.display("hi");</code></li><li><span class="opt-letter">B</span> <code>Printer.display("hi");</code></li><li><span class="opt-letter">C</span> <code>Printer p = new Printer(); display("hi");</code></li><li><span class="opt-letter">D</span> <code>display.Printer("hi");</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Static methods are called with ClassName.method(). A void method can't be assigned to a variable.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Class method / static method</dt><dd>a method that belongs to the class and is called with the class name</dd></div><div><dt>Return statement</dt><dd>ends the method and sends a value back to the caller</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-9.html"><span class="dir">Previous</span>1.9 Method Signatures</a>
+  <a class="to-right" href="1-11.html"><span class="dir">Next</span>1.11 Math Class</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

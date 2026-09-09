@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.1 Binary Numbers — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/2-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">BIG IDEA 2: DATA</a> &middot; TOPIC 2.1</div>
+<h1 class="article-title"><span class="title-num">2.1</span> Binary Numbers</h1>
+<p class="article-lede">All data on a computer is stored as sequences of bits. You need to convert between binary and decimal fluently and understand how the number of bits limits what can be represented.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>bit</strong> is a single binary digit: 0 or 1. A <strong>byte</strong> is 8 bits.</li><li>Binary is <strong>base 2</strong>: each place value is a power of 2 (from the right: 1, 2, 4, 8, 16, 32, 64, 128 …). Decimal is <strong>base 10</strong>, with place values that are powers of 10.</li><li><strong>Binary → decimal:</strong> add the place values where there's a 1. <code>1101</code> = 8 + 4 + 0 + 1 = 13.</li><li><strong>Decimal → binary:</strong> repeatedly subtract the largest power of 2 that fits. 22 → 16 (leaves 6) → 4 (leaves 2) → 2 (leaves 0), so 22 = <code>10110</code>.</li><li><em>n</em> bits can represent <strong>2<sup>n</sup></strong> distinct values. 8 bits → 256 values (0–255). Adding one bit <em>doubles</em> the number of possible values.</li><li>Numbers, text, images, and sound are all stored as binary once encoded. Text uses a scheme that maps each character to a number (ASCII, Unicode); an image maps each pixel to numbers for its color; audio is <strong>sampled</strong> at regular intervals and each sample stored as a number.</li><li>A <strong>fixed number of bits</strong> for a value means a maximum representable size — the source of overflow errors. Some languages use a fixed size; others (and AP pseudocode) treat integers as arbitrary-size, so overflow is a real-world issue rather than a pseudocode one.</li><li>Real numbers are stored with limited precision, so calculations can produce small <strong>round-off errors</strong>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p><strong>Convert <code>10011</code> to decimal.</strong> Place values from the right: 1, 2, 4, 8, 16. Ones are in the 16, 2, and 1 places → 16 + 2 + 1 = <strong>19</strong>.</p>
+<p><strong>Convert 45 to binary.</strong> 32 fits (13 left) → 8 fits (5 left) → 4 fits (1 left) → 1 fits (0 left). Bits set: 32, 8, 4, 1 → <code>101101</code>. Check: 32 + 8 + 4 + 1 = 45.</p>
+<p><strong>How many colors can 3 bits represent?</strong> 2<sup>3</sup> = 8. With 4 bits, 16. Each added bit doubles the count.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Write the place values above the bits (…32 16 8 4 2 1) before converting — it removes almost every arithmetic slip. For "how many values" questions, the answer is always a power of 2 equal to 2 raised to the number of bits, not the number of bits itself.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED asks you to understand <strong>place value</strong> in both bases, not just memorize conversions. In decimal, 352 = 3×100 + 5×10 + 2×1. In binary, 101 = 1×4 + 0×2 + 1×1. Same idea, different base.</li><li><strong>Analog vs. digital:</strong> analog data (sound waves, temperature) is continuous. Digital data is discrete. Converting analog to digital means <strong>sampling</strong> — measuring at regular intervals — and each sample is stored as a number. More samples per second and more bits per sample = higher fidelity and larger file.</li><li><strong>Bit width limits</strong> matter in real languages. An 8-bit unsigned integer holds 0–255; add 1 to 255 and it wraps to 0 (overflow). A 32-bit signed integer maxes at about 2.1 billion. AP pseudocode ignores this, but the concept is tested.</li><li><strong>Round-off error</strong> comes from real numbers: 1/3 can't be stored exactly in any finite number of bits, in any base. So 0.1 + 0.2 might not exactly equal 0.3 in a computer. This is why financial software often works in cents (integers) rather than dollars (decimals).</li><li>Converting binary to decimal quickly: write the place values above the digits from the right (1, 2, 4, 8, 16, 32, 64, 128). Converting decimal to binary: subtract the largest power of 2 that fits, repeat. Or divide by 2 repeatedly and read the remainders bottom-up.</li><li>The number of bits needed to represent N distinct values is the smallest n with 2<sup>n</sup> ≥ N. 100 values need 7 bits (2<sup>7</sup> = 128). 1,000 values need 10 bits.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Off-by-one on place values.</strong> The rightmost bit is worth 1, not 2. Students who start at 2 get every conversion wrong by a factor.</li><li><strong>Answering with the number of bits instead of the number of values.</strong> "How many values can 5 bits represent?" is 32, not 5. "How many bits to represent 32 values?" is 5.</li><li><strong>Thinking adding a bit adds a fixed number of values.</strong> It <em>doubles</em> them. 3 bits → 8, 4 bits → 16, 5 bits → 32.</li><li><strong>Confusing sampling rate with bit depth.</strong> Rate = how often you measure; depth = how many bits each measurement gets. Both affect quality and size, in different ways.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is the decimal value of the binary number 101110?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 42</li><li><span class="opt-letter">B</span> 44</li><li><span class="opt-letter">C</span> 46</li><li><span class="opt-letter">D</span> 48</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Place values 32, 16, 8, 4, 2, 1 with bits 1,0,1,1,1,0 → 32 + 8 + 4 + 2 = 46.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A game stores each player's level using 4 bits. The developers want to allow more than 16 levels. What is the minimum number of bits needed to represent 20 distinct levels?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 4</li><li><span class="opt-letter">B</span> 5</li><li><span class="opt-letter">C</span> 10</li><li><span class="opt-letter">D</span> 20</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 4 bits gives 2⁴ = 16 values, not enough. 5 bits gives 2⁵ = 32 values, which covers 20. The answer is the smallest n with 2ⁿ ≥ 20.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Which of the following is a true statement about how computers represent data?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Only numbers can be stored as binary; text and images require a different representation.</li><li><span class="opt-letter">B</span> Each additional bit used to store a value halves the number of possible values.</li><li><span class="opt-letter">C</span> Text, images, and sound are all represented as binary sequences after being encoded as numbers.</li><li><span class="opt-letter">D</span> A byte can represent 8 different values.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> All data types are ultimately binary. Adding a bit doubles (not halves) values, and a byte represents 256 values, not 8.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Bit</dt><dd>a single binary digit, 0 or 1</dd></div><div><dt>Byte</dt><dd>8 bits</dd></div><div><dt>Binary (base 2)</dt><dd>a number system with two digits, where each place is a power of 2</dd></div><div><dt>Decimal (base 10)</dt><dd>the everyday number system, where each place is a power of 10</dd></div><div><dt>Overflow error</dt><dd>a value exceeds what its fixed number of bits can hold</dd></div><div><dt>Sampling</dt><dd>measuring an analog signal, like sound, at regular intervals to store it digitally</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-2.html"><span class="dir">Up</span>Big Idea 2 overview</a>
+  <a class="to-right" href="2-2.html"><span class="dir">Next</span>2.2 Data Compression</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

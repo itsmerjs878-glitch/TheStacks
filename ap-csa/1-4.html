@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.4 Assignment Statements and Input — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.4</div>
+<h1 class="article-title"><span class="title-num">1.4</span> Assignment Statements and Input</h1>
+<p class="article-lede">Assignment stores a value; the revised course also expects you to know how a program reads input, using the Scanner class methods on the reference sheet.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>=</code> is <strong>assignment</strong>: evaluate the right side, store it in the variable on the left. It is <em>not</em> equality (that's <code>==</code>).</li><li>The right side is evaluated using the variable's <em>current</em> value, so <code>x = x + 1</code> increments. The expression must produce a value compatible with the variable's type.</li><li>Assigning one primitive variable to another <strong>copies the value</strong>. Assigning one reference variable to another copies the <strong>reference</strong> — both then point to the same object.</li><li><strong>Input</strong> comes from <code>Scanner</code>. Create one with <code>Scanner input = new Scanner(System.in);</code> then read with <code>nextInt()</code>, <code>nextDouble()</code>, <code>nextLine()</code>, or <code>next()</code> (one word).</li><li><code>hasNext()</code>, <code>hasNextInt()</code>, <code>hasNextLine()</code> return whether more input is available — used to loop over input of unknown length.</li><li><strong>The nextInt/nextLine trap:</strong> <code>nextInt()</code> leaves the newline in the buffer, so a following <code>nextLine()</code> returns an empty string. The fix is an extra <code>nextLine()</code> to consume it.</li><li>Swapping two variables requires a temporary: <code>int temp = a; a = b; b = temp;</code></li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">Scanner in = new Scanner(System.in);
+System.out.print("Age: ");
+int age = in.nextInt();
+in.nextLine();                 // consume leftover newline
+System.out.print("Name: ");
+String name = in.nextLine();
+System.out.println(name + " is " + age);</pre>
+<p>Without line 4, if the user types <code>17</code> and Enter, <code>name</code> becomes the empty string because <code>nextLine()</code> reads the leftover newline. This exact trap is the reason Scanner questions exist.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions about Scanner are usually "which method reads a whole line vs. one token" (<code>nextLine</code> vs <code>next</code>) or the nextInt-then-nextLine trap. Also remember: <code>=</code> assigns; a question with <code>if (x = 5)</code> is a compile error because an int isn't a boolean.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Assignment is right-to-left.</strong> Evaluate the entire right side using current values; then store in the left variable. <code>x = x + 1</code> is not an equation; it's "compute x + 1, then overwrite x."</li><li><strong>Copying primitives copies values.</strong> After <code>int b = a;</code>, a and b are independent. <strong>Copying references copies addresses.</strong> After <code>Dog b = a;</code>, both point at one Dog. (Full treatment in 1.13.)</li><li><strong>Scanner reads tokens or lines.</strong> <code>next()</code> reads one whitespace-delimited token. <code>nextLine()</code> reads to the end of the line, including spaces. <code>nextInt()</code> / <code>nextDouble()</code> read one token and convert it — and throw <code>InputMismatchException</code> if it isn't a number.</li><li><strong>The buffer trap in detail:</strong> the user types <code>42⏎</code>. <code>nextInt()</code> consumes <code>42</code> and leaves <code>⏎</code>. The next <code>nextLine()</code> reads up to that <code>⏎</code> — an empty String — and consumes it. Only the <em>following</em> <code>nextLine()</code> gets the actual next line. Fix: call <code>nextLine()</code> once after <code>nextInt()</code> to discard the leftover.</li><li><strong>hasNext family:</strong> <code>hasNext()</code>, <code>hasNextInt()</code>, <code>hasNextDouble()</code>, <code>hasNextLine()</code> return booleans and don't consume anything. They're how you loop over input of unknown length — and they're the same methods used for files in 4.6.</li><li><code>Scanner</code> is in <code>java.util</code> — needs an import. Creating one: <code>new Scanner(System.in)</code> for keyboard.</li><li>A <strong>swap</strong> needs a temporary variable. The three-line pattern is worth memorizing because it appears inside sorting algorithms in Unit 4.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Using <code>==</code> for assignment or <code>=</code> for comparison.</strong> <code>if (x = 5)</code> won't compile (int isn't boolean). <code>x == 5;</code> compiles but does nothing.</li><li><strong>Forgetting the buffer clear after nextInt.</strong> The next nextLine() gets an empty string. This is the single most common Scanner bug and it's tested.</li><li><strong>Using next() when you need a whole line.</strong> <code>next()</code> stops at the first space. "Ram Singh" becomes "Ram".</li><li><strong>Two-line swap.</strong> <code>a = b; b = a;</code> leaves both equal to b's original value.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> After the following code runs, what are the values of <code>a</code> and <code>b</code>?
+<pre class="code">int a = 3;
+int b = 7;
+a = b;
+b = a;</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> a = 3, b = 7</li><li><span class="opt-letter">B</span> a = 7, b = 3</li><li><span class="opt-letter">C</span> a = 7, b = 7</li><li><span class="opt-letter">D</span> a = 3, b = 3</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> a becomes 7, then b is assigned a's new value, 7. No swap happened — a temp variable was needed.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A program reads an integer with <code>nextInt()</code> and then immediately calls <code>nextLine()</code> to read the user's name. The name is stored as an empty string. Which of the following best explains why?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>nextLine()</code> cannot read Strings.</li><li><span class="opt-letter">B</span> <code>nextInt()</code> does not consume the newline after the number, so <code>nextLine()</code> reads that leftover newline.</li><li><span class="opt-letter">C</span> The Scanner must be recreated between reads.</li><li><span class="opt-letter">D</span> <code>nextInt()</code> reads the entire line including the name.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> This is the standard Scanner buffer behavior. An extra nextLine() call fixes it.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Assignment (=)</dt><dd>stores the value of the right-side expression in the left-side variable</dd></div><div><dt>Scanner</dt><dd>a class for reading input from the keyboard or a file</dd></div><div><dt>nextLine()</dt><dd>reads an entire line of input as a String</dd></div><div><dt>nextInt()</dt><dd>reads the next integer token, leaving the newline in the buffer</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-3.html"><span class="dir">Previous</span>1.3 Expressions and Output</a>
+  <a class="to-right" href="1-5.html"><span class="dir">Next</span>1.5 Casting and Range of Variables</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

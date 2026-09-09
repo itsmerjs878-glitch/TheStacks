@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.18 Undecidable Problems — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-18.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.18</div>
+<h1 class="article-title"><span class="title-num">3.18</span> Undecidable Problems</h1>
+<p class="article-lede">Some problems can't be solved by any algorithm — not slow, not hard, impossible. The exam expects you to know the distinction and the famous example.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>decidable problem</strong> is one for which an algorithm exists that gives a correct yes/no answer for <em>every</em> possible input. "Is this number even?" is decidable.</li><li>An <strong>undecidable problem</strong> is one for which no such algorithm can exist. It's not that we haven't found one — it has been proven that none can exist.</li><li>Undecidable ≠ unreasonable time. An unreasonable-time problem <em>has</em> an algorithm, just a slow one. An undecidable problem has no algorithm that works for all inputs.</li><li>The classic example is the <strong>halting problem</strong>: no general algorithm can determine, for every possible program and input, whether that program will eventually stop or run forever.</li><li>An algorithm may solve <em>some instances</em> of an undecidable problem (you can tell that <code>DISPLAY("hi")</code> halts), but no single algorithm solves all instances.</li><li>This is a theoretical limit of computing — a boundary that faster hardware or cleverer programming cannot move.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Someone claims to have written <code>willHalt(program, input)</code> that returns true if the program stops and false if it loops forever. Sure, it works on simple cases. But it can be shown that any such procedure must fail on at least one input — a program constructed to do the opposite of whatever <code>willHalt</code> predicts about it. That contradiction is why the halting problem is undecidable. The takeaway for the exam is just the conclusion: no general solution exists.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Three categories, don't mix them: (1) reasonable time — has a fast algorithm; (2) unreasonable time — has an algorithm, but too slow, so use a heuristic; (3) undecidable — no algorithm can exist for all cases. If the stem says "no algorithm can ever" or mentions determining whether an arbitrary program halts, it's undecidable.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A <strong>decidable</strong> problem is one where an algorithm can be written that gives a correct yes/no answer for <em>every possible input</em>. An <strong>undecidable</strong> problem is one where no such algorithm can exist — this has been mathematically proven, not just not-yet-found.</li><li>The <strong>halting problem</strong>: given any program and any input, will the program eventually stop? Alan Turing proved in 1936 that no algorithm can answer this for all programs. The proof constructs a program that does the opposite of whatever the supposed halting-detector predicts about it, creating a contradiction.</li><li>Undecidability is <strong>not about difficulty or time</strong>. An unreasonable-time problem has an algorithm that's too slow. An undecidable problem has no algorithm at all, regardless of time. They're separate categories on the exam.</li><li>An undecidable problem can still be <strong>solved for specific instances</strong>. You can tell that <code>DISPLAY("hi")</code> halts and <code>REPEAT UNTIL (false)</code> doesn't. What's impossible is one algorithm that works for <em>every</em> program.</li><li>Real consequences: no tool can perfectly detect all infinite loops, all bugs, or all malware — because each of those reduces to the halting problem. Tools use heuristics and catch most cases; the impossible part is catching all.</li><li>This is one of the few places the CED touches theoretical computer science. The exam expects you to know: some problems are provably unsolvable by computers, the halting problem is the example, and this is a fundamental limit rather than a current-technology limit.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Saying an undecidable problem "hasn't been solved yet."</strong> It's been proven unsolvable. "Yet" is wrong.</li><li><strong>Suggesting a faster computer or heuristic.</strong> Those address unreasonable time, not undecidability. No algorithm exists to speed up.</li><li><strong>Thinking undecidable means no instance can be solved.</strong> Specific cases often can. The claim is about a general algorithm for all cases.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following best describes an undecidable problem?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A problem that can be solved, but only in unreasonable time</li><li><span class="opt-letter">B</span> A problem for which no algorithm can be constructed that always gives a correct yes/no answer for every input</li><li><span class="opt-letter">C</span> A problem that requires a heuristic</li><li><span class="opt-letter">D</span> A problem that has not yet been solved but eventually will be</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Undecidable means provably no general algorithm exists — not slow, not unsolved-so-far.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A programmer says, "I can write a program that, given any other program and its input, will always correctly determine whether that program eventually stops." Which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> This is possible with a sufficiently fast computer.</li><li><span class="opt-letter">B</span> This is possible using binary search.</li><li><span class="opt-letter">C</span> This is impossible; determining whether an arbitrary program halts is an undecidable problem.</li><li><span class="opt-letter">D</span> This is possible but would take unreasonable time.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> This is the halting problem. No algorithm solves it for all programs, regardless of speed.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Decidable problem</dt><dd>a problem for which an algorithm exists that correctly answers every input</dd></div><div><dt>Undecidable problem</dt><dd>a problem for which no algorithm can correctly answer every input</dd></div><div><dt>Halting problem</dt><dd>the undecidable problem of determining whether an arbitrary program will stop or run forever</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-17.html"><span class="dir">Previous</span>3.17 Algorithmic Efficiency</a>
+  <a class="to-right" href="unit-3.html"><span class="dir">Back to</span>Big Idea 3 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

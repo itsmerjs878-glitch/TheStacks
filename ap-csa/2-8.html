@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.8 for Loops — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-8.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.8</div>
+<h1 class="article-title"><span class="title-num">2.8</span> for Loops</h1>
+<p class="article-lede">The for loop packages initialization, condition, and update into one header. It's equivalent to a while loop, and the exam expects you to convert between them.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>for (init; condition; update) { body }</code>. Execution: init once → check condition → body → update → check condition → … until the condition is false.</li><li>A variable declared in the init (<code>int i = 0</code>) exists <strong>only inside the loop</strong>. Using it after the loop is a compile error.</li><li><code>for (int i = 0; i &lt; n; i++)</code> runs exactly n times, i = 0 through n−1. <code>i &lt;= n</code> runs n + 1 times.</li><li>Number of iterations for <code>i = a; i &lt; b; i++</code> is b − a (if b &gt; a). For <code>i &lt;= b</code>, it's b − a + 1.</li><li>The update can be anything: <code>i += 2</code>, <code>i--</code>, <code>i *= 2</code>. Counting down: <code>for (int i = 10; i &gt; 0; i--)</code>.</li><li>Any for loop can be rewritten as a while loop by moving the init above and the update to the end of the body. The difference: scope of the loop variable.</li><li>Modifying the loop variable inside the body is legal but confusing and a source of trick questions.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">for (int i = 2; i &lt;= 10; i += 3)
+{
+    System.out.print(i + " ");
+}
+// prints: 2 5 8
+// i would be 11 after, but i doesn't exist outside the loop
+
+// equivalent while loop:
+int i = 2;
+while (i &lt;= 10)
+{
+    System.out.print(i + " ");
+    i += 3;
+}
+System.out.println(i);   // 11 — i is in scope here</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Count iterations by listing the loop variable's values: start, add the step until the condition fails. Don't compute a formula unless the step is 1. And remember: <code>&lt;</code> vs <code>&lt;=</code> is one full extra iteration.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>Execution order of <code>for (init; cond; update)</code>: init once → cond → body → update → cond → body → update → … → cond false → exit. The update runs <em>after</em> the body, <em>before</em> the next check.</li><li><strong>Loop variable scope:</strong> a variable declared in the init exists only inside the loop. After the loop it's gone — using it is a compile error. To use it after, declare it before the loop and initialize in the init: <code>int i; for (i = 0; …)</code>.</li><li><strong>Iteration counts:</strong> <code>i = a; i &lt; b</code> → b − a iterations. <code>i = a; i &lt;= b</code> → b − a + 1. With step s: ⌈(b − a) / s⌉ for <code>&lt;</code>. When in doubt, list the values.</li><li><strong>Counting down:</strong> <code>for (int i = n; i &gt;= 0; i--)</code> runs n + 1 times (n down to 0). <code>i &gt; 0</code> runs n times (n down to 1). The exam tests the boundary.</li><li><strong>Multiplicative steps:</strong> <code>for (int i = 1; i &lt; 100; i *= 2)</code> → 1, 2, 4, 8, 16, 32, 64: seven iterations. No formula; list them.</li><li><strong>for ↔ while conversion:</strong> <code>for (A; B; C) { D }</code> ≡ <code>A; while (B) { D; C }</code>. The only difference is the loop variable's scope. Equivalence questions between the two forms hinge on the placement of C (must be at the <em>end</em> of the body) and on scope.</li><li>Modifying the loop variable inside the body is legal and confusing. If the body does <code>i += 2</code> and the header does <code>i++</code>, i increases by 3 per iteration.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>&lt; vs &lt;= off-by-one.</strong> One full extra iteration. Count the endpoints.</li><li><strong>Using the loop variable after the loop.</strong> Out of scope if declared in the header.</li><li><strong>Converting for to while with the update at the top of the body.</strong> It goes at the bottom, or the first iteration sees the wrong value.</li><li><strong>Applying a formula to a non-unit step.</strong> List the values instead.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">for (int i = 10; i &gt; 0; i -= 4)
+{
+    System.out.print(i + " ");
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 10 6 2</li><li><span class="opt-letter">B</span> 10 6 2 -2</li><li><span class="opt-letter">C</span> 10 6</li><li><span class="opt-letter">D</span> 6 2</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> 10 (print), 6 (print), 2 (print), -2 fails i > 0.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> How many times does the body of <code>for (int j = 3; j &lt;= 15; j++)</code> execute?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 12</li><li><span class="opt-letter">B</span> 13</li><li><span class="opt-letter">C</span> 15</li><li><span class="opt-letter">D</span> 14</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> j takes values 3 through 15 inclusive: 15 - 3 + 1 = 13.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Which of the following will cause a compile-time error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (int i = 0; i &lt; 3; i++) { } System.out.println(i);</code></li><li><span class="opt-letter">B</span> <code>int i; for (i = 0; i &lt; 3; i++) { } System.out.println(i);</code></li><li><span class="opt-letter">C</span> <code>for (int i = 3; i &gt; 0; i--) { System.out.println(i); }</code></li><li><span class="opt-letter">D</span> <code>for (int i = 0; i &lt; 10; i += 3) { }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> i declared in the for header is out of scope after the loop. Option B declares it outside, so it's fine.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>for loop</dt><dd>a loop with initialization, condition, and update in its header</dd></div><div><dt>Loop variable</dt><dd>the counter declared in the for header; scoped to the loop</dd></div><div><dt>Scope</dt><dd>the region of code where a variable can be used</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-7.html"><span class="dir">Previous</span>2.7 while Loops</a>
+  <a class="to-right" href="2-9.html"><span class="dir">Next</span>2.9 Implementing Selection and Iteration Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

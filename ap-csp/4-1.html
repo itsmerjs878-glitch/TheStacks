@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 The Internet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/4-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">BIG IDEA 4: COMPUTER SYSTEMS AND NETWORKS</a> &middot; TOPIC 4.1</div>
+<h1 class="article-title"><span class="title-num">4.1</span> The Internet</h1>
+<p class="article-lede">A network of networks, connected by agreed-upon rules. The exam wants precise definitions and an understanding of how data actually travels.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>computer network</strong> is a group of interconnected computing devices that can send and receive data. The <strong>internet</strong> is a network of networks connected by shared standards — no single organization owns or controls it.</li><li><strong>Routing</strong> is finding a path from sender to receiver. Data can take many different paths; <strong>routers</strong> pass packets toward their destination.</li><li>Data is sent in <strong>packets</strong>: small chunks that each contain the data plus <strong>metadata</strong> (source and destination addresses, sequence number). Packets from one message may travel different routes and arrive out of order; they're <strong>reassembled</strong> at the destination using the sequence numbers.</li><li>Every device has an <strong>IP address</strong> — a unique numeric identifier used for routing. IPv4 uses 32 bits (about 4 billion addresses, now exhausted); IPv6 uses 128 bits.</li><li><strong>Protocols</strong> are agreed rules that specify how data is formatted, addressed, transmitted, and received. Because they're <strong>open standards</strong>, any device following them can communicate with any other.</li><li>Key protocols: <strong>IP</strong> (addressing and routing packets), <strong>TCP</strong> (reliable delivery — checks all packets arrive, requests re-sends, reorders), <strong>UDP</strong> (faster, no delivery guarantee — used for streaming), <strong>HTTP/HTTPS</strong> (requesting and sending web pages; HTTPS adds encryption).</li><li><strong>DNS</strong> (Domain Name System) translates human-readable names like <code>example.com</code> into IP addresses.</li><li><strong>Bandwidth</strong> is the maximum data-transfer rate of a connection, measured in bits per second. Higher bandwidth = more data per second.</li><li>The <strong>World Wide Web</strong> is a system of linked pages and resources <em>that runs on</em> the internet. They aren't the same thing: the internet is the network; the web is one service using it.</li><li>The internet's <strong>scalability</strong> — its ability to keep working as it grows — comes from its layered, standardized, decentralized design.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>You type <code>example.com</code> and press Enter. Your browser asks a <strong>DNS</strong> server for that name's <strong>IP address</strong>. It then sends an <strong>HTTPS</strong> request. That request is split into <strong>packets</strong>, each stamped with your IP, the server's IP, and a sequence number. <strong>Routers</strong> forward each packet along whatever path is available — packet 3 might go through Denver while packet 4 goes through Dallas. The server's <strong>TCP</strong> layer collects them, puts them in order, and asks for any that are missing. Then it sends the page back the same way.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Two distinctions the exam loves: internet vs. World Wide Web (network vs. a service on it), and TCP vs. UDP (reliable/ordered vs. fast/unguaranteed). And if an option says packets must travel the same route or arrive in order, it's wrong — they don't, and reassembly handles it.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The internet is <strong>decentralized</strong>: no single authority controls it. It's a network of independently-operated networks that agree to talk using common protocols. That's why it can't easily be "turned off" and why it scales — anyone can add a network.</li><li><strong>Packets</strong> carry a chunk of data plus <strong>metadata</strong>: source address, destination address, and a sequence number. The sequence number is what lets the receiver reassemble packets that arrive out of order. If a packet is missing, TCP asks for it again.</li><li><strong>Routing</strong> happens hop by hop. Each router looks at a packet's destination and forwards it toward the next router closer to that destination. No router knows the whole path; each knows the next step. Different packets of the same message can take different paths.</li><li><strong>IP</strong> handles addressing and routing — getting packets to the right machine. <strong>TCP</strong> sits on top and handles reliability — making sure they all arrive, in order, and asking for re-sends. <strong>UDP</strong> is TCP's faster, unreliable sibling used when speed matters more than perfection (live video, games).</li><li><strong>HTTP</strong> is the protocol web browsers and servers use to request and send pages. <strong>HTTPS</strong> is HTTP with encryption (via TLS), so intercepted traffic can't be read. The padlock icon means HTTPS.</li><li><strong>DNS</strong> is the internet's phone book: it maps names like <code>collegeboard.org</code> to IP addresses. Without DNS you'd type numbers. DNS itself is a distributed, hierarchical system — another example of scalability.</li><li><strong>IPv4</strong> addresses are 32 bits (four numbers 0–255, like 192.168.1.1) — about 4.3 billion, which ran out. <strong>IPv6</strong> uses 128 bits — enough for every device imaginable. The transition is ongoing.</li><li><strong>Bandwidth</strong> is capacity (bits per second); <strong>latency</strong> is delay (how long one packet takes to arrive). A satellite link can have high bandwidth and high latency. The CED focuses on bandwidth.</li><li>The <strong>World Wide Web</strong> is one application built on the internet, alongside email, file transfer, streaming, and games. The web = HTTP + HTML + browsers. The internet = the underlying network. Different things.</li><li><strong>Open standards</strong> (the protocols are public, not owned) are why the internet works across every manufacturer and country. Anyone can implement TCP/IP; nobody needs permission.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Using internet and web interchangeably.</strong> The exam tests the distinction. Web is a service; internet is the network.</li><li><strong>Claiming packets take the same path or arrive in order.</strong> Neither is guaranteed. Sequence numbers and reassembly handle it.</li><li><strong>Assigning the wrong job to a protocol.</strong> IP = addressing/routing. TCP = reliable delivery. HTTP = web pages. DNS = names to addresses. Learn the four.</li><li><strong>Thinking a router knows the whole route.</strong> It knows the next hop. That's what makes rerouting around failures automatic.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following best explains how a large file is transmitted over the internet?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The file is sent as one continuous stream along a single fixed path.</li><li><span class="opt-letter">B</span> The file is divided into packets that may travel different routes and are reassembled in order at the destination.</li><li><span class="opt-letter">C</span> The file is converted to a single IP address and sent to the router.</li><li><span class="opt-letter">D</span> The file is compressed into one packet to guarantee delivery.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Packet switching: split into packets, independently routed, reassembled using sequence data.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes the relationship between the internet and the World Wide Web?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> They are two names for the same thing.</li><li><span class="opt-letter">B</span> The internet is a network of networks; the World Wide Web is a system of linked resources that uses the internet.</li><li><span class="opt-letter">C</span> The World Wide Web is the physical hardware; the internet is the software.</li><li><span class="opt-letter">D</span> The internet is a subset of the World Wide Web.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The web is one of many services (with email, streaming, etc.) that run over the internet.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> Why are open protocols important to the functioning of the internet?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> They allow devices made by different manufacturers to communicate using shared rules.</li><li><span class="opt-letter">B</span> They encrypt all data automatically.</li><li><span class="opt-letter">C</span> They guarantee that no packets are ever lost.</li><li><span class="opt-letter">D</span> They assign every user the same IP address.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Interoperability through shared, public standards is the point of open protocols.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Computer network</dt><dd>interconnected devices that can send and receive data</dd></div><div><dt>Internet</dt><dd>a global network of networks using open protocols</dd></div><div><dt>Packet</dt><dd>a small unit of data with metadata for routing and reassembly</dd></div><div><dt>Router</dt><dd>a device that forwards packets toward their destination</dd></div><div><dt>IP address</dt><dd>a unique numeric address for a device on a network</dd></div><div><dt>Protocol</dt><dd>an agreed set of rules for formatting and transmitting data</dd></div><div><dt>TCP</dt><dd>a protocol that ensures reliable, ordered delivery of packets</dd></div><div><dt>DNS</dt><dd>the system that translates domain names into IP addresses</dd></div><div><dt>Bandwidth</dt><dd>the maximum rate of data transfer, in bits per second</dd></div><div><dt>World Wide Web</dt><dd>a system of linked resources accessed over the internet via HTTP</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-4.html"><span class="dir">Up</span>Big Idea 4 overview</a>
+  <a class="to-right" href="4-2.html"><span class="dir">Next</span>4.2 Fault Tolerance</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.6 Conditionals — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.6</div>
+<h1 class="article-title"><span class="title-num">3.6</span> Conditionals</h1>
+<p class="article-lede">Selection means the program chooses which code to run based on a condition. IF and IF/ELSE are how it does that.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Selection</strong> is one of the three building blocks of algorithms (with sequencing and iteration). It lets a program take different paths.</li><li><code>IF (condition) { block }</code> runs the block only when the condition is true; otherwise it skips it and continues.</li><li><code>IF (condition) { block1 } ELSE { block2 }</code> runs exactly one of the two blocks — block1 if true, block2 if false. Never both, never neither.</li><li>After the conditional finishes, execution continues with the next statement in sequence regardless of which branch ran.</li><li>Two separate <code>IF</code> statements are independent — both conditions are checked and both blocks can run. An <code>IF/ELSE</code> is mutually exclusive. This difference is a frequent exam trap.</li><li>The condition must be a Boolean expression. Everything from 3.5 applies.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">temp ← 72
+IF (temp > 80)
+{
+    DISPLAY("hot")
+}
+IF (temp > 60)
+{
+    DISPLAY("warm")
+}
+ELSE
+{
+    DISPLAY("cold")
+}</pre>
+<p>First IF: 72 &gt; 80 is false → nothing. Second IF/ELSE: 72 &gt; 60 is true → <strong>warm</strong>, and the ELSE is skipped. Output: <code>warm</code>. Had the first IF been true, both "hot" and "warm" would display, because they're independent statements.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Count the IFs. Independent IFs can each fire; an IF/ELSE chain fires exactly one branch. When a question asks "how many lines are displayed," this distinction is usually the whole question.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>An <code>IF</code> with no <code>ELSE</code> means "maybe do this." An <code>IF/ELSE</code> means "do exactly one of these two." The difference is whether there's a case where nothing in the structure runs.</li><li>The condition is evaluated <strong>once</strong>, when the IF is reached. If the block changes variables that were in the condition, that doesn't re-trigger anything — the decision was already made.</li><li>Two <code>IF</code> statements in sequence are <strong>independent</strong>. Both conditions are checked; zero, one, or both blocks may run. This is the most common structure the exam uses to test whether you understand independence vs. mutual exclusion.</li><li><code>IF/ELSE</code> can be rewritten as two <code>IF</code> statements with opposite conditions — <code>IF (x &gt; 5)</code> and <code>IF (x ≤ 5)</code> — and the behavior is identical <em>as long as the first block doesn't change x</em>. If it does, the second IF might see a different x. Equivalence questions exploit this.</li><li>The exam's block-based pseudocode draws IF/ELSE as connected shapes. Read it the same way: one condition, two branches, exactly one runs.</li><li>Selection combined with iteration — an IF inside a loop — is how counting, filtering, and finding patterns work. The IF picks which iterations "count."</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Reading two IFs as an IF/ELSE.</strong> If both conditions can be true for the same input, both blocks run. Count outputs accordingly.</li><li><strong>Reading an IF/ELSE as two IFs.</strong> Exactly one branch runs. If a question asks "which values cause both DISPLAY statements to run" and they're in an IF/ELSE, the answer is "none."</li><li><strong>Forgetting execution continues after the conditional.</strong> Whatever's after the closing brace runs regardless of which branch was taken.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is displayed by the following code?
+<pre class="code">score ← 85
+IF (score ≥ 90)
+{
+    DISPLAY("A")
+}
+ELSE
+{
+    IF (score ≥ 80)
+    {
+        DISPLAY("B")
+    }
+    ELSE
+    {
+        DISPLAY("C")
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A</li><li><span class="opt-letter">B</span> B</li><li><span class="opt-letter">C</span> C</li><li><span class="opt-letter">D</span> B C</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 85 ≥ 90 is false, so the ELSE runs. Inside, 85 ≥ 80 is true, so "B" is displayed and the inner ELSE is skipped.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Consider the following code, where <code>n</code> is a positive integer.
+<pre class="code">IF (n MOD 2 = 0)
+{
+    DISPLAY("even")
+}
+IF (n > 10)
+{
+    DISPLAY("big")
+}</pre>For which value of <code>n</code> are two words displayed?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 7</li><li><span class="opt-letter">B</span> 8</li><li><span class="opt-letter">C</span> 11</li><li><span class="opt-letter">D</span> 12</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: D.</strong> Both independent IFs must be true: even AND greater than 10. Only 12 qualifies.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Selection</dt><dd>choosing which code to execute based on a Boolean condition</dd></div><div><dt>Conditional statement</dt><dd>an IF or IF/ELSE statement</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-5.html"><span class="dir">Previous</span>3.5 Boolean Expressions</a>
+  <a class="to-right" href="3-7.html"><span class="dir">Next</span>3.7 Nested Conditionals</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

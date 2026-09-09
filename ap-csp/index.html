@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP Computer Science Principles — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/index.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="course-eyebrow">AP COMPUTER SCIENCE</div>
+<h1 class="course-title">AP Computer Science Principles</h1>
+<div class="course-intro">
+<p>Everything on the AP CSP exam, organized exactly the way the College Board's Course and Exam Description (CED) organizes it: five Big Ideas, 35 numbered topics. Each topic page has the essential knowledge, a worked example, an exam tip, practice questions in the real exam's style, and the vocabulary you'll be tested on.</p>
+</div>
+
+<section class="block">
+  <h2>The 5 Big Ideas</h2>
+  <p class="block-note">Weight shown is that big idea's share of the multiple-choice exam.</p>
+  <nav aria-label="Big Ideas"><a class="toc-entry" href="unit-1.html">
+  <span class="toc-num">1</span>
+  <span class="toc-label">Creative Development</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">10–13%</span>
+</a><a class="toc-entry" href="unit-2.html">
+  <span class="toc-num">2</span>
+  <span class="toc-label">Data</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">17–22%</span>
+</a><a class="toc-entry" href="unit-3.html">
+  <span class="toc-num">3</span>
+  <span class="toc-label">Algorithms and Programming</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">30–35%</span>
+</a><a class="toc-entry" href="unit-4.html">
+  <span class="toc-num">4</span>
+  <span class="toc-label">Computer Systems and Networks</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">11–15%</span>
+</a><a class="toc-entry" href="unit-5.html">
+  <span class="toc-num">5</span>
+  <span class="toc-label">Impact of Computing</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">21–26%</span>
+</a></nav>
+</section>
+
+
+<section class="block">
+  <h2>How the exam works</h2>
+  <ul class="points">
+    <li><strong>Section I — End-of-course multiple choice.</strong> 70 questions, 120 minutes, 70% of your score. Every question has 4 options. Most are single-select; a handful are multi-select where you must pick <em>two</em> correct answers to get credit.</li>
+    <li><strong>Section II — Create Performance Task.</strong> 30% of your score. You build a program during the year (at least 12 hours of class time), submit the code and a video, then answer written-response prompts about it on exam day.</li>
+    <li>There is no penalty for guessing on multiple choice — answer every question.</li>
+    <li>All code on the exam is in <strong>AP pseudocode</strong> (text-based and block-based). A reference sheet is provided, but you're expected to read it fluently, not learn it during the test.</li>
+    <li>Roughly 25% of questions are code-analysis: given a snippet, predict output, find the bug, or pick the equivalent code. Practice tracing by hand, line by line, with a table of variable values.</li>
+  </ul>
+</section>
+
+
+<section class="block">
+  <h2>What separates a 5 from a 3</h2>
+  <ul class="points">
+    <li><strong>Trace code with a variable table.</strong> The most common lost points are careless tracing errors in Big Idea 3 — writing each variable's value after every line catches them.</li>
+    <li><strong>Know the exam's vocabulary precisely.</strong> Lossy vs. lossless, procedural vs. data abstraction, parallel vs. distributed, sequential vs. selection vs. iteration — many questions are essentially "which term describes this scenario."</li>
+    <li><strong>Weigh both sides in Big Idea 5.</strong> Impact questions reward answers that acknowledge an innovation can be beneficial for one group and harmful for another; extreme, one-sided options are usually wrong.</li>
+    <li><strong>Read the whole stem.</strong> Distractors are built from a partial reading. Underline what is actually being asked (output? number of iterations? which change preserves behavior?).</li>
+    <li><strong>Spend proportionally.</strong> Big Idea 3 (30–35%) and Big Idea 5 (21–26%) are over half the multiple choice. Study time should mirror that.</li>
+  </ul>
+</section>
+
+
+<section class="block">
+  <h2>Practice tracing</h2>
+  <p class="block-note">Interactive, step-by-step walkthroughs of the loops, lists, and recursion the exam asks you to trace by hand.</p>
+  <a class="toc-entry" href="tracer.html"><span class="toc-num">&#9654;</span><span class="toc-label">Code tracer</span><span class="toc-leader"></span><span class="toc-page">interactive</span></a>
+</section>
+
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

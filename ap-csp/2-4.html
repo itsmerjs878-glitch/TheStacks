@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.4 Using Programs with Data — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/2-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">BIG IDEA 2: DATA</a> &middot; TOPIC 2.4</div>
+<h1 class="article-title"><span class="title-num">2.4</span> Using Programs with Data</h1>
+<p class="article-lede">This topic closes the loop: programs are the tool for turning large datasets into answers, and that means handling messy data and asking well-formed questions.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Programs can process data to <strong>discover information and generate new knowledge</strong> — automating what would be impossible manually at scale.</li><li><strong>Data cleaning</strong> is a necessary, real step: making data uniform (same date formats, consistent capitalization), removing duplicates, and handling missing or invalid values, all <em>without changing the meaning</em> of the data.</li><li>Programs can <strong>transform</strong> data — reformat, combine, or derive new values — to make analysis possible (e.g., converting temperatures to one unit, computing an average per row).</li><li><strong>Visualization</strong> (charts, graphs, maps) communicates information in a dataset in a way that's much easier to interpret than the raw table.</li><li>Extracting information requires asking a question first, then choosing which data, transformations, and tools answer it. Not every question can be answered by the data available.</li><li>Tools include spreadsheets, purpose-built programs, and code; the process is the same regardless of tool.</li><li>The knowledge gained from data can raise <strong>new questions</strong>, driving another round of collection and analysis (iteration again).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>You export a class survey to a spreadsheet. Some students typed "yes", others "Yes", others "Y". A program that normalizes all of these to <code>yes</code> is <em>cleaning</em>. Adding a column that converts "hours per week" from text like "3h" to the number 3 is <em>transforming</em>. Plotting hours-studied against grade is <em>visualizing</em>. Only after all three can you ask whether studying correlates with grades — and remember 2.3's warning about what a correlation does and doesn't show.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> A question about "making data uniform so a program can process it" wants the answer <em>cleaning</em>. Cleaning never changes what the data means — if an option describes altering values to get a desired result, that's data manipulation, not cleaning, and it's wrong.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>This topic exists because the CED wants you to understand that <strong>programs, not people, do the work</strong> on large data. A human can't compute the average of ten million values; a five-line loop can. The value of computing is that it makes analysis of large datasets possible at all.</li><li><strong>Cleaning</strong> in the CED means making data <em>uniform</em> without changing its <em>meaning</em>: consistent capitalization, consistent date formats, consistent units, removing exact duplicates, deciding how to handle blanks. The "without changing meaning" clause is what separates cleaning from manipulation.</li><li><strong>Transformation</strong> derives new values from existing ones: converting Celsius to Fahrenheit, computing a per-student average from a list of scores, combining first and last name into one field. The original data is preserved; new columns are added.</li><li><strong>Filtering</strong> selects a subset by condition (only seniors, only scores above 80). <strong>Sorting</strong> orders by a field. <strong>Aggregating</strong> combines many records into a summary (count, sum, average, max). Most analyses chain these.</li><li><strong>Visualization</strong> choices matter: a bar chart for categories, a line chart for change over time, a scatter plot for relationships between two variables. The wrong chart type hides the pattern.</li><li>The CED says data analysis can raise <em>new questions</em>, driving new collection. That iterative loop is the same idea as iterative development — investigate, analyze, refine, repeat.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Calling manipulation "cleaning."</strong> If an option describes changing values to produce a desired conclusion ("adjusting outliers upward to raise the average"), that's not cleaning — it's falsification. Cleaning never changes meaning.</li><li><strong>Skipping cleaning and analyzing anyway.</strong> Questions that describe inconsistent data ("NY" and "New York") and ask what to do first want cleaning, not analysis.</li><li><strong>Choosing a visualization that hides the pattern.</strong> A pie chart for change over time, a line chart for unrelated categories. Match chart to question.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A dataset of survey responses contains the values "NY", "New York", and "new york" for the same state. A programmer writes code to change all three to "New York" before analysis. Which of the following best describes this step?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Lossy compression</li><li><span class="opt-letter">B</span> Data cleaning</li><li><span class="opt-letter">C</span> Encryption</li><li><span class="opt-letter">D</span> Creating metadata</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Making inconsistent values uniform without changing their meaning is data cleaning.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is most likely to help a researcher communicate a pattern found in a large dataset to a general audience?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Displaying the full raw table of every record</li><li><span class="opt-letter">B</span> Creating a visualization such as a chart or graph of the pattern</li><li><span class="opt-letter">C</span> Compressing the dataset with a lossless algorithm</li><li><span class="opt-letter">D</span> Removing all metadata from the dataset</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Visualization exists to make information in data interpretable. The other options don't communicate a pattern.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data cleaning</dt><dd>making data uniform and valid without changing its meaning</dd></div><div><dt>Data transformation</dt><dd>reformatting or deriving values from data to enable analysis</dd></div><div><dt>Visualization</dt><dd>representing data graphically to make patterns easier to interpret</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-3.html"><span class="dir">Previous</span>2.3 Extracting Information from Data</a>
+  <a class="to-right" href="unit-2.html"><span class="dir">Back to</span>Big Idea 2 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.5 Casting and Range of Variables — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-5.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.5</div>
+<h1 class="article-title"><span class="title-num">1.5</span> Casting and Range of Variables</h1>
+<p class="article-lede">Casting converts between types. The exam tests the truncation of (int), automatic widening to double, and the standard rounding idiom.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Casting</strong> temporarily converts a value to another type: <code>(int) 3.99</code> is <code>3</code> (truncates toward zero, never rounds); <code>(double) 7</code> is <code>7.0</code>.</li><li>A cast applies to the value <em>immediately</em> after it. <code>(int) 7.8 / 2</code> is <code>3</code> (cast to 7 first, then integer division). <code>(int) (7.8 / 2)</code> is <code>3</code> too but for a different reason (3.9 truncated). <code>(double) 7 / 2</code> is <code>3.5</code>.</li><li><strong>Widening</strong> is automatic: assigning an int to a double works (<code>double d = 5;</code> gives 5.0). <strong>Narrowing</strong> (double to int) requires an explicit cast or the compiler complains.</li><li>In mixed arithmetic, ints are promoted to doubles: <code>5 / 2.0</code> is <code>2.5</code>.</li><li><strong>Rounding idiom:</strong> <code>(int) (x + 0.5)</code> rounds a positive double to the nearest int. For negatives, <code>(int) (x - 0.5)</code>.</li><li>Values outside int's range overflow silently; casting a large double to int clamps to <code>Integer.MAX_VALUE</code> or <code>MIN_VALUE</code>.</li><li>Doubles can't represent most decimals exactly: <code>0.1 + 0.2</code> is not exactly <code>0.3</code>. Comparing doubles with <code>==</code> is unreliable; check whether the difference is below a small tolerance.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">double x = 7.6;
+int a = (int) x;             // 7   truncation
+int b = (int) (x + 0.5);     // 8   rounding
+double c = (double) 7 / 2;   // 3.5
+double d = (double) (7 / 2); // 3.0  division happened first
+int e = (int) -7.6;          // -7  toward zero, not -8</pre>
+<p>Lines 4 and 5 are the exam's favorite pair. The cast binds to the nearest value; parentheses change what gets cast.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Ask two things for every cast: what exactly is being cast (the next value only, unless parentheses say otherwise), and is it truncation or rounding (a bare (int) always truncates). Toward zero: (int) -2.9 is -2.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A cast is an <strong>operator that applies to the very next value</strong>, before any binary operators. <code>(int) x / y</code> casts x, then divides. <code>(int) (x / y)</code> divides, then casts. These give different results whenever x / y has a fractional part — and the exam builds questions on exactly that difference.</li><li><code>(int)</code> <strong>truncates toward zero</strong>: 3.99 → 3, −3.99 → −3, 0.5 → 0. It never rounds. If you need rounding, use the +0.5 idiom (positives) or −0.5 (negatives).</li><li><code>(double)</code> on an int adds <code>.0</code>: 7 → 7.0. Its main use is forcing real division: <code>(double) a / b</code>.</li><li><strong>Automatic widening</strong> happens in assignment (<code>double d = 5;</code>), in arithmetic (int + double → double), and in method calls (passing an int to a double parameter). <strong>Narrowing</strong> never happens automatically — you must cast.</li><li><strong>Casting a double outside int's range</strong> clamps to <code>Integer.MAX_VALUE</code> or <code>MIN_VALUE</code> rather than wrapping. Rarely tested, but different from arithmetic overflow.</li><li><strong>Precision loss:</strong> because doubles can't represent most decimals exactly, a computation like <code>0.1 * 3</code> gives <code>0.30000000000000004</code>. Comparing doubles for equality is fragile; the exam avoids it or gives you a tolerance approach.</li><li>Rounding to two decimal places: <code>(int) (x * 100 + 0.5) / 100.0</code>. Multiply, round, divide by a double so the result stays decimal.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Misplacing the cast's scope.</strong> <code>(int) 7.8 / 2</code> is <code>7 / 2 = 3</code>. Students compute <code>(int) 3.9 = 3</code> — same number by coincidence, wrong reasoning, and it fails on other values.</li><li><strong>Rounding instead of truncating.</strong> <code>(int) 2.9</code> is 2, not 3.</li><li><strong>Flooring negatives.</strong> <code>(int) -2.9</code> is −2, not −3. Toward zero.</li><li><strong>Casting the wrong thing to force real division.</strong> <code>(double) (7 / 2)</code> is 3.0 — division already truncated. Cast an operand, not the result.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is the value of <code>(int) 9.99 / 2 * 2.0</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 9.99</li><li><span class="opt-letter">B</span> 9.0</li><li><span class="opt-letter">C</span> 8.0</li><li><span class="opt-letter">D</span> 10.0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> (int) 9.99 → 9. 9 / 2 → 4 (integer division). 4 * 2.0 → 8.0.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which expression correctly rounds the positive double <code>val</code> to the nearest integer?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>(int) val</code></li><li><span class="opt-letter">B</span> <code>(int) (val + 0.5)</code></li><li><span class="opt-letter">C</span> <code>(int) val + 0.5</code></li><li><span class="opt-letter">D</span> <code>(double) (val + 0.5)</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Adding 0.5 then truncating rounds correctly for positives. Option C truncates first, then adds 0.5 producing a double.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is printed by <code>System.out.println((int) -4.7);</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> -5</li><li><span class="opt-letter">B</span> -4</li><li><span class="opt-letter">C</span> 4</li><li><span class="opt-letter">D</span> -4.0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Casting truncates toward zero, so -4.7 becomes -4.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Cast</dt><dd>an explicit conversion, e.g. (int) or (double)</dd></div><div><dt>Truncation</dt><dd>dropping the fractional part when casting to int</dd></div><div><dt>Widening</dt><dd>automatic conversion from int to double</dd></div><div><dt>Narrowing</dt><dd>conversion from double to int, requires a cast</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-4.html"><span class="dir">Previous</span>1.4 Assignment Statements and Input</a>
+  <a class="to-right" href="1-6.html"><span class="dir">Next</span>1.6 Compound Assignment Operators</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

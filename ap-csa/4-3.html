@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.3 Array Creation and Access — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.3</div>
+<h1 class="article-title"><span class="title-num">4.3</span> Array Creation and Access</h1>
+<p class="article-lede">Arrays are fixed-size, indexed from 0. Off-by-one and out-of-bounds are the whole story.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Declare and create: <code>int[] nums = new int[5];</code> — five ints, all initialized to <strong>0</strong>. <code>double[]</code> → 0.0, <code>boolean[]</code> → false, object arrays (<code>String[]</code>) → <strong>null</strong>.</li><li>Initializer list: <code>int[] nums = {4, 8, 15};</code> creates and fills in one step.</li><li>Access: <code>nums[i]</code>. Indices run from <strong>0</strong> to <strong><code>nums.length - 1</code></strong>. <code>length</code> is a field (no parentheses), unlike String's <code>length()</code>.</li><li>Accessing index <code>length</code> or any negative index throws <strong>ArrayIndexOutOfBoundsException</strong> at run time.</li><li>Array size is <strong>fixed</strong> once created. To "grow" you create a new, bigger array and copy.</li><li>Arrays are objects: an array variable holds a reference. <code>int[] b = a;</code> makes b an alias of a — same array.</li><li>An array of objects holds references; each element must be assigned an object before its methods are called, or you get a NullPointerException.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int[] a = new int[4];        // {0, 0, 0, 0}
+a[0] = 7;
+a[3] = 2;
+a[a.length - 1] = 9;         // last element → 9
+System.out.println(a[2]);    // 0
+System.out.println(a.length);// 4
+// a[4] = 1;                 // ArrayIndexOutOfBoundsException
+
+String[] words = new String[2];
+// words[0].length();        // NullPointerException — element is null
+words[0] = "hi";
+System.out.println(words[0].length());   // 2</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Every array question: what's the first index (0), the last index (length − 1), and what's the default value? An index equal to length is the exam's favorite exception. And <code>length</code> without parentheses — with parentheses it won't compile.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Two creation forms:</strong> <code>new int[n]</code> — n elements, all default; <code>{a, b, c}</code> — initializer, exactly those elements. You can't use an initializer after the declaration line (<code>arr = {1, 2};</code> won't compile); use <code>arr = new int[]{1, 2};</code>.</li><li><strong>Defaults:</strong> 0, 0.0, false, null. An array of Strings or of your own class starts as all nulls; you must assign each element an object before calling methods on it. <code>new Student[5]</code> creates zero Students.</li><li><strong>length</strong> is a field: <code>arr.length</code>, no parentheses. (String's is a method: <code>s.length()</code>. ArrayList's is <code>list.size()</code>.) Mixing these is a compile-error question.</li><li><strong>Valid indices:</strong> 0 through length − 1. Index length is one past the end — the exam's favorite exception. Negative indices also throw.</li><li><strong>Arrays are objects.</strong> The variable holds a reference. <code>int[] b = a;</code> aliases; modifying <code>b[0]</code> modifies <code>a[0]</code>. To copy, make a new array and loop.</li><li><strong>Fixed size forever.</strong> To add an element you create a bigger array, copy everything, and switch the reference. This is what ArrayList does internally — which is why ArrayList exists.</li><li><strong>Array of arrays</strong> = 2D array (4.11). Each row is a 1D array object with its own length.</li><li><strong>Passing an array to a method</strong> passes the reference: the method can change elements, not replace the array (3.6).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>arr[arr.length].</strong> Out of bounds. Last element is length − 1.</li><li><strong>arr.length().</strong> Compile error. No parentheses for arrays.</li><li><strong>Calling a method on an element of a new object array.</strong> It's null. NullPointerException.</li><li><strong>Expecting <code>int[] b = a;</code> to copy.</strong> It aliases.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following will cause a run-time exception?
+<pre class="code">int[] arr = new int[6];</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>arr[0] = 5;</code></li><li><span class="opt-letter">B</span> <code>arr[5] = 5;</code></li><li><span class="opt-letter">C</span> <code>arr[6] = 5;</code></li><li><span class="opt-letter">D</span> <code>arr[arr.length - 1] = 5;</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Valid indices are 0–5. Index 6 is out of bounds.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is printed by the following code?
+<pre class="code">int[] x = {3, 6, 9};
+int[] y = x;
+y[1] = 0;
+System.out.println(x[1]);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 6</li><li><span class="opt-letter">B</span> 0</li><li><span class="opt-letter">C</span> 3</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> y is an alias of x; they're the same array. Changing y[1] changes x[1].</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> After <code>double[] d = new double[3];</code>, what is the value of <code>d[1]</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> null</li><li><span class="opt-letter">B</span> 0.0</li><li><span class="opt-letter">C</span> Undefined until assigned</li><li><span class="opt-letter">D</span> 1.0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Numeric arrays are initialized to zero.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Array</dt><dd>a fixed-size, ordered collection of elements of one type</dd></div><div><dt>Index</dt><dd>an element's position, from 0 to length - 1</dd></div><div><dt>length</dt><dd>the field giving the number of elements in an array</dd></div><div><dt>ArrayIndexOutOfBoundsException</dt><dd>the run-time error from using an invalid index</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-2.html"><span class="dir">Previous</span>4.2 Introduction to Using Data Sets</a>
+  <a class="to-right" href="4-4.html"><span class="dir">Next</span>4.4 Array Traversals</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

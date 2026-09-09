@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Idea 2 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/cheat-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">BIG IDEA 2: DATA</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Data — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 4 topics in this big idea. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">2.1</span>Binary Numbers</h3>
+  <dl><div><dt>Bit</dt><dd>a single binary digit, 0 or 1</dd></div><div><dt>Byte</dt><dd>8 bits</dd></div><div><dt>Binary (base 2)</dt><dd>a number system with two digits, where each place is a power of 2</dd></div><div><dt>Decimal (base 10)</dt><dd>the everyday number system, where each place is a power of 10</dd></div><div><dt>Overflow error</dt><dd>a value exceeds what its fixed number of bits can hold</dd></div><div><dt>Sampling</dt><dd>measuring an analog signal, like sound, at regular intervals to store it digitally</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Write the place values above the bits (…32 16 8 4 2 1) before converting — it removes almost every arithmetic slip. For "how many values" questions, the answer is always a power of 2 equal to 2 raised to the number of bits, not the number of bits itself.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.2</span>Data Compression</h3>
+  <dl><div><dt>Data compression</dt><dd>reducing the number of bits needed to represent data</dd></div><div><dt>Lossless compression</dt><dd>compression from which the original data can be completely reconstructed</dd></div><div><dt>Lossy compression</dt><dd>compression that permanently discards some data for greater size reduction</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If the stem says the file must be "exactly" or "perfectly" restored, or involves text/code/financial records, answer lossless. If it emphasizes minimizing size or transmission time and the data is an image, video, or audio where small quality loss is acceptable, answer lossy. Also remember: compression is about size and speed — not security.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.3</span>Extracting Information from Data</h3>
+  <dl><div><dt>Information</dt><dd>facts and patterns extracted from data through processing and interpretation</dd></div><div><dt>Metadata</dt><dd>data that describes other data, such as a file's creation date or location</dd></div><div><dt>Correlation</dt><dd>two variables tending to change together, which does not by itself prove one causes the other</dd></div><div><dt>Filtering</dt><dd>selecting only the records that meet a condition</dd></div><div><dt>Cleaning data</dt><dd>fixing or removing incomplete, invalid, or inconsistent records</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When a question presents a dataset and a conclusion, ask: does the data actually support that, or could something else explain it? Options that claim causation from a correlation are wrong. Options that say more data or a controlled comparison is needed are usually right.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.4</span>Using Programs with Data</h3>
+  <dl><div><dt>Data cleaning</dt><dd>making data uniform and valid without changing its meaning</dd></div><div><dt>Data transformation</dt><dd>reformatting or deriving values from data to enable analysis</dd></div><div><dt>Visualization</dt><dd>representing data graphically to make patterns easier to interpret</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> A question about "making data uniform so a program can process it" wants the answer <em>cleaning</em>. Cleaning never changes what the data means — if an option describes altering values to get a desired result, that's data manipulation, not cleaning, and it's wrong.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-2.html"><span class="dir">Back to</span>Big Idea 2 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

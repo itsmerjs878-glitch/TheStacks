@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/cheat-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Class Creation — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 9 topics in this unit. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">3.1</span>Abstraction and Program Design</h3>
+  <dl><div><dt>Data abstraction</dt><dd>modeling a concept as a class with attributes</dd></div><div><dt>Procedural abstraction</dt><dd>using a method without knowing its implementation</dd></div><div><dt>Encapsulation</dt><dd>keeping data private and controlling access through public methods</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> On FRQ 2, underline every noun that's a piece of state (becomes an instance variable) and every verb (becomes a method). The prompt tells you the class's design; your job is to translate it faithfully, not invent extras.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.2</span>Impact of Program Design</h3>
+  <dl><div><dt>Data minimization</dt><dd>collecting and storing only the data a program actually needs</dd></div><div><dt>Accessibility</dt><dd>designing so people with disabilities and varied contexts can use the program</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions here are scenario-based and the right answer usually involves collecting less data, validating before storing, considering users unlike the developer, or getting consent. Options that maximize data collection "just in case" are wrong.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.3</span>Anatomy of a Class</h3>
+  <dl><div><dt>Instance variable</dt><dd>a variable declared in a class that each object has its own copy of</dd></div><div><dt>private</dt><dd>accessible only within the class</dd></div><div><dt>public</dt><dd>accessible from any class</dd></div><div><dt>Default value</dt><dd>the automatic initial value of an instance variable: 0, 0.0, false, or null</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> FRQ 2 rubrics award a point for declaring instance variables private. Forgetting <code>private</code> costs it every year. Also, a class with instance variables but no constructor is legal — Java provides a default one — but on the FRQ you'll be asked to write one.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.4</span>Constructors</h3>
+  <dl><div><dt>Constructor</dt><dd>a method with the class's name and no return type that initializes a new object</dd></div><div><dt>No-argument constructor</dt><dd>a constructor with no parameters that sets default values</dd></div><div><dt>Default constructor</dt><dd>the no-arg constructor Java provides only when a class defines none</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Two mistakes cost FRQ points every year: writing <code>public void Rectangle(...)</code> (the void makes it a method, not a constructor) and assigning parameters to nothing (<code>w = width;</code> backwards). Instance variable on the left, parameter on the right.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.5</span>Methods: How to Write Them</h3>
+  <dl><div><dt>Accessor method</dt><dd>returns the value of an instance variable without changing it</dd></div><div><dt>Mutator method</dt><dd>changes an instance variable; typically void</dd></div><div><dt>toString</dt><dd>a method returning a String representation of the object, called automatically by println</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If the prompt says "returns," write <code>return</code>; if it says "prints," write <code>System.out.println</code>. Mixing them up is a full rubric point. For toString, always return. For every non-void method, ask: does every possible path hit a return?</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.6</span>Methods: Passing and Returning References of an Object</h3>
+  <dl><div><dt>Pass by value</dt><dd>Java copies the argument's value; for objects that value is a reference</dd></div><div><dt>Reference parameter</dt><dd>a parameter that holds the address of the caller's object</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Draw the arrow. Parameter and argument arrows point to the same box; mutating the box is visible to both. Reassigning the parameter moves only the parameter's arrow. Primitives are just copied numbers.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.7</span>Class Variables and Methods</h3>
+  <dl><div><dt>Class variable / static variable</dt><dd>a single variable shared by all objects of a class</dd></div><div><dt>Class method / static method</dt><dd>a method called on the class that can't use instance variables</dd></div><div><dt>Constant</dt><dd>a static final variable whose value never changes</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> "Which variable should be static?" — anything that's the same for every object or tracks the class as a whole. "Why won't this compile?" — a static method touching an instance variable. Trace static variables as one shared cell, not one per object.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.8</span>Scope and Access</h3>
+  <dl><div><dt>Scope</dt><dd>the region of code in which a variable is accessible</dd></div><div><dt>Local variable</dt><dd>a variable declared inside a method or block</dd></div><div><dt>Shadowing</dt><dd>a local variable or parameter hiding an instance variable of the same name</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Find the closing brace of the block a variable was declared in — that's the end of its life. If a question uses a variable after that brace, it's a compile error. For shadowing, the closest declaration wins.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.9</span>this Keyword</h3>
+  <dl><div><dt>this</dt><dd>a reference to the object on which the current method or constructor was invoked</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When a constructor's parameters share names with instance variables, look for <code>this.</code> on the left side. If it's missing, the instance variables are never set — a classic "why does getTitle() return null" question.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-3.html"><span class="dir">Back to</span>Unit 3 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 2 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/cheat-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Selection and Iteration — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 12 topics in this unit. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">2.1</span>Algorithms with Selection and Repetition</h3>
+  <dl><div><dt>Sequence</dt><dd>statements executed one after another</dd></div><div><dt>Selection</dt><dd>choosing a path with a conditional</dd></div><div><dt>Repetition</dt><dd>repeating with a loop; also called iteration</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Before tracing, write what each variable starts as. Then execute statements strictly in order. If a question describes an algorithm in English and asks which code implements it, translate the English into initializations, a loop, and a decision — then match.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.2</span>Boolean Expressions</h3>
+  <dl><div><dt>Relational operator</dt><dd><, >, <=, >=, ==, != — compares two values and yields a boolean</dd></div><div><dt>equals()</dt><dd>compares object contents</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Any time a question compares two Strings with <code>==</code>, be suspicious. If both came from literals it may happen to be true, but the exam's intended answer is that <code>==</code> is not a reliable content comparison — <code>.equals</code> is.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.3</span>if Statements</h3>
+  <dl><div><dt>One-way selection</dt><dd>an if statement with no else</dd></div><div><dt>Two-way selection</dt><dd>an if statement with an else</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Indentation means nothing to Java. When braces are missing, exactly one statement belongs to the if. The exam writes misleadingly-indented code on purpose; read braces, not spacing.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.4</span>Nested if Statements</h3>
+  <dl><div><dt>Nested if</dt><dd>an if statement inside the block of another if</dd></div><div><dt>else-if chain</dt><dd>a series of conditions tested in order; only the first true one runs</dd></div><div><dt>Dangling else</dt><dd>an else that pairs with the nearest unbraced if</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Trace else-if chains top to bottom and stop at the first true condition. For nested ifs with no braces, an else attaches to the closest if above it — draw the braces in yourself before tracing.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.5</span>Compound Boolean Expressions</h3>
+  <dl><div><dt>&& (and)</dt><dd>true only when both operands are true</dd></div><div><dt>|| (or)</dt><dd>true when at least one operand is true</dd></div><div><dt>! (not)</dt><dd>negates a boolean</dd></div><div><dt>Short-circuit evaluation</dt><dd>the right operand of && or || is skipped when the left operand decides the result</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For "which condition is safe" questions, the null or zero check must come <em>first</em> in an <code>&amp;&amp;</code>. For evaluation questions, compute each relational part to true/false, then apply ! → &amp;&amp; → ||.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.6</span>Comparing Boolean Expressions</h3>
+  <dl><div><dt>Equivalent expressions</dt><dd>expressions with the same value for all inputs</dd></div><div><dt>De Morgan's laws</dt><dd>rules for negating && and || expressions</dd></div><div><dt>Truth table</dt><dd>a table of all input combinations and their resulting values</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Apply De Morgan mechanically: flip the operator, negate each side, and flip each comparison to its boundary-inclusive opposite. Then test one or two values. Options that negate the parts but keep the same &amp;&amp;/|| are the standard distractor.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.7</span>while Loops</h3>
+  <dl><div><dt>while loop</dt><dd>repeats its body as long as the condition is true; condition checked first</dd></div><div><dt>Infinite loop</dt><dd>a loop whose condition never becomes false</dd></div><div><dt>Sentinel</dt><dd>a special input value that signals a loop to stop</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Always trace with a table and include a row for the final failed check — that's where students stop one iteration early or late. And check whether the condition is true at the start; "zero iterations" is a real answer choice.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.8</span>for Loops</h3>
+  <dl><div><dt>for loop</dt><dd>a loop with initialization, condition, and update in its header</dd></div><div><dt>Loop variable</dt><dd>the counter declared in the for header; scoped to the loop</dd></div><div><dt>Scope</dt><dd>the region of code where a variable can be used</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Count iterations by listing the loop variable's values: start, add the step until the condition fails. Don't compute a formula unless the step is 1. And remember: <code>&lt;</code> vs <code>&lt;=</code> is one full extra iteration.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.9</span>Implementing Selection and Iteration Algorithms</h3>
+  <dl><div><dt>Accumulator</dt><dd>a variable that collects a running total or count across iterations</dd></div><div><dt>Digit extraction</dt><dd>using % 10 and / 10 to process an integer's digits</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> On FRQ 1, the rubric gives separate points for the loop, the condition, the update, and the return. Even if the logic isn't perfect, a correctly structured loop with the right variable initialized earns credit. Write the skeleton first, then fill in the condition.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.10</span>Implementing String Algorithms</h3>
+  <dl><div><dt>Palindrome</dt><dd>a String that reads the same forward and backward</dd></div><div><dt>Substring search</dt><dd>checking each window of a String against a target</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> The loop bound for substring searching is <code>i &lt;= s.length() - sub.length()</code> — get that off by one and you either miss the last match or throw an exception. Always use <code>.equals</code> inside the loop, never <code>==</code>.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.11</span>Nested Iteration</h3>
+  <dl><div><dt>Nested loop</dt><dd>a loop inside the body of another loop</dd></div><div><dt>Inner loop</dt><dd>the loop that runs to completion on each pass of the outer</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Write the outer variable's value in the margin, then list the inner loop's values for that pass. Don't try to hold both counters in your head. For "how many times" with a dependent inner loop, write out the sum explicitly.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">2.12</span>Informal Run-Time Analysis</h3>
+  <dl><div><dt>Statement execution count</dt><dd>how many times a statement runs; the exam's measure of efficiency</dd></div><div><dt>Run-time analysis</dt><dd>estimating an algorithm's work as a function of input size</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Read the loop headers, not the bodies. Nested with independent bounds → multiply. Nested with dependent bound → triangular sum (n(n+1)/2). Two loops in sequence → add. A question asking "how many times is the statement executed when n = 5" wants a number, so compute it.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-2.html"><span class="dir">Back to</span>Unit 2 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

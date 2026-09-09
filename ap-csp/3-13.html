@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.13 Developing Procedures — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-13.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.13</div>
+<h1 class="article-title"><span class="title-num">3.13</span> Developing Procedures</h1>
+<p class="article-lede">Writing your own procedures is where procedural abstraction happens — and the Create Task requires you to have one with a parameter, selection, and iteration.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Procedural abstraction</strong> lets a programmer use a procedure by knowing <em>what</em> it does without knowing <em>how</em>. The name and parameters are the interface; the body is hidden detail.</li><li>Benefits: reduces <strong>duplicated code</strong>, makes programs easier to read and maintain, and lets you fix a bug in one place instead of many.</li><li><strong>Parameters generalize</strong> a procedure. A procedure that only works on one hardcoded value is far less useful than one that takes that value as a parameter.</li><li>Good procedure names describe the task (<code>calculateTax</code>, <code>isValidEmail</code>). Like variable names, they're documentation.</li><li><strong>Create Task requirement:</strong> a student-developed procedure with at least one parameter that affects its behavior, and whose body includes an algorithm with sequencing, selection, and iteration. You must show the procedure being <em>called</em>, too.</li><li>Procedures can call other procedures, building larger behavior from smaller verified pieces.</li><li>A procedure should do one clearly defined thing. If you're describing it with "and," it may be two procedures.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Without a procedure, computing a letter grade three times means the IF/ELSE chain appears three times. With one:</p>
+<pre class="code">PROCEDURE letterGrade(score)
+{
+    IF (score ≥ 90) { RETURN ("A") }
+    IF (score ≥ 80) { RETURN ("B") }
+    IF (score ≥ 70) { RETURN ("C") }
+    RETURN ("F")
+}
+DISPLAY(letterGrade(91))
+DISPLAY(letterGrade(74))</pre>
+<p>Output: <strong>A C</strong>. If the school changes the B cutoff, you edit one line. That's the maintenance benefit the CED describes.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When a question asks why a programmer should turn repeated code into a procedure, the right answer is about <em>reducing duplication and making changes easier</em>. Answers about making the program run faster or use less memory are distractors — procedures don't do that.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Procedural abstraction</strong> in the CED: a procedure lets you use a computation by name without knowing (or re-reading) how it works. Once <code>isPrime(n)</code> is written and tested, you call it and trust it. That trust is the abstraction.</li><li>The <strong>Create Task's procedure requirement</strong> is specific: a student-developed procedure with a name, a return type (or no return), and <strong>at least one parameter that has an effect on the procedure's functionality</strong>. The body must contain an algorithm with sequencing, selection, and iteration. And you must show a call to it.</li><li>"Parameter that has an effect" means the parameter is actually used inside and changes what happens. A parameter that's received and ignored doesn't count.</li><li><strong>Generalization</strong> is the reason for parameters: <code>greetRam()</code> can only do one thing; <code>greet(name)</code> can do infinitely many. When code is duplicated with small variations, the variations become parameters and the code becomes one procedure.</li><li>Procedures make programs <strong>easier to modify</strong> (change the body once), <strong>easier to test</strong> (test the procedure alone with known inputs), and <strong>easier to read</strong> (a good name explains the intent). The exam's "why use a procedure" questions want one of these.</li><li>A procedure should have a <strong>single, clear purpose</strong> reflected in its name. <code>calculateAverage</code> should calculate an average and nothing else. Mixing responsibilities makes procedures harder to reuse.</li><li>Procedures reduce <strong>duplicated code</strong>. Duplication is bad because a bug in duplicated code must be fixed everywhere it appears — and one copy inevitably gets missed.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>A Create Task procedure with a parameter that isn't used.</strong> Doesn't meet the requirement. The parameter must affect behavior.</li><li><strong>Choosing an efficiency reason for using a procedure.</strong> Procedures don't make programs faster. They make them clearer and easier to maintain. Options claiming speed or memory benefits are distractors.</li><li><strong>Not showing the call.</strong> The Create Task needs the procedure <em>and</em> a call to it in your code. A defined-but-never-called procedure doesn't count.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A program contains the same 8-line block of code in five different places, differing only in the number used on the first line. Which of the following is the best improvement?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Add a comment above each copy explaining that it is repeated.</li><li><span class="opt-letter">B</span> Write a procedure with a parameter for the differing number and call it in each of the five places.</li><li><span class="opt-letter">C</span> Combine the five copies into one very long block.</li><li><span class="opt-letter">D</span> Rename the variables in each copy so they are distinct.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Duplicated logic with one varying value is exactly what a parameterized procedure is for.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes procedural abstraction?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Storing many values in a list so they can be processed together</li><li><span class="opt-letter">B</span> Using a procedure by knowing its name and what it does, without needing to know how it is implemented</li><li><span class="opt-letter">C</span> Writing a program without any procedures</li><li><span class="opt-letter">D</span> Compressing code so it takes less space</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Procedural abstraction hides implementation behind an interface. Option A describes data abstraction.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Procedural abstraction</dt><dd>using a procedure without needing to know how its internal code works</dd></div><div><dt>Generalization</dt><dd>using parameters so a procedure works for many inputs, not one fixed case</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-12.html"><span class="dir">Previous</span>3.12 Calling Procedures</a>
+  <a class="to-right" href="3-14.html"><span class="dir">Next</span>3.14 Libraries</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

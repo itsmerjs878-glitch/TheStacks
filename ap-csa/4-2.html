@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.2 Introduction to Using Data Sets — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.2</div>
+<h1 class="article-title"><span class="title-num">4.2</span> Introduction to Using Data Sets</h1>
+<p class="article-lede">New in the revised course: a data set is a collection of related records, and programs process it as arrays, ArrayLists, or files.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>data set</strong> is a collection of related data, often organized as records (one per item) with fields (attributes of each item) — like a spreadsheet's rows and columns.</li><li>In Java, a data set is typically stored as an array or ArrayList of values, or of objects where each object is one record.</li><li>Data may come from user input, a text file (4.6), or be built in code.</li><li>Before analysis, data often needs <strong>cleaning</strong>: removing invalid or duplicate entries, standardizing formats, handling missing values.</li><li>Common analyses: summary statistics (sum, average, max, min), filtering records that meet a condition, counting matches, sorting, and finding patterns.</li><li>The structure of the data determines which collection to use: fixed-size known-length → array; growing/shrinking → ArrayList; grid → 2D array.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// a data set of daily temperatures as an array
+double[] temps = {72.5, 68.0, 75.2, 71.8, 69.9};
+double sum = 0;
+for (double t : temps)
+{
+    sum += t;
+}
+double avg = sum / temps.length;   // 71.48
+
+// a data set of records as an ArrayList of objects
+ArrayList&lt;Student&gt; roster = new ArrayList&lt;Student&gt;();
+roster.add(new Student("Ava", 92));
+roster.add(new Student("Ben", 85));</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions here are conceptual: which structure fits which data, and what step (cleaning, filtering, aggregating) a description refers to. The code for all of it comes in the following topics.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A <strong>data set</strong> is structured: records (rows) with fields (columns). In Java, that's usually an array or ArrayList where each element is one record — either a primitive (one field per record) or an object (many fields per record).</li><li><strong>Choosing the structure:</strong> known fixed size → array. Size changes → ArrayList. Grid/table with rows and columns → 2D array. Records with multiple fields → array or ArrayList of objects of a class you define.</li><li><strong>Cleaning</strong> before analysis: consistent format (dates, capitalization, units), handle missing values (skip, default, or flag), remove duplicates, validate ranges. Without cleaning, an average with a stray −999 sentinel value is garbage.</li><li><strong>Transformation:</strong> computing new fields from existing ones — a BMI from height and weight, a total from unit price and quantity. Usually a loop that reads fields and writes a new value.</li><li><strong>Summary statistics</strong> (count, sum, mean, min, max, frequency) are the sum/count/max algorithms from Unit 2 applied to a data set. <strong>Filtering</strong> (records matching a condition) is a loop with an if. <strong>Sorting</strong> (4.15) enables binary search and ordered output.</li><li>Data comes from <strong>user input</strong> (Scanner), <strong>files</strong> (4.6), or is <strong>hard-coded</strong> for testing. The processing code is the same regardless of source.</li><li>The revised CED added this topic so that FRQ 3 (ArrayList data analysis) has a conceptual foundation: you're not just manipulating a list, you're analyzing a data set.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Choosing an array when size is unknown.</strong> ArrayList.</li><li><strong>Analyzing before cleaning.</strong> Questions that show inconsistent data want cleaning first.</li><li><strong>Storing records as parallel arrays.</strong> An array of names and a separate array of scores is fragile. One object per record is the CED's model.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A program must store the names of students who sign up for a club over the course of a semester; the number is not known in advance. Which structure is most appropriate?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> An int</li><li><span class="opt-letter">B</span> An array of fixed size</li><li><span class="opt-letter">C</span> An ArrayList</li><li><span class="opt-letter">D</span> A 2D array</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Unknown, changing size means ArrayList.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A data set of survey responses contains some entries with a blank age field. Removing or replacing these entries before computing the average age is an example of which step?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Sorting</li><li><span class="opt-letter">B</span> Data cleaning</li><li><span class="opt-letter">C</span> Encapsulation</li><li><span class="opt-letter">D</span> Recursion</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Handling invalid or missing values is data cleaning.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data set</dt><dd>a collection of related records, each with fields</dd></div><div><dt>Record</dt><dd>one item in a data set, such as one row</dd></div><div><dt>Data cleaning</dt><dd>fixing or removing invalid, duplicate, or missing data before analysis</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-1.html"><span class="dir">Previous</span>4.1 Ethical and Social Issues Around Data Collection</a>
+  <a class="to-right" href="4-3.html"><span class="dir">Next</span>4.3 Array Creation and Access</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

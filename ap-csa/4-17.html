@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.17 Recursive Searching and Sorting — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-17.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.17</div>
+<h1 class="article-title"><span class="title-num">4.17</span> Recursive Searching and Sorting</h1>
+<p class="article-lede">Binary search written recursively, and merge sort — the divide-and-conquer sort that's faster than selection and insertion. Trace, don't write.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Recursive binary search:</strong> the same halving as the loop version, but each half-search is a recursive call with updated <code>low</code>/<code>high</code>. Base case: <code>low &gt; high</code> (not found) or the middle matches.</li><li><strong>Merge sort:</strong> split the array in half, recursively sort each half, then <strong>merge</strong> the two sorted halves into one sorted array.</li><li>The merge step walks through both halves with two indices, copying the smaller front element each time, then copying any leftovers.</li><li>Merge sort's base case is a sub-array of one element (already sorted).</li><li>Merge sort is <strong>faster</strong> than selection or insertion sort for large inputs — roughly n log n operations instead of n². It needs extra memory for the temporary merged array.</li><li>The exam may show the array at some stage of merge sort (halves sorted, not yet merged) and ask which stage or which algorithm.</li><li>Both algorithms illustrate <strong>divide and conquer</strong>: split, solve pieces recursively, combine.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public static int bs(int[] a, int t, int low, int high)
+{
+    if (low &gt; high) return -1;             // base: not found
+    int mid = (low + high) / 2;
+    if (a[mid] == t) return mid;          // base: found
+    if (a[mid] &lt; t) return bs(a, t, mid + 1, high);
+    return bs(a, t, low, mid - 1);
+}
+
+// merge sort on {8, 3, 5, 1}:
+//   split → {8, 3} and {5, 1}
+//   sort each → {3, 8} and {1, 5}
+//   merge → compare 3 vs 1 → 1; 3 vs 5 → 3; 8 vs 5 → 5; leftover 8
+//   result {1, 3, 5, 8}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For merge sort traces, the snapshot after the recursive sorts but before the final merge shows two independently sorted halves — that's the give-away. For recursive binary search, count the calls the same way as 4.14 counts comparisons.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Recursive binary search</strong> takes the range as parameters: <code>bs(a, target, low, high)</code>. Base cases: <code>low &gt; high</code> → −1; <code>a[mid] == target</code> → mid. Otherwise recurse on one half. Same comparisons as the iterative version; the exam may show either.</li><li><strong>Merge sort:</strong> if the range has ≤ 1 element, done. Otherwise split at the middle, sort each half recursively, merge. The recursion goes all the way down to single elements before any merging happens.</li><li><strong>Merge step:</strong> two indices, one per half, walking forward. Compare the elements at the indices, copy the smaller into the output, advance that index. When one half runs out, copy the rest of the other. This produces a sorted combination of two sorted inputs.</li><li><strong>Snapshots:</strong> after the recursive sorts and before the final merge, each half is sorted independently — that's the identifying state. During the merge, the output fills left to right with the globally smallest remaining.</li><li><strong>Efficiency:</strong> log₂ n levels of splitting, each level does n work merging → n log n total. For n = 1,000,000: ~20 million operations vs. ~500 billion for selection sort.</li><li><strong>Cost:</strong> merge sort needs a temporary array of size n. Selection/insertion sort in place. Space vs. time trade-off.</li><li><strong>Divide and conquer</strong> is the general name: split the problem, solve pieces recursively, combine. Binary search (discard half), merge sort (sort halves and merge), and many others share the pattern.</li><li>You trace these; you don't write them. Know what each stage looks like and how many operations each takes.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Thinking merge sort merges before both halves are sorted.</strong> Recursion completes first.</li><li><strong>Picking a snapshot where halves aren't independently sorted as "before the merge."</strong> Both halves must be sorted.</li><li><strong>Saying merge sort uses less memory.</strong> More. It's faster, not smaller.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> During a merge sort of <code>{7, 2, 9, 4, 6, 1}</code>, which of the following could be the state of the array just before the final merge?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> {2, 7, 9, 1, 4, 6}</li><li><span class="opt-letter">B</span> {1, 2, 4, 6, 7, 9}</li><li><span class="opt-letter">C</span> {2, 7, 9, 4, 6, 1}</li><li><span class="opt-letter">D</span> {1, 2, 4, 7, 9, 6}</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Before the final merge, each half is sorted independently: {2, 7, 9} and {1, 4, 6}.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes why merge sort is preferred over selection sort for very large arrays?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Merge sort uses less memory.</li><li><span class="opt-letter">B</span> Merge sort performs roughly n log n operations rather than n², so it is much faster as n grows.</li><li><span class="opt-letter">C</span> Merge sort does not require recursion.</li><li><span class="opt-letter">D</span> Selection sort only works on sorted arrays.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The n log n vs n² gap is the reason. Merge sort actually uses more memory.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Merge sort</dt><dd>recursively sort halves, then merge them</dd></div><div><dt>Merge</dt><dd>combining two sorted sequences into one sorted sequence</dd></div><div><dt>Divide and conquer</dt><dd>split a problem into smaller instances, solve recursively, combine</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-16.html"><span class="dir">Previous</span>4.16 Recursion</a>
+  <a class="to-right" href="unit-4.html"><span class="dir">Back to</span>Unit 4 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

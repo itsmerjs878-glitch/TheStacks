@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.9 Implementing Selection and Iteration Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-9.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.9</div>
+<h1 class="article-title"><span class="title-num">2.9</span> Implementing Selection and Iteration Algorithms</h1>
+<p class="article-lede">The CED lists specific algorithms you should be able to write and recognize. These are the shapes FRQ 1 is built from.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Named algorithms the CED expects:</strong> compute a sum or average; count values meeting a condition; find the minimum or maximum; check whether a number is even/odd or divisible; compute the digits of an integer; determine whether a number is prime; find the frequency of a condition.</li><li><strong>Sum/count pattern:</strong> initialize to 0 before the loop, update inside. Average = sum ÷ count, cast to double if needed.</li><li><strong>Max/min pattern:</strong> initialize to the first value (or an extreme like <code>Integer.MIN_VALUE</code>), compare each value, replace if better.</li><li><strong>Digit extraction:</strong> <code>n % 10</code> is the last digit; <code>n / 10</code> removes it. Loop while <code>n &gt; 0</code>.</li><li><strong>Divisibility:</strong> <code>a % b == 0</code>. <strong>Prime:</strong> loop from 2 to n−1 (or √n) checking for a divisor; if none, prime.</li><li><strong>Early exit:</strong> a <code>return</code> inside the loop ends the method at the first match — used in "is there any…" checks.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// sum of the digits of a positive int
+public static int digitSum(int n)
+{
+    int sum = 0;
+    while (n &gt; 0)
+    {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+// digitSum(4712): 2, then 1, then 7, then 4 → 14
+
+// is n prime?
+public static boolean isPrime(int n)
+{
+    if (n &lt; 2) return false;
+    for (int d = 2; d &lt; n; d++)
+    {
+        if (n % d == 0) return false;
+    }
+    return true;
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> On FRQ 1, the rubric gives separate points for the loop, the condition, the update, and the return. Even if the logic isn't perfect, a correctly structured loop with the right variable initialized earns credit. Write the skeleton first, then fill in the condition.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's <strong>named algorithms</strong> for this topic: compute a sum, average, minimum, or maximum of a set of numbers; count values with a property; determine even/odd or divisibility; process the digits of an integer; determine whether a number is prime; compute the frequency of a condition. FRQ 1 draws directly from these.</li><li><strong>Accumulator initialization:</strong> sum starts at 0, product at 1, count at 0, max at the first value (or <code>Integer.MIN_VALUE</code>), min at the first value (or <code>Integer.MAX_VALUE</code>). Wrong initialization is the most common logic error the exam plants.</li><li><strong>Average</strong> needs a double: <code>(double) sum / count</code> or <code>sum / (double) count</code>. Casting after dividing (<code>(double) (sum / count)</code>) is the trap — the truncation already happened.</li><li><strong>Digit processing:</strong> while <code>n &gt; 0</code>: last digit is <code>n % 10</code>; drop it with <code>n /= 10</code>. This processes digits right to left. Count digits, sum them, reverse the number, check for a digit — all this loop.</li><li><strong>Prime check:</strong> n &lt; 2 is not prime. For d from 2 to n − 1 (or to √n), if <code>n % d == 0</code>, not prime. If the loop completes, prime. Early return inside the loop is the clean way.</li><li><strong>Divisibility:</strong> <code>a % b == 0</code>. Even: <code>n % 2 == 0</code>. Multiple of 5: <code>n % 5 == 0</code>.</li><li><strong>FRQ 1 rubric shape:</strong> points for the loop header, the correct condition, the correct update/accumulation, and the return. Structure earns points even when a detail is off — so always write the full skeleton.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>max = 0 for a list that could be all negative.</strong> Initialize to the first element.</li><li><strong>Integer average.</strong> <code>sum / count</code> with two ints truncates. Cast one operand.</li><li><strong>Prime loop that starts at 1.</strong> Every number is divisible by 1. Start at 2.</li><li><strong>Processing digits with a for loop over a String.</strong> Works, but the CED's method is % and /. Know both.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What does the following method return when called with <code>n = 3407</code>?
+<pre class="code">public static int mystery(int n)
+{
+    int count = 0;
+    while (n &gt; 0)
+    {
+        if (n % 10 % 2 == 1)
+        {
+            count++;
+        }
+        n /= 10;
+    }
+    return count;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 2</li><li><span class="opt-letter">B</span> 3</li><li><span class="opt-letter">C</span> 4</li><li><span class="opt-letter">D</span> 14</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> It counts odd digits. Digits 7, 0, 4, 3: odd ones are 7 and 3 → 2.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> The following code is intended to find the largest value among <code>a</code>, <code>b</code>, and <code>c</code>.
+<pre class="code">int max = 0;
+if (a &gt; max) max = a;
+if (b &gt; max) max = b;
+if (c &gt; max) max = c;</pre>For which inputs does it give the wrong answer?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> When all three are positive</li><li><span class="opt-letter">B</span> When all three are negative</li><li><span class="opt-letter">C</span> When two values are equal</li><li><span class="opt-letter">D</span> It is always correct</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> If all values are negative, none exceed 0, so max stays 0 — wrong. Initialize to a first value instead.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Accumulator</dt><dd>a variable that collects a running total or count across iterations</dd></div><div><dt>Digit extraction</dt><dd>using % 10 and / 10 to process an integer's digits</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-8.html"><span class="dir">Previous</span>2.8 for Loops</a>
+  <a class="to-right" href="2-10.html"><span class="dir">Next</span>2.10 Implementing String Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

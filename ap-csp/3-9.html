@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.9 Developing Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-9.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.9</div>
+<h1 class="article-title"><span class="title-num">3.9</span> Developing Algorithms</h1>
+<p class="article-lede">An algorithm is a finite set of instructions that solves a problem. This topic is about how the three building blocks combine and the standard patterns you're expected to recognize on sight.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>An <strong>algorithm</strong> is a finite sequence of precise instructions that accomplishes a task. It must end.</li><li>Every algorithm is built from <strong>sequencing</strong>, <strong>selection</strong>, and <strong>iteration</strong>. The exam asks you to identify which one a code fragment illustrates.</li><li>Algorithms can be expressed in natural language, flowcharts, pseudocode, or code — the same algorithm in different forms is still the same algorithm.</li><li>Different algorithms can solve the same problem; they may differ in efficiency or clarity but produce the same result.</li><li><strong>Standard patterns to recognize:</strong> finding the <em>max/min</em> (track the best so far), computing a <em>sum or average</em> (accumulator), <em>counting</em> items that meet a condition, checking whether a value is <em>present</em> in a list, and building a new list from filtered elements.</li><li>Existing algorithms can be <strong>combined or modified</strong> to solve new problems — you don't start from scratch every time.</li><li>Reading an algorithm: identify what's initialized, what changes each iteration, and what's true when it stops. That reveals its purpose.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p><strong>Find the largest value in a list</strong> — the canonical pattern:</p>
+<pre class="code">biggest ← nums[1]
+FOR EACH n IN nums
+{
+    IF (n > biggest)
+    {
+        biggest ← n
+    }
+}
+DISPLAY(biggest)</pre>
+<p>Initialize to the first element (never to 0 — that fails for all-negative lists), compare each element, keep the winner. Swap <code>&gt;</code> for <code>&lt;</code> and it finds the minimum. Replace the IF with <code>total ← total + n</code> and it sums. Recognizing these variants is faster than re-deriving them.</p>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csp-max"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> When asked "what does this algorithm do," don't trace with random values — trace with a tiny list of 3 items and watch what the tracked variable equals at the end. The initialization line usually tells you the pattern before you've read anything else.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's definition of an algorithm has three properties: it's a <strong>finite</strong> set of instructions (it ends), the instructions are <strong>precise</strong> (no ambiguity), and following them <strong>accomplishes a task</strong>. "Add salt to taste" fails precision; "count forever" fails finiteness.</li><li>Every algorithm can be built from the three control structures: <strong>sequencing</strong>, <strong>selection</strong>, and <strong>iteration</strong>. This is a theoretical result, and the exam treats it as a fact you should know. There's no fourth structure you need.</li><li>The same algorithm can be written in <strong>many forms</strong> — natural language, flowchart, pseudocode, any programming language — and it's still the same algorithm. Questions may show a flowchart and ask which pseudocode matches, or vice versa.</li><li><strong>Different algorithms can solve the same problem.</strong> To find the maximum, you could scan once tracking the largest, or sort and take the last element. Both work; they differ in efficiency (3.17).</li><li><strong>Recognizing a pattern from its initialization:</strong> <code>x ← list[1]</code> before a loop with a comparison → finding min or max. <code>x ← 0</code> before a loop with <code>x ← x + …</code> → sum or count. <code>found ← false</code> before a loop → searching. Read the setup line first.</li><li><strong>Modifying an existing algorithm</strong> — changing &gt; to &lt; to find min instead of max, or changing a count into a sum — is a named skill. The exam gives working code and asks what single change achieves a new goal.</li><li>The CED expects you to know these specific algorithms: finding max/min, computing sum/average, counting elements meeting a condition, determining whether a value is in a list, and combining or reordering lists. These appear as both "what does this do" and "which code does this" questions.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Initializing max to 0.</strong> Fails for lists of all negative numbers. Correct: initialize to the first element. The exam asks "for which list does this algorithm fail" — the answer is the all-negative list.</li><li><strong>Tracing with a realistic list.</strong> Use three elements. It's enough to see the pattern and short enough not to make arithmetic mistakes.</li><li><strong>Confusing count and sum.</strong> <code>count ← count + 1</code> counts. <code>sum ← sum + item</code> sums. Look at what's being added.</li><li><strong>Assuming a flowchart is a different algorithm.</strong> Form doesn't matter; logic does.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What does the following code display, where <code>vals ← [4, 9, 2, 7]</code>?
+<pre class="code">count ← 0
+FOR EACH v IN vals
+{
+    IF (v > 5)
+    {
+        count ← count + 1
+    }
+}
+DISPLAY(count)</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 2</li><li><span class="opt-letter">B</span> 4</li><li><span class="opt-letter">C</span> 16</li><li><span class="opt-letter">D</span> 22</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> This is the counting pattern. Values greater than 5 are 9 and 7 → count = 2.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A programmer wants to modify the algorithm below so it finds the smallest value instead of the largest.
+<pre class="code">best ← list[1]
+FOR EACH x IN list
+{
+    IF (x > best)
+    {
+        best ← x
+    }
+}</pre>Which single change accomplishes this?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Change <code>best ← list[1]</code> to <code>best ← 0</code></li><li><span class="opt-letter">B</span> Change <code>x > best</code> to <code>x < best</code></li><li><span class="opt-letter">C</span> Change <code>best ← x</code> to <code>x ← best</code></li><li><span class="opt-letter">D</span> Remove the IF statement</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Flipping the comparison makes it track the smallest value seen. Initializing to 0 would break the algorithm for lists of positive numbers.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Algorithm</dt><dd>a finite set of precise instructions that accomplishes a task</dd></div><div><dt>Sequencing</dt><dd>statements executed in order</dd></div><div><dt>Selection</dt><dd>choosing a path with a conditional</dd></div><div><dt>Iteration</dt><dd>repeating with a loop</dd></div><div><dt>Accumulator</dt><dd>a variable that builds up a result, such as a running total, across iterations</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-8.html"><span class="dir">Previous</span>3.8 Iteration</a>
+  <a class="to-right" href="3-10.html"><span class="dir">Next</span>3.10 Lists</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csp-max": {"id": "csp-max", "title": "Find the maximum with FOR EACH", "course": "ap-csp", "code": ["nums ← [4, 9, 2, 7]", "biggest ← nums[1]", "FOR EACH n IN nums", "{", "    IF (n > biggest)", "    {", "        biggest ← n", "    }", "}", "DISPLAY(biggest)"], "steps": [{"line": 0, "vars": [["nums", "[4, 9, 2, 7]"]], "out": "", "note": "the list"}, {"line": 1, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"]], "out": "", "note": "start with the first element"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "4"]], "out": "", "note": "next element: n = 4"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "4"]], "out": "", "note": "is 4 > 4? no"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "9"]], "out": "", "note": "next element: n = 9"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "4"], ["n", "9"]], "out": "", "note": "is 9 > 4? yes"}, {"line": 6, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "9"]], "out": "", "note": "new biggest: 9"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "2"]], "out": "", "note": "next element: n = 2"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "2"]], "out": "", "note": "is 2 > 9? no"}, {"line": 2, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "", "note": "next element: n = 7"}, {"line": 4, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "", "note": "is 7 > 9? no"}, {"line": 9, "vars": [["nums", "[4, 9, 2, 7]"], ["biggest", "9"], ["n", "7"]], "out": "9 ", "note": "loop done; display 9"}], "intro": "The standard max pattern. Note biggest is initialized to the first element, never to 0."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

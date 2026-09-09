@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.5 Compound Boolean Expressions — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-5.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.5</div>
+<h1 class="article-title"><span class="title-num">2.5</span> Compound Boolean Expressions</h1>
+<p class="article-lede">Combine conditions with && and ||, negate with !. Short-circuit evaluation is the concept that turns into exam questions.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>!a</code> is true when a is false. <code>a &amp;&amp; b</code> is true only when both are true. <code>a || b</code> is true when at least one is.</li><li>Precedence: <code>!</code> first, then <code>&amp;&amp;</code>, then <code>||</code>. Relational operators bind tighter than all three. Use parentheses to be safe.</li><li><strong>Short-circuit evaluation:</strong> for <code>a &amp;&amp; b</code>, if a is false, b is <em>never evaluated</em>. For <code>a || b</code>, if a is true, b is never evaluated.</li><li>Short-circuiting prevents errors: <code>if (s != null &amp;&amp; s.length() &gt; 0)</code> is safe because the length call is skipped when s is null. Reversed, it would crash.</li><li>Also prevents division by zero: <code>if (d != 0 &amp;&amp; n / d &gt; 2)</code>.</li><li>Compound conditions can replace nested ifs: <code>if (a) { if (b) { ... } }</code> ≡ <code>if (a &amp;&amp; b) { ... }</code> when there are no else branches.</li><li><code>!(x &gt; 5)</code> is <code>x &lt;= 5</code> — the negation includes the boundary.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int age = 17;
+boolean permit = true;
+boolean canDrive = age &gt;= 16 &amp;&amp; permit;              // true
+boolean discount = age &lt; 13 || age &gt;= 65;              // false
+boolean neither = !(age &lt; 13 || age &gt;= 65);            // true
+
+String s = null;
+if (s != null &amp;&amp; s.length() &gt; 3)   // safe: second part skipped
+{
+    ...
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For "which condition is safe" questions, the null or zero check must come <em>first</em> in an <code>&amp;&amp;</code>. For evaluation questions, compute each relational part to true/false, then apply ! → &amp;&amp; → ||.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Precedence:</strong> <code>!</code> (highest, unary) → <code>&amp;&amp;</code> → <code>||</code> (lowest). And all three are below relational operators. <code>a || b &amp;&amp; c</code> is <code>a || (b &amp;&amp; c)</code>.</li><li><strong>Short-circuit is guaranteed, not optional.</strong> Java's <code>&amp;&amp;</code> and <code>||</code> <em>always</em> skip the right operand when the left decides. This is what makes null-guards and zero-guards safe: <code>x != null &amp;&amp; x.method()</code> never calls the method on null.</li><li><strong>Order of the guard matters.</strong> <code>s.length() &gt; 0 &amp;&amp; s != null</code> is wrong — the length call happens first and crashes on null. Guard first, use second.</li><li><code>||</code> short-circuits on true: <code>x == 0 || 10 / x &gt; 2</code> is safe because when x is 0, the division never runs.</li><li><strong>Three or more operands:</strong> <code>a &amp;&amp; b &amp;&amp; c</code> is true only if all three are; evaluated left to right, stopping at the first false. <code>a || b || c</code> stops at the first true.</li><li>Compound conditions replace nested ifs when there are no elses. <code>if (a &amp;&amp; b)</code> ≡ <code>if (a) { if (b) … }</code>. <code>if (a || b)</code> ≡ two separate ifs with the same body — except the body would run twice if both are true, so they're not quite equivalent.</li><li><code>!(a &amp;&amp; b)</code> is <em>not</em> <code>!a &amp;&amp; !b</code>. It's <code>!a || !b</code> (2.6).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Guarding after using.</strong> <code>arr[i] == 5 &amp;&amp; i &lt; arr.length</code> crashes when i is out of bounds. Put the bound check first.</li><li><strong>Misgrouping mixed && and ||.</strong> && binds tighter. Add parentheses mentally.</li><li><strong>Thinking both sides always evaluate.</strong> They don't. The exam asks "does the method on the right ever get called" — and with short-circuit, the answer can be no.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> For which values of <code>x</code> is <code>x &gt; 3 &amp;&amp; x &lt; 10 || x == 0</code> true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Only x from 4 to 9</li><li><span class="opt-letter">B</span> x from 4 to 9, or x equal to 0</li><li><span class="opt-letter">C</span> Only x equal to 0</li><li><span class="opt-letter">D</span> x from 3 to 10</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> && binds tighter than ||: (x > 3 && x < 10) || x == 0. That's 4–9, or 0.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Consider <code>if (arr.length &gt; 0 &amp;&amp; arr[0] == 5)</code>. Which best explains why this is safe even when <code>arr</code> has zero elements?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Java checks all array indices at compile time.</li><li><span class="opt-letter">B</span> Because of short-circuit evaluation, <code>arr[0]</code> is never evaluated when <code>arr.length &gt; 0</code> is false.</li><li><span class="opt-letter">C</span> <code>arr[0]</code> returns 0 for empty arrays.</li><li><span class="opt-letter">D</span> The condition always evaluates both parts, so it is not safe.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> && stops as soon as the left side is false, so the out-of-bounds access never happens.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>&& (and)</dt><dd>true only when both operands are true</dd></div><div><dt>|| (or)</dt><dd>true when at least one operand is true</dd></div><div><dt>! (not)</dt><dd>negates a boolean</dd></div><div><dt>Short-circuit evaluation</dt><dd>the right operand of && or || is skipped when the left operand decides the result</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-4.html"><span class="dir">Previous</span>2.4 Nested if Statements</a>
+  <a class="to-right" href="2-6.html"><span class="dir">Next</span>2.6 Comparing Boolean Expressions</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

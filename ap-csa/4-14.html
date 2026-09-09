@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.14 Searching Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-14.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.14</div>
+<h1 class="article-title"><span class="title-num">4.14</span> Searching Algorithms</h1>
+<p class="article-lede">Two searches: linear works on anything, binary needs sorted data and is much faster. The exam counts comparisons.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Linear (sequential) search:</strong> check each element from the start until found or the end is reached. Returns the index or −1. Works on any array or ArrayList.</li><li>Linear search worst case: <em>n</em> comparisons (element absent or last).</li><li><strong>Binary search:</strong> requires a <strong>sorted</strong> array. Compare the target to the middle; if equal, done; if smaller, search the left half; if larger, the right half. Repeat until found or the range is empty.</li><li>Binary search implementation uses <code>low</code>, <code>high</code>, and <code>mid = (low + high) / 2</code>; adjust <code>high = mid - 1</code> or <code>low = mid + 1</code>; loop while <code>low &lt;= high</code>.</li><li>Binary search worst case: about log₂ n comparisons — for 1,000 elements, about 10. The exam asks "how many elements are examined" for a given target: trace the mid values.</li><li>Binary search on an unsorted array gives wrong answers, not an error.</li><li>Both searches can be written for ArrayLists using <code>get</code> and <code>size</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public static int binarySearch(int[] a, int target)
+{
+    int low = 0;
+    int high = a.length - 1;
+    while (low &lt;= high)
+    {
+        int mid = (low + high) / 2;
+        if (a[mid] == target) return mid;
+        else if (a[mid] &lt; target) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}
+// a = {2, 5, 8, 12, 16, 23, 38}, target 23
+// mid=3 (12) &lt; 23 → low=4; mid=5 (23) → found. 2 comparisons.</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-binary-search"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> For "how many times is the target compared," trace mid: write low, high, mid, and the element at mid on each pass. For "which search should be used," unsorted → linear; sorted and large → binary. And binary search's <code>mid</code> uses integer division — truncation matters.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Linear search</strong> works on anything, needs no preparation, returns the index of the first match or −1 (or a boolean). Worst case n comparisons. It's the right choice for one-off searches on unsorted data.</li><li><strong>Binary search</strong> needs sorted data. <code>low</code>/<code>high</code> bracket the remaining range; <code>mid = (low + high) / 2</code>; compare, then discard half by moving low or high <em>past</em> mid. Loop while <code>low &lt;= high</code>. If they cross, not found.</li><li><strong>Trace protocol:</strong> a table with columns low, high, mid, a[mid], action. One row per comparison. "How many elements are examined" = number of rows.</li><li><strong>mid uses integer division</strong>, so for an even-size range it picks the lower middle. With <code>low = 0, high = 7</code>, mid = 3, not 3.5 or 4.</li><li><strong>Adjust past mid:</strong> <code>low = mid + 1</code> or <code>high = mid - 1</code>. Setting <code>low = mid</code> can loop forever when low and high differ by 1.</li><li><strong>Comparisons:</strong> up to ⌊log₂ n⌋ + 1. For n = 1000, 10. For a million, 20. Linear would be up to n.</li><li><strong>On an unsorted array</strong>, binary search doesn't throw — it just returns wrong answers (may miss a present element). The exam asks "why did this return −1 even though the element is there" → not sorted.</li><li><strong>On ArrayLists</strong>: same algorithm with <code>get(mid)</code> and <code>size()</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Setting low = mid or high = mid.</strong> Off by one; possible infinite loop.</li><li><strong>Rounding mid up.</strong> Integer division rounds down.</li><li><strong>Miscounting comparisons.</strong> One per loop iteration. The found step counts.</li><li><strong>Using binary search on unsorted data.</strong> Wrong answers, not errors.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A binary search is performed on the sorted array <code>{1, 4, 7, 10, 13, 16, 19, 22}</code> for the value 4. Which elements are compared to the target, in order?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 10, 4</li><li><span class="opt-letter">B</span> 10, 7, 4</li><li><span class="opt-letter">C</span> 13, 7, 4</li><li><span class="opt-letter">D</span> 1, 4</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> low=0, high=7, mid=3 → 10. 4 < 10 → high=2. mid=1 → 4. Found. Two comparisons: 10, then 4.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is true about binary search?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> It works on any array regardless of order.</li><li><span class="opt-letter">B</span> It requires the array to be sorted and eliminates about half the remaining elements with each comparison.</li><li><span class="opt-letter">C</span> It always examines every element.</li><li><span class="opt-letter">D</span> It is slower than linear search for large arrays.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Sorted input and halving are the two defining properties.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Linear search</dt><dd>checking elements one by one until the target is found</dd></div><div><dt>Binary search</dt><dd>repeatedly halving a sorted range to locate a target</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-13.html"><span class="dir">Previous</span>4.13 Implementing 2D Array Algorithms</a>
+  <a class="to-right" href="4-15.html"><span class="dir">Next</span>4.15 Sorting Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-binary-search": {"id": "csa-binary-search", "title": "Binary search — tracking low, high, mid", "course": "ap-csa", "code": ["// a = {1, 4, 7, 10, 13, 16, 19, 22}, target = 4", "int low = 0;", "int high = a.length - 1;", "while (low <= high)", "{", "    int mid = (low + high) / 2;", "    if (a[mid] == target) return mid;", "    else if (a[mid] < target) low = mid + 1;", "    else high = mid - 1;", "}", "return -1;"], "steps": [{"line": 1, "vars": [["low", "0"]], "out": "", "note": "low = 0"}, {"line": 2, "vars": [["low", "0"], ["high", "7"]], "out": "", "note": "high = 7"}, {"line": 3, "vars": [["low", "0"], ["high", "7"]], "out": "", "note": "check low <= high: 0 <= 7"}, {"line": 5, "vars": [["low", "0"], ["high", "7"], ["mid", "3"]], "out": "", "note": "mid = (0 + 7) / 2 = 3; a[mid] = 10"}, {"line": 6, "vars": [["low", "0"], ["high", "7"], ["mid", "3"], ["comparisons", "1"]], "out": "", "note": "is a[3] = 10 equal to 4? no"}, {"line": 8, "vars": [["low", "0"], ["high", "2"], ["mid", "3"], ["comparisons", "1"]], "out": "", "note": "10 > 4; search left half: high = 2"}, {"line": 3, "vars": [["low", "0"], ["high", "2"]], "out": "", "note": "check low <= high: 0 <= 2"}, {"line": 5, "vars": [["low", "0"], ["high", "2"], ["mid", "1"]], "out": "", "note": "mid = (0 + 2) / 2 = 1; a[mid] = 4"}, {"line": 6, "vars": [["low", "0"], ["high", "2"], ["mid", "1"], ["comparisons", "2"]], "out": "", "note": "is a[1] = 4 equal to 4? yes → return 1"}], "intro": "Count the comparisons: elements 10 then 4 were examined. Two steps to find the target."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

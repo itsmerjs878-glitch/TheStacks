@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.14 Calling Instance Methods — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-14.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.14</div>
+<h1 class="article-title"><span class="title-num">1.14</span> Calling Instance Methods</h1>
+<p class="article-lede">Instance methods operate on a specific object. The call syntax is object-dot-method, and the exam expects you to classify methods by what they do.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Instance methods</strong> are called on an object: <code>obj.method(args)</code>. The method operates on that object's instance variables.</li><li>An <strong>accessor</strong> (getter) returns information about the object's state without changing it: <code>getName()</code>, <code>length()</code>.</li><li>A <strong>mutator</strong> (setter) changes the object's state; typically <code>void</code>: <code>setAge(5)</code>, <code>deposit(100)</code>.</li><li>Method calls can be chained if each returns an object: <code>s.substring(1).toUpperCase()</code>.</li><li>The dot operator on a null reference throws NullPointerException. The dot operator on a primitive doesn't compile (<code>int</code> has no methods).</li><li>Calling a method with the wrong number or types of arguments, or calling a method the class doesn't have, is a compile-time error.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">Account acct = new Account("Ram", 100.0);
+acct.deposit(50.0);                 // mutator: changes balance
+double b = acct.getBalance();       // accessor: 150.0
+String who = acct.getOwner();       // accessor: "Ram"
+acct.getBalance();                  // legal but pointless: value discarded</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When a question gives you a class's method headers and asks what a code segment does, check each call: is it a mutator (state changed for later lines) or an accessor (value used now)? Track object state in a table just like variables.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>Instance methods are called <strong>on an object</strong> and have access to that object's instance variables. <code>acct.deposit(50)</code> changes <em>that account's</em> balance. Calling it on a different account changes a different balance.</li><li><strong>Accessor</strong> (getter): returns state, doesn't change it. Convention: <code>getX()</code>, or <code>isX()</code> for booleans. <strong>Mutator</strong> (setter): changes state, usually void. Convention: <code>setX(value)</code>, or verbs like <code>deposit</code>, <code>increment</code>.</li><li>A method that both changes state and returns something exists (ArrayList's <code>remove</code> does), but the exam's own classes mostly follow the accessor/mutator split cleanly.</li><li><strong>Method chaining</strong> works when a method returns an object: <code>s.substring(2).toUpperCase().length()</code>. Read left to right: each call operates on what the previous one returned.</li><li>The dot operator requires a <strong>reference to an object</strong>. On a primitive (<code>int x; x.foo()</code>) it's a compile error. On null it's a run-time error. On a valid reference to a class without that method, compile error.</li><li>Calling an accessor and ignoring the result is legal and useless: <code>acct.getBalance();</code> on its own line does nothing observable.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Calling a mutator and expecting a return value.</strong> <code>double b = acct.deposit(50);</code> where deposit is void — compile error.</li><li><strong>Calling a method on a primitive.</strong> <code>int n = 5; n.toString()</code> — compile error. Primitives have no methods.</li><li><strong>Not tracking state across calls.</strong> Two mutator calls in a row compound. Update the object's state in your table after each.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A class <code>Temperature</code> has a method <code>public double getDegrees()</code> and a method <code>public void setDegrees(double d)</code>. Which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>getDegrees</code> is a mutator and <code>setDegrees</code> is an accessor.</li><li><span class="opt-letter">B</span> <code>getDegrees</code> is an accessor and <code>setDegrees</code> is a mutator.</li><li><span class="opt-letter">C</span> Both are accessors.</li><li><span class="opt-letter">D</span> Both are mutators.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> get returns state (accessor); set changes it (mutator).</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following will not compile?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>String s = "hi"; int n = s.length();</code></li><li><span class="opt-letter">B</span> <code>int x = 5; int n = x.length();</code></li><li><span class="opt-letter">C</span> <code>String s = "hi"; String t = s.toUpperCase();</code></li><li><span class="opt-letter">D</span> <code>String s = "hi"; boolean b = s.equals("hi");</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Primitives have no methods. Calling .length() on an int is a compile-time error.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Instance method</dt><dd>a method called on an object that operates on that object's data</dd></div><div><dt>Accessor</dt><dd>a method that returns information about an object without modifying it</dd></div><div><dt>Mutator</dt><dd>a method that changes an object's state</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-13.html"><span class="dir">Previous</span>1.13 Object Creation and Storage (Instantiation)</a>
+  <a class="to-right" href="1-15.html"><span class="dir">Next</span>1.15 String Manipulation</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

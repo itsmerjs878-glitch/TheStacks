@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.4 Constructors — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.4</div>
+<h1 class="article-title"><span class="title-num">3.4</span> Constructors</h1>
+<p class="article-lede">A constructor runs when new is called and sets up the object's initial state. Get the name, the missing return type, and the parameter-to-variable assignments right.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>constructor</strong> has the class's exact name and <strong>no return type</strong> (not even void). <code>public Student(String n) { ... }</code></li><li>Its job is to initialize instance variables, usually from parameters. Every instance variable should get a value here, even if it's a default like 0 or an empty list.</li><li>Constructors can be <strong>overloaded</strong>: a no-argument constructor that sets defaults and a full constructor that takes values.</li><li>If a class has <em>no</em> constructor, Java supplies a default no-argument one. If you write <em>any</em> constructor, that default disappears.</li><li>Parameters that are references (like a String or an array) are copied as references — the object's variable points to the same object the caller passed. For mutable objects this can be a problem; for Strings it's safe because they're immutable.</li><li>A common convention: parameter names differ from instance variable names (<code>n</code> vs <code>name</code>), or use <code>this.name = name</code> (3.9).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Rectangle
+{
+    private double width;
+    private double height;
+
+    public Rectangle()                  // no-arg: defaults
+    {
+        width = 1.0;
+        height = 1.0;
+    }
+
+    public Rectangle(double w, double h)   // full
+    {
+        width = w;
+        height = h;
+    }
+}
+
+Rectangle r1 = new Rectangle();         // 1.0 x 1.0
+Rectangle r2 = new Rectangle(3, 4.5);   // 3.0 x 4.5</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Two mistakes cost FRQ points every year: writing <code>public void Rectangle(...)</code> (the void makes it a method, not a constructor) and assigning parameters to nothing (<code>w = width;</code> backwards). Instance variable on the left, parameter on the right.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A constructor's job: <strong>put every instance variable in a valid initial state</strong>. Usually from parameters, sometimes from defaults (<code>count = 0</code>, <code>items = new ArrayList&lt;&gt;()</code>). A field left uninitialized gets Java's default, which may not be what you want — an uninitialized ArrayList field is null, and calling <code>add</code> on it crashes.</li><li><strong>Signature rules:</strong> name = class name exactly (case matters); no return type at all (not void, not anything); usually public. <code>public Dog(String n)</code> ✓. <code>public void Dog(String n)</code> ✗ (a method that happens to be named Dog). <code>public dog(String n)</code> ✗ (wrong case, won't compile as a constructor).</li><li><strong>Default constructor:</strong> if you write zero constructors, Java gives you <code>public ClassName() {}</code> for free. Write even one constructor and that freebie vanishes — <code>new ClassName()</code> then fails unless you wrote a no-arg constructor yourself.</li><li><strong>Overloaded constructors</strong> give callers options: no-arg with defaults, partial, full. Arguments select which runs. Within one class, they can't have the same parameter types.</li><li><strong>Parameter naming:</strong> either use different names (<code>n</code> → <code>name</code>) or use <code>this.name = name</code> (3.9). Using the same name <em>without</em> <code>this</code> assigns the parameter to itself and leaves the field at its default — a silent bug the exam loves.</li><li><strong>Reference parameters:</strong> if a constructor receives an object (say, an ArrayList) and stores the reference directly, the caller still has a reference to the same list and can modify it behind the object's back. Defensive code copies it. The exam mentions this in 3.6; FRQ 2 rarely requires the copy.</li><li>Constructors can call methods of the class, and can do computation — a <code>Rectangle</code> constructor can compute and store the area. But they can't return a value.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Adding void.</strong> Turns the constructor into a method. The class then has only the default constructor, and <code>new Dog("Rex")</code> won't compile.</li><li><strong>Backwards assignment.</strong> <code>n = name;</code> — the field stays default. Field on the left.</li><li><strong>Same-name parameter without this.</strong> <code>name = name;</code> does nothing useful.</li><li><strong>Expecting the default constructor to survive.</strong> It's gone once you write any constructor.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following is a correctly written constructor for a class named <code>Timer</code> with a <code>private int seconds</code> instance variable?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>public void Timer(int s) { seconds = s; }</code></li><li><span class="opt-letter">B</span> <code>public Timer(int s) { seconds = s; }</code></li><li><span class="opt-letter">C</span> <code>public Timer(int s) { s = seconds; }</code></li><li><span class="opt-letter">D</span> <code>public int Timer(int s) { return s; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> No return type, class name, instance variable assigned from the parameter. A has void (a method), C is backwards, D returns a value.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A class <code>Point</code> defines only the constructor <code>public Point(int x, int y)</code>. Which of the following will not compile?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>Point p = new Point(1, 2);</code></li><li><span class="opt-letter">B</span> <code>Point p = new Point();</code></li><li><span class="opt-letter">C</span> <code>Point p = new Point(0, 0);</code></li><li><span class="opt-letter">D</span> <code>Point p = null;</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Once any constructor is defined, the default no-arg constructor no longer exists.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Constructor</dt><dd>a method with the class's name and no return type that initializes a new object</dd></div><div><dt>No-argument constructor</dt><dd>a constructor with no parameters that sets default values</dd></div><div><dt>Default constructor</dt><dd>the no-arg constructor Java provides only when a class defines none</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-3.html"><span class="dir">Previous</span>3.3 Anatomy of a Class</a>
+  <a class="to-right" href="3-5.html"><span class="dir">Next</span>3.5 Methods: How to Write Them</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.2 Fault Tolerance — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/4-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">BIG IDEA 4: COMPUTER SYSTEMS AND NETWORKS</a> &middot; TOPIC 4.2</div>
+<h1 class="article-title"><span class="title-num">4.2</span> Fault Tolerance</h1>
+<p class="article-lede">The internet keeps working when parts of it break. The reason is redundancy, and the exam wants you to explain it in those terms.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Fault tolerance</strong> is a system's ability to continue functioning correctly when some components fail.</li><li>The internet is fault tolerant because of <strong>redundancy</strong>: there are many possible paths between any two points. If a router or cable fails, packets are re-routed through another path.</li><li>Redundant routing means <strong>no single point of failure</strong> — the internet doesn't depend on any one connection.</li><li>Redundancy has a cost: extra hardware and connections. The trade-off is reliability versus expense.</li><li>The <strong>scalability</strong> of the internet is tied to this design: adding new networks adds more paths, increasing rather than decreasing resilience.</li><li>Fault tolerance applies beyond networks — backup servers, mirrored data, and duplicated power supplies are the same idea.</li><li>A network is more fault tolerant when the removal of any one node still leaves every other node connected. Exam questions often show a diagram and ask which connection's failure would disconnect part of the network.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Picture five routers A–E where A connects to B and C, B connects to D, C connects to D, and D connects to E. If the A–B link fails, traffic from A to E still flows A→C→D→E. The network is fault tolerant for that failure. But D–E is the <em>only</em> link to E: if it fails, E is cut off entirely. D–E is a single point of failure; adding a C–E link would fix it. That's exactly the kind of diagram question the exam uses.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For network-diagram questions, count paths. Ask: for each connection, if I delete it, can every device still reach every other? A connection whose removal isolates a device is the vulnerability. The answer to "how do we improve fault tolerance" is always "add another path."</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Fault tolerance</strong> means a system keeps working <em>correctly</em> — not just stays on — when parts fail. The internet achieves it through <strong>redundancy</strong>: many paths between any two points, so losing one path doesn't cut the connection.</li><li>The formal idea: a network is fault tolerant with respect to a component if removing that component still leaves every remaining node reachable from every other. The exam's diagram questions ask exactly this: which single link's removal would disconnect the network?</li><li><strong>Single point of failure</strong>: a component whose failure alone breaks the system. In a network diagram, a node connected by only one link is a single point of failure for itself. Adding a second link fixes it. The design goal is no single points of failure.</li><li>Redundancy costs money — extra cables, routers, servers. The trade-off is reliability vs. expense. Critical systems (hospitals, financial networks) pay for more redundancy than a home network.</li><li>Redundancy applies to <strong>data</strong> too: backups, mirrored drives, and data replicated across data centers are fault tolerance for storage. If one copy is lost, another exists.</li><li>The internet's fault tolerance is a consequence of its design history: it was built to survive partial destruction. Packets automatically route around dead nodes because each router only needs to know the next hop, not the whole path.</li><li><strong>Scalability</strong> and fault tolerance reinforce each other: adding networks adds paths, which adds redundancy. A bigger internet is a more resilient internet.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Confusing redundancy with sending duplicate packets.</strong> Redundancy is extra <em>paths</em> (and backup components), not repeated transmissions. TCP re-sends packets that are lost, but that's error recovery, not redundancy.</li><li><strong>Not checking every link in a diagram.</strong> The question is usually "which link's failure disconnects the network?" Test each one by mentally removing it.</li><li><strong>Assuming a bigger network is more fragile.</strong> The opposite — more nodes means more alternative paths.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following best explains why the internet is considered fault tolerant?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Every packet is sent multiple times to guarantee delivery.</li><li><span class="opt-letter">B</span> There are multiple paths between devices, so data can be rerouted if a connection fails.</li><li><span class="opt-letter">C</span> All data is stored in a single central location.</li><li><span class="opt-letter">D</span> Routers never fail.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Redundant paths allow rerouting around failures. That's the definition of the internet's fault tolerance.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A small network has four devices. Device P connects only to device Q. Devices Q, R, and S are each connected to the other two. Which of the following is true?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The network has no single point of failure.</li><li><span class="opt-letter">B</span> If the connection between Q and R fails, S can no longer reach P.</li><li><span class="opt-letter">C</span> If the connection between P and Q fails, P is disconnected from the rest of the network.</li><li><span class="opt-letter">D</span> The network is fully fault tolerant.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> P has exactly one connection. Losing it isolates P. Q, R, and S have redundant links to each other.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Fault tolerance</dt><dd>the ability of a system to keep working when components fail</dd></div><div><dt>Redundancy</dt><dd>having multiple copies or paths so a single failure isn't fatal</dd></div><div><dt>Single point of failure</dt><dd>a component whose failure would bring down the system</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-1.html"><span class="dir">Previous</span>4.1 The Internet</a>
+  <a class="to-right" href="4-3.html"><span class="dir">Next</span>4.3 Parallel and Distributed Computing</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

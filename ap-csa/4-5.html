@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.5 Implementing Array Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-5.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.5</div>
+<h1 class="article-title"><span class="title-num">4.5</span> Implementing Array Algorithms</h1>
+<p class="article-lede">The CED names the array algorithms you should be able to write. These are FRQ building blocks — practice until they're reflexive.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Named algorithms:</strong> find min/max; compute sum/average; count elements meeting a condition; determine if any/all elements satisfy a condition; find the mode (most frequent); check for duplicates; reverse the array; shift or rotate elements; check whether an array is sorted; find consecutive pairs.</li><li><strong>Any/all:</strong> "any" loops and returns true at the first match, false after the loop. "All" returns false at the first failure, true after.</li><li><strong>Reverse in place:</strong> swap <code>arr[i]</code> with <code>arr[arr.length - 1 - i]</code> for i from 0 to length/2.</li><li><strong>Shift left by one:</strong> <code>arr[i] = arr[i + 1]</code> for i from 0 to length − 2, then handle the last element. Direction of the loop matters to avoid overwriting.</li><li><strong>Consecutive elements:</strong> compare <code>arr[i]</code> and <code>arr[i + 1]</code> with the loop ending at <code>length - 1</code> (not length).</li><li><strong>Duplicates:</strong> nested loop comparing each pair (i, j with j &gt; i).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// are all elements positive?
+public static boolean allPositive(int[] a)
+{
+    for (int x : a)
+    {
+        if (x &lt;= 0) return false;
+    }
+    return true;
+}
+
+// count adjacent equal pairs
+int pairs = 0;
+for (int i = 0; i &lt; a.length - 1; i++)
+{
+    if (a[i] == a[i + 1]) pairs++;
+}
+
+// reverse in place
+for (int i = 0; i &lt; a.length / 2; i++)
+{
+    int tmp = a[i];
+    a[i] = a[a.length - 1 - i];
+    a[a.length - 1 - i] = tmp;
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Any algorithm touching <code>arr[i + 1]</code> must stop at <code>length - 1</code>; touching <code>arr[i - 1]</code> must start at 1. For "any" vs "all," the return inside the loop is the opposite of the return after it.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED's named array algorithms: min/max, sum/average, count with property, any/all with property, mode (most frequent), duplicates present?, reverse, shift elements left/right, rotate, is-sorted?, consecutive pairs with property. Each has a canonical shape.</li><li><strong>Any:</strong> loop, return true at first match, return false after. <strong>All:</strong> loop, return false at first failure, return true after. The two returns are opposites of each other. "None" is <code>!any</code>.</li><li><strong>Mode:</strong> for each element, count how many times it appears (nested loop or a count array if values are in a known range); track the element with the highest count.</li><li><strong>Duplicates:</strong> nested loops i, j with j &gt; i; if <code>arr[i] == arr[j]</code>, duplicate found. Or sort first and check neighbors.</li><li><strong>Reverse in place:</strong> swap positions i and length−1−i for i from 0 to length/2 (exclusive). Going to length would swap everything back.</li><li><strong>Shift left by one:</strong> <code>for (i = 0; i &lt; length - 1; i++) arr[i] = arr[i + 1];</code> then set the last element (to 0, or to the saved first element for a rotation). <strong>Shift right:</strong> loop <em>backward</em> from length−1 down to 1: <code>arr[i] = arr[i - 1]</code>. Direction matters: going forward while shifting right overwrites before copying.</li><li><strong>Is sorted:</strong> for i from 0 to length−2, if <code>arr[i] &gt; arr[i + 1]</code>, return false. Return true after.</li><li><strong>Consecutive pairs:</strong> any comparison of <code>arr[i]</code> with <code>arr[i + 1]</code> loops i to <code>length - 2</code> (i.e., <code>i &lt; length - 1</code>).</li><li><strong>Building a new array:</strong> when the result size differs from the input, first count how many elements qualify, then create an array of that size, then fill it with a separate index.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Any/all with an else-return inside the loop.</strong> Exits on the first element. Only one return in the loop.</li><li><strong>Reversing with a full-length loop.</strong> Swaps everything twice. Stop at length/2.</li><li><strong>Shifting right with a forward loop.</strong> Copies the first element into every position. Go backward.</li><li><strong>Neighbor comparison to length.</strong> <code>arr[i + 1]</code> throws on the last i. Stop at length − 1.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What does the following method return for <code>{3, 3, 5, 5, 5, 2}</code>?
+<pre class="code">public static int count(int[] a)
+{
+    int c = 0;
+    for (int i = 1; i &lt; a.length; i++)
+    {
+        if (a[i] == a[i - 1]) c++;
+    }
+    return c;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 2</li><li><span class="opt-letter">B</span> 3</li><li><span class="opt-letter">C</span> 4</li><li><span class="opt-letter">D</span> 5</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Pairs (3,3), (5,5), (5,5) match → 3.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> The following method is intended to return true if any element of <code>arr</code> is negative.
+<pre class="code">public static boolean hasNeg(int[] arr)
+{
+    for (int x : arr)
+    {
+        if (x &lt; 0) return true;
+        else return false;
+    }
+    return false;
+}</pre>Which best describes the error?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> It will not compile.</li><li><span class="opt-letter">B</span> It only checks the first element, because the else returns immediately.</li><li><span class="opt-letter">C</span> It throws an exception on an empty array.</li><li><span class="opt-letter">D</span> It works correctly.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The else-return exits on the first element regardless. Remove the else so the loop continues.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>In-place</dt><dd>modifying the array itself rather than building a new one</dd></div><div><dt>Mode</dt><dd>the value that appears most often</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-4.html"><span class="dir">Previous</span>4.4 Array Traversals</a>
+  <a class="to-right" href="4-6.html"><span class="dir">Next</span>4.6 Using Text Files</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

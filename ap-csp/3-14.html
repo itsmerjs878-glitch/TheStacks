@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.14 Libraries — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-14.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.14</div>
+<h1 class="article-title"><span class="title-num">3.14</span> Libraries</h1>
+<p class="article-lede">Libraries are collections of procedures written by someone else. Using them well means reading documentation and understanding what an API promises.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>software library</strong> is a collection of procedures that can be used in other programs — often written and tested by other developers.</li><li>Benefits: save development time, reuse code that's already been debugged, and gain capabilities (graphics, networking, math) you'd otherwise have to build yourself.</li><li>An <strong>API (application programming interface)</strong> specifies how a library's procedures are called: their names, parameters, and what they return. It's the contract between your code and the library.</li><li><strong>Documentation</strong> is essential for using a library correctly — it explains what each procedure does, what it needs, and how it behaves in edge cases. You can't use a library well without it.</li><li>Using a library is procedural abstraction in practice: you call <code>sort(list)</code> without knowing the sorting algorithm inside.</li><li>Libraries are typically imported into a program before their procedures can be called.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Suppose a math library's documentation says: <code>ROUND(x, places)</code> returns x rounded to the given number of decimal places. You never see the rounding code; you just call <code>ROUND(3.14159, 2)</code> and get 3.14. If the documentation had said the second parameter is the number of <em>significant figures</em>, the same call would return 3.1. Reading the API, not guessing, is the skill.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions here are usually scenario-based: a developer wants to add a map to an app. The correct reasoning is "use a library to avoid rewriting tested code," and the correct next step is "read its documentation/API." Any option suggesting you must understand the library's internal implementation is wrong.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A <strong>library</strong> is a collection of procedures (and sometimes data) that other programs can use. The procedures were written, tested, and documented by someone else — that's the value: you don't redo their work.</li><li>An <strong>API</strong> specifies <em>how</em> to use a library: the procedure names, what to pass in, what comes back. You program <em>against</em> the API. The implementation behind it can change without your code changing, as long as the API stays the same.</li><li><strong>Documentation</strong> is the CED's emphasis: you can't use a library correctly without reading how each procedure behaves — what it expects, what it returns, what happens in edge cases. A question describing a developer who "read the documentation to understand the parameters" is describing correct library use.</li><li>Libraries make development <strong>faster</strong> (don't rewrite tested code) and programs <strong>more reliable</strong> (widely-used libraries have had their bugs found). They also give access to capabilities you couldn't build yourself — graphics, networking, machine learning.</li><li>Using a library is <strong>procedural abstraction at scale</strong>: you call <code>sortList(list)</code> without knowing whether it uses merge sort or quicksort. The abstraction is the whole point.</li><li>Libraries are also a <strong>collaboration</strong> mechanism (1.1) — the people who wrote the library are, in effect, on your team.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Assuming you need the source code.</strong> You use a library through its API. Options saying "the developer must understand the library's implementation" are wrong.</li><li><strong>Claiming libraries guarantee correctness.</strong> They're usually well-tested, but calling them with the wrong arguments still produces wrong results — hence documentation.</li><li><strong>Confusing a library with a language feature.</strong> Built-in operators (+, MOD) aren't library calls. A library adds procedures beyond what the language provides.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A programmer wants to display a bar chart in their program. Rather than writing the drawing code from scratch, they use a charting library. Which of the following is the most important reason this approach is effective?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The library's procedures have already been developed and tested, saving time and reducing errors.</li><li><span class="opt-letter">B</span> Programs that use libraries are always shorter.</li><li><span class="opt-letter">C</span> Libraries eliminate the need for documentation.</li><li><span class="opt-letter">D</span> Using a library guarantees the program has no bugs.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Reusing tested code is the core benefit. Libraries don't guarantee bug-free programs or remove the need for documentation.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes an API?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> A type of lossy compression</li><li><span class="opt-letter">B</span> The set of procedures, their parameters, and return values that a library makes available for other programs to call</li><li><span class="opt-letter">C</span> The internal source code of a library</li><li><span class="opt-letter">D</span> A list used to store data</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> An API is the interface — what you can call and how — not the implementation.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Software library</dt><dd>a collection of pre-written procedures that other programs can use</dd></div><div><dt>API</dt><dd>the specification of how to use a library: its procedures, parameters, and return values</dd></div><div><dt>Documentation</dt><dd>written explanation of how a library's procedures behave</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-13.html"><span class="dir">Previous</span>3.13 Developing Procedures</a>
+  <a class="to-right" href="3-15.html"><span class="dir">Next</span>3.15 Random Values</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

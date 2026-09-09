@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.3 Mathematical Expressions — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.3</div>
+<h1 class="article-title"><span class="title-num">3.3</span> Mathematical Expressions</h1>
+<p class="article-lede">Arithmetic in pseudocode follows normal order of operations, with one operator — MOD — that shows up constantly.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>MOD</code>. Standard precedence applies: parentheses first, then <code>*</code> <code>/</code> <code>MOD</code> left to right, then <code>+</code> <code>-</code> left to right.</li><li><code>a MOD b</code> is the <strong>remainder</strong> when <code>a</code> is divided by <code>b</code>. <code>17 MOD 5</code> = 2, <code>20 MOD 4</code> = 0, <code>3 MOD 10</code> = 3 (if a &lt; b, the result is a).</li><li><strong>MOD uses:</strong> <code>n MOD 2 = 0</code> tests for even; <code>n MOD 10</code> gets the last digit; <code>i MOD LENGTH(list)</code> wraps an index around; <code>seconds MOD 60</code> converts to minutes and seconds.</li><li><code>/</code> in AP pseudocode is regular division that can produce decimals (<code>7 / 2</code> = 3.5). There is no integer-division operator on the reference sheet.</li><li>A <strong>sequence</strong> of statements executes in order, one after another. The order changes the result: <code>x ← x * 2</code> then <code>x ← x + 1</code> is not the same as the reverse.</li><li>Arithmetic on values of the wrong type (e.g., adding a number to a string) is an error in most languages.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">a ← 17
+b ← a MOD 5
+c ← a / 5
+d ← (a + 3) MOD 4
+DISPLAY(b)
+DISPLAY(c)
+DISPLAY(d)</pre>
+<p><code>b</code> = 17 MOD 5 = 2. <code>c</code> = 17 / 5 = 3.4. <code>d</code> = 20 MOD 4 = 0. Output: <strong>2 3.4 0</strong>.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Whenever you see MOD, ask "what's the remainder?" and do the long division. For expressions mixing MOD with other operators, put parentheses around the MOD part mentally — MOD has the same precedence as multiplication, so <code>a + b MOD c</code> computes the MOD first.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>MOD's precedence</strong> is the same as multiplication and division — higher than addition and subtraction. <code>10 + 7 MOD 3</code> is <code>10 + 1 = 11</code>, not <code>17 MOD 3 = 2</code>. When operators are the same precedence, evaluate left to right.</li><li><strong>MOD for wraparound:</strong> if you're cycling through positions 1 to n and want to go from n back to 1, the formula is <code>(i MOD n) + 1</code>. Try it: i = n gives (0) + 1 = 1. i = 1 gives 2. This shows up in circular list and clock problems.</li><li><strong>MOD for digit extraction:</strong> <code>n MOD 10</code> is the last digit; <code>n MOD 100</code> is the last two digits. To get other digits you'd need division, and the exam may define an integer-division procedure for that purpose within a question.</li><li><strong>MOD with a smaller left operand:</strong> <code>3 MOD 7</code> is 3 — 7 goes in zero times, remainder 3. Students sometimes answer 0 or 4. The remainder of a small number divided by a bigger one is the small number itself.</li><li>AP pseudocode's <code>/</code> is <strong>real division</strong>: <code>7 / 2</code> is 3.5. Unlike Java or Python 2, there's no integer division operator on the reference sheet. If a question needs integer division, it will define a procedure or use MOD to get the same effect.</li><li>Expressions can nest: <code>((a + b) * c) MOD d</code>. Work inside-out, innermost parentheses first.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Applying MOD last.</strong> <code>a + b MOD c</code> means <code>a + (b MOD c)</code>. Students compute <code>(a + b) MOD c</code>. Same precedence as *, so it goes before +.</li><li><strong>Returning the quotient instead of the remainder.</strong> <code>17 MOD 5</code> is 2 (remainder), not 3 (quotient). MOD is always the leftover.</li><li><strong>Assuming / truncates.</strong> It doesn't in AP pseudocode. <code>9 / 2</code> is 4.5.</li><li><strong>Ignoring statement order.</strong> <code>x ← x + 1</code> then <code>x ← x * 2</code> is not the same as the reverse. Trace in order.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is the value of the expression <code>25 MOD 7</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 3</li><li><span class="opt-letter">B</span> 4</li><li><span class="opt-letter">C</span> 18</li><li><span class="opt-letter">D</span> 3.57</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 7 goes into 25 three times (21), leaving a remainder of 4.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following expressions evaluates to true exactly when the variable <code>n</code> holds an odd integer?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>n MOD 2 = 0</code></li><li><span class="opt-letter">B</span> <code>n MOD 2 = 1</code></li><li><span class="opt-letter">C</span> <code>n / 2 = 1</code></li><li><span class="opt-letter">D</span> <code>n MOD 1 = 0</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Odd numbers leave a remainder of 1 when divided by 2.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is displayed by the following code?
+<pre class="code">x ← 4
+x ← x * 3
+x ← x + 2
+DISPLAY(x MOD 5)</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0</li><li><span class="opt-letter">B</span> 2</li><li><span class="opt-letter">C</span> 4</li><li><span class="opt-letter">D</span> 14</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> x becomes 12, then 14. 14 MOD 5 = 4.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>MOD</dt><dd>the remainder after integer division; a MOD b</dd></div><div><dt>Expression</dt><dd>a combination of values, variables, and operators that evaluates to a single value</dd></div><div><dt>Sequencing</dt><dd>executing statements in order, one after another</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-2.html"><span class="dir">Previous</span>3.2 Data Abstraction</a>
+  <a class="to-right" href="3-4.html"><span class="dir">Next</span>3.4 Strings</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

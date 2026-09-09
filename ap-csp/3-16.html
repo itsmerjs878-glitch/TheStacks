@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.16 Simulations — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-16.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.16</div>
+<h1 class="article-title"><span class="title-num">3.16</span> Simulations</h1>
+<p class="article-lede">A simulation is a program that models a real or imagined situation. The exam tests why we simulate and what's lost when we do.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>simulation</strong> is an abstraction of a more complex object or phenomenon, used to investigate it in a controlled way.</li><li><strong>Why simulate:</strong> the real thing may be too dangerous (crash tests), too expensive, too slow (climate over centuries), too fast, or simply impossible to observe (a bridge that isn't built yet). Simulations can be run many times and with varied parameters.</li><li>Simulations <strong>remove details</strong> and make <strong>simplifying assumptions</strong>. That's what makes them tractable — and what limits their accuracy. Every simulation question wants you to notice this trade-off.</li><li>Because of simplifications, a simulation's results may not match reality; conclusions must account for what was left out.</li><li>Simulations often use <strong>random values</strong> (3.15) to model uncertainty or variation, and are run repeatedly to see the range of outcomes.</li><li>Investigating a simulation: change one parameter at a time and observe the effect. That's how simulations generate hypotheses.</li><li>A simulation is a model, not an experiment on the real system — but it can guide which real experiments are worth running.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A city wants to know whether adding a traffic light reduces accidents. Building the light and waiting a year is slow and risks real crashes. A simulation models cars arriving at random intervals, the light cycling, and drivers' reaction times. It ignores weather, driver distraction, and road conditions — simplifications. Running it 10,000 times shows accidents drop 40% <em>in the model</em>. That's useful for deciding to try the light, but the 40% number shouldn't be quoted as a real-world prediction.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Two answer patterns dominate. "Why use a simulation?" → safety, cost, time, or impossibility of the real thing. "What's a limitation?" → simplifying assumptions mean results may not reflect reality. If an option says a simulation gives "exact" or "guaranteed" real-world results, it's wrong.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>A simulation is an <strong>abstraction</strong> of a real-world process: it keeps the parts that matter for the question being asked and drops the rest. The CED's phrase is that simulations "remove details" and "make assumptions" to simplify.</li><li>The reasons to simulate, per the CED: the real experiment is <strong>impossible</strong> (a future bridge), <strong>dangerous</strong> (a nuclear reaction), <strong>expensive</strong> (a rocket launch), <strong>too slow</strong> (centuries of climate), or <strong>too fast</strong> (a chemical reaction). Simulations are also <strong>repeatable</strong> with changed parameters.</li><li>The core limitation: because details were removed, <strong>the simulation may not match reality</strong>. Results are only as good as the assumptions. A simulation that assumes every person has the same number of daily contacts will mispredict a disease that spreads through super-spreaders.</li><li><strong>Random values</strong> in a simulation model real-world variability. Running the simulation many times and looking at the distribution of results is how you get useful predictions from a random model — a single run tells you one possibility.</li><li><strong>Investigating with simulation:</strong> change one input, hold the others constant, observe the change in output. That's how simulations generate hypotheses about the real system.</li><li>A simulation can be <strong>biased</strong> in the same ways data can: if the assumptions reflect one group's experience, the simulation predicts well for that group and poorly for others.</li><li>Simulations can also be used <strong>as a testing tool</strong> for programs: simulate user input or network conditions to test a program without real users.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Claiming a simulation gives exact real-world results.</strong> It gives results under its assumptions. Any "guarantees" or "exactly predicts" option is wrong.</li><li><strong>Saying a simulation has no assumptions.</strong> Every simulation simplifies. That's the definition.</li><li><strong>Confusing a simulation with the real thing.</strong> A simulated crash test doesn't damage a car. That's the point — and the reason results need validation against real data eventually.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> An engineer uses a computer simulation to test how a bridge design responds to earthquakes of different strengths. Which of the following is the most likely reason for using a simulation instead of a physical test?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Simulations always produce perfectly accurate results.</li><li><span class="opt-letter">B</span> Testing a real bridge under real earthquakes would be dangerous, expensive, and impractical, while a simulation can be run many times safely.</li><li><span class="opt-letter">C</span> Simulations do not require any assumptions about the bridge.</li><li><span class="opt-letter">D</span> A physical test would require less time.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Safety, cost, and repeatability are the core reasons to simulate. Simulations still rely on assumptions and are not perfectly accurate.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A simulation of disease spread assumes every person has the same number of daily contacts. Which of the following best describes the effect of this assumption?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> It makes the simulation impossible to run.</li><li><span class="opt-letter">B</span> It is a simplification that may cause the simulation's results to differ from real-world spread.</li><li><span class="opt-letter">C</span> It guarantees the simulation matches real data.</li><li><span class="opt-letter">D</span> It eliminates the need for random values.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Simplifying assumptions make simulations feasible but limit accuracy. The exam wants you to name that trade-off.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Simulation</dt><dd>a program that models a real-world or hypothetical process as an abstraction</dd></div><div><dt>Simplifying assumption</dt><dd>a detail intentionally left out or held constant to make a model tractable</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-15.html"><span class="dir">Previous</span>3.15 Random Values</a>
+  <a class="to-right" href="3-17.html"><span class="dir">Next</span>3.17 Algorithmic Efficiency</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

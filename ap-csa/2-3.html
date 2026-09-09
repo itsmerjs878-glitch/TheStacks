@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 if Statements — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.3</div>
+<h1 class="article-title"><span class="title-num">2.3</span> if Statements</h1>
+<p class="article-lede">The if statement runs a block when a condition is true; adding else gives an alternative. Braces and semicolons cause more errors here than logic does.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>if (condition) { statements }</code> — runs the block only when the condition is true. This is <strong>one-way selection</strong>.</li><li><code>if (condition) { A } else { B }</code> — runs exactly one of A or B. <strong>Two-way selection</strong>.</li><li>The condition must be a boolean. <code>if (x)</code> where x is an int doesn't compile. <code>if (x = 5)</code> doesn't compile either (assignment isn't a boolean).</li><li>Braces are optional for a single statement, but omitting them is a classic trap: only the <em>first</em> statement is controlled by the if. Always use braces.</li><li>A semicolon right after the condition — <code>if (x &gt; 0);</code> — ends the if with an empty body, so the next block always runs.</li><li>After the if/else completes, execution continues with the next statement regardless of which branch ran.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int score = 72;
+if (score &gt;= 70)
+    System.out.println("Pass");
+    System.out.println("Congrats");   // NOT part of the if — always prints
+if (score &gt; 90)
+{
+    System.out.println("Honors");
+}
+else
+{
+    System.out.println("Standard");
+}
+// Output: Pass  Congrats  Standard</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Indentation means nothing to Java. When braces are missing, exactly one statement belongs to the if. The exam writes misleadingly-indented code on purpose; read braces, not spacing.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The if body without braces is <strong>exactly one statement</strong>. A second line, no matter how it's indented, is outside the if. The exam writes deliberately misleading indentation to test this. Always mentally add the braces.</li><li><code>if (cond);</code> — a semicolon right after the condition — is an <em>empty</em> if. The block that follows runs unconditionally. It compiles fine, which is why it's dangerous.</li><li>The <code>else</code> pairs with the nearest unmatched <code>if</code>. With braces, no ambiguity. Without, the dangling-else rule applies (2.4).</li><li>A condition that's a <strong>constant</strong> — <code>if (true)</code> — always runs. Rarely written on purpose, but appears in "which of these is redundant" questions.</li><li>The if statement itself has no value. <code>x = if (…)</code> isn't Java. To choose between values, use if/else with two assignments.</li><li>Two-way selection covers <em>every</em> input: one branch or the other. One-way selection has a "do nothing" case. That difference is what "how many lines are printed" questions probe.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Attaching the second unbraced statement to the if.</strong> Only the first belongs. The indentation lies.</li><li><strong>Missing the stray semicolon.</strong> <code>if (x &gt; 5);</code> means the next block always runs.</li><li><strong>Using a non-boolean condition.</strong> <code>if (count)</code> doesn't compile. Java isn't C.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">int n = 4;
+if (n &gt; 5)
+    System.out.print("A");
+    System.out.print("B");
+System.out.print("C");</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> C</li><li><span class="opt-letter">B</span> BC</li><li><span class="opt-letter">C</span> ABC</li><li><span class="opt-letter">D</span> AC</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Without braces, only print("A") is controlled by the if. "B" and "C" always print.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following will not compile?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>if (x &gt; 3) { y = 1; }</code></li><li><span class="opt-letter">B</span> <code>if (x == 3) { y = 1; } else { y = 2; }</code></li><li><span class="opt-letter">C</span> <code>if (x) { y = 1; }</code> where x is an int</li><li><span class="opt-letter">D</span> <code>if (x &gt; 3 == true) { y = 1; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> The condition must be a boolean; an int isn't. Option D is legal, just redundant.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>One-way selection</dt><dd>an if statement with no else</dd></div><div><dt>Two-way selection</dt><dd>an if statement with an else</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-2.html"><span class="dir">Previous</span>2.2 Boolean Expressions</a>
+  <a class="to-right" href="2-4.html"><span class="dir">Next</span>2.4 Nested if Statements</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

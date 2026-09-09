@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1: Using Objects and Methods — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/unit-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow">UNIT 1 &middot; 15–25% OF THE EXAM &middot; 15 TOPICS</div>
+<h1 class="article-title">Using Objects and Methods</h1>
+<p class="article-lede">Everything else in the course assumes Unit 1. Variables, types, expressions, calling methods on objects, and the String class. Weakness here shows up as lost points in every other unit.</p>
+
+<section class="block">
+  <h2>What the College Board expects you to walk away understanding</h2>
+  <ul class="points"><li>Java programs are sequences of statements that a compiler translates; errors can happen at compile time or run time.</li><li>Variables have types; primitive types hold values directly while reference types hold addresses of objects.</li><li>Methods are called on classes (static) or objects (instance), take arguments, and may return values.</li><li>String and Math are the two classes you must know in detail, using exactly the methods on the Java Quick Reference.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Topics in this Unit</h2>
+  <nav aria-label="Topics"><a class="toc-entry" href="1-1.html">
+  <span class="toc-num">1.1</span>
+  <span class="toc-label">Introduction to Algorithms, Programming, and Compilers</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">what a program is, compile vs. run time</span>
+</a><a class="toc-entry" href="1-2.html">
+  <span class="toc-num">1.2</span>
+  <span class="toc-label">Variables and Data Types</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">int, double, boolean, String</span>
+</a><a class="toc-entry" href="1-3.html">
+  <span class="toc-num">1.3</span>
+  <span class="toc-label">Expressions and Output</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">arithmetic, integer division, println</span>
+</a><a class="toc-entry" href="1-4.html">
+  <span class="toc-num">1.4</span>
+  <span class="toc-label">Assignment Statements and Input</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">=, reading input with Scanner</span>
+</a><a class="toc-entry" href="1-5.html">
+  <span class="toc-num">1.5</span>
+  <span class="toc-label">Casting and Range of Variables</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">(int), (double), rounding</span>
+</a><a class="toc-entry" href="1-6.html">
+  <span class="toc-num">1.6</span>
+  <span class="toc-label">Compound Assignment Operators</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">+=, -=, *=, /=, %=, ++, --</span>
+</a><a class="toc-entry" href="1-7.html">
+  <span class="toc-num">1.7</span>
+  <span class="toc-label">Application Program Interface (API) and Libraries</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">using code you didn't write</span>
+</a><a class="toc-entry" href="1-8.html">
+  <span class="toc-num">1.8</span>
+  <span class="toc-label">Documentation with Comments</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">comments, preconditions, postconditions</span>
+</a><a class="toc-entry" href="1-9.html">
+  <span class="toc-num">1.9</span>
+  <span class="toc-label">Method Signatures</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">name + parameter list</span>
+</a><a class="toc-entry" href="1-10.html">
+  <span class="toc-num">1.10</span>
+  <span class="toc-label">Calling Class Methods</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">static methods, ClassName.method()</span>
+</a><a class="toc-entry" href="1-11.html">
+  <span class="toc-num">1.11</span>
+  <span class="toc-label">Math Class</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">abs, pow, sqrt, random</span>
+</a><a class="toc-entry" href="1-12.html">
+  <span class="toc-num">1.12</span>
+  <span class="toc-label">Objects: Instances of Classes</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">class vs. object, attributes and behaviors</span>
+</a><a class="toc-entry" href="1-13.html">
+  <span class="toc-num">1.13</span>
+  <span class="toc-label">Object Creation and Storage (Instantiation)</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">new, constructors, references, null</span>
+</a><a class="toc-entry" href="1-14.html">
+  <span class="toc-num">1.14</span>
+  <span class="toc-label">Calling Instance Methods</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">object.method(), accessors and mutators</span>
+</a><a class="toc-entry" href="1-15.html">
+  <span class="toc-num">1.15</span>
+  <span class="toc-label">String Manipulation</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">substring, indexOf, equals, compareTo</span>
+</a></nav>
+</section>
+
+<section class="block">
+  <h2>Night-before review</h2>
+  <p class="block-note">Every key term and exam tip from this unit on one printable page.</p>
+  <a class="toc-entry" href="cheat-1.html"><span class="toc-num">&#9633;</span><span class="toc-label">Unit 1 cheat sheet</span><span class="toc-leader"></span><span class="toc-page">print</span></a>
+</section>
+
+<div class="pager">
+  <a href="index.html"><span class="dir">Up</span>Course overview</a>
+  <a class="to-right" href="unit-2.html"><span class="dir">Next</span>Unit 2: Selection and Iteration</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

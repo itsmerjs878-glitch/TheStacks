@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Idea 4 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/cheat-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">BIG IDEA 4: COMPUTER SYSTEMS AND NETWORKS</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Computer Systems and Networks — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 3 topics in this big idea. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">4.1</span>The Internet</h3>
+  <dl><div><dt>Computer network</dt><dd>interconnected devices that can send and receive data</dd></div><div><dt>Internet</dt><dd>a global network of networks using open protocols</dd></div><div><dt>Packet</dt><dd>a small unit of data with metadata for routing and reassembly</dd></div><div><dt>Router</dt><dd>a device that forwards packets toward their destination</dd></div><div><dt>IP address</dt><dd>a unique numeric address for a device on a network</dd></div><div><dt>Protocol</dt><dd>an agreed set of rules for formatting and transmitting data</dd></div><div><dt>TCP</dt><dd>a protocol that ensures reliable, ordered delivery of packets</dd></div><div><dt>DNS</dt><dd>the system that translates domain names into IP addresses</dd></div><div><dt>Bandwidth</dt><dd>the maximum rate of data transfer, in bits per second</dd></div><div><dt>World Wide Web</dt><dd>a system of linked resources accessed over the internet via HTTP</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Two distinctions the exam loves: internet vs. World Wide Web (network vs. a service on it), and TCP vs. UDP (reliable/ordered vs. fast/unguaranteed). And if an option says packets must travel the same route or arrive in order, it's wrong — they don't, and reassembly handles it.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.2</span>Fault Tolerance</h3>
+  <dl><div><dt>Fault tolerance</dt><dd>the ability of a system to keep working when components fail</dd></div><div><dt>Redundancy</dt><dd>having multiple copies or paths so a single failure isn't fatal</dd></div><div><dt>Single point of failure</dt><dd>a component whose failure would bring down the system</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For network-diagram questions, count paths. Ask: for each connection, if I delete it, can every device still reach every other? A connection whose removal isolates a device is the vulnerability. The answer to "how do we improve fault tolerance" is always "add another path."</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">4.3</span>Parallel and Distributed Computing</h3>
+  <dl><div><dt>Sequential computing</dt><dd>operations executed one after another on a single processor</dd></div><div><dt>Parallel computing</dt><dd>splitting a task across multiple processors running at the same time</dd></div><div><dt>Distributed computing</dt><dd>multiple networked computers cooperating on one problem</dd></div><div><dt>Speedup</dt><dd>sequential time divided by parallel time</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For the timing calculation: (1) list tasks that <em>must</em> be sequential — they add up; (2) for parallel tasks, distribute them to balance the processors and take the <em>longest</em> processor's total; (3) add the two. The answer is never the average of parallel tasks — it's the maximum.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-4.html"><span class="dir">Back to</span>Big Idea 4 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.9 this Keyword — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-9.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.9</div>
+<h1 class="article-title"><span class="title-num">3.9</span> this Keyword</h1>
+<p class="article-lede">this refers to the object the method was called on. It resolves shadowing and lets an object pass itself to other methods.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Inside an instance method or constructor, <code>this</code> is a reference to <strong>the current object</strong> — the one the method was called on.</li><li><code>this.name = name;</code> assigns the parameter to the instance variable when they share a name. Without <code>this</code>, the line would assign the parameter to itself.</li><li><code>this</code> can be passed as an argument: <code>other.compareTo(this)</code>, or used to return the current object.</li><li><code>this</code> cannot be used in a static method — there's no current object.</li><li>Calling a method with no object prefix inside a class is the same as <code>this.method()</code>.</li><li>Using <code>this</code> is optional when there's no shadowing; it's only required to disambiguate.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">public class Book
+{
+    private String title;
+    private int pages;
+
+    public Book(String title, int pages)
+    {
+        this.title = title;      // instance ← parameter
+        this.pages = pages;
+    }
+
+    public boolean isLongerThan(Book other)
+    {
+        return this.pages &gt; other.pages;
+    }
+}</pre>
+<p>Without <code>this.</code> in the constructor, <code>title = title;</code> assigns the parameter to itself and the instance variable stays null.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> When a constructor's parameters share names with instance variables, look for <code>this.</code> on the left side. If it's missing, the instance variables are never set — a classic "why does getTitle() return null" question.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>this</code> is an implicit reference variable available in every instance method and constructor. It points to the object the method was called on. <code>a.getName()</code> → inside getName, <code>this</code> is <code>a</code>.</li><li><strong>The main use:</strong> resolving shadowing in constructors and setters. <code>this.name = name;</code> assigns the parameter to the field. Without <code>this</code>, both sides refer to the parameter.</li><li><strong>Passing this:</strong> a method can hand the current object to another method: <code>other.merge(this)</code>, or <code>list.add(this)</code>. Useful when an object needs to register itself somewhere.</li><li><strong>Returning this</strong> enables chaining, though the exam doesn't test that pattern.</li><li><strong>Comparing with this:</strong> in an <code>equals</code> or comparison method, <code>this.value == other.value</code> compares the current object's field with the parameter object's field. Both are the same class, so the method can access <code>other</code>'s private fields directly.</li><li>Static methods have no <code>this</code> — there's no object. Using it there is a compile error.</li><li>Inside an instance method, a bare instance variable name is shorthand for <code>this.name</code>. The two are identical when there's no shadowing.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Omitting this when the parameter shadows the field.</strong> Silent bug — the field stays default (null or 0).</li><li><strong>Using this in a static context.</strong> Compile error.</li><li><strong>Thinking this is a special variable you declare.</strong> It's provided automatically.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the constructor below.
+<pre class="code">public Cat(String name)
+{
+    name = name;
+}</pre>After <code>Cat c = new Cat("Tom");</code>, what does <code>c.getName()</code> return (where the getter returns the instance variable <code>name</code>)?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> "Tom"</li><li><span class="opt-letter">B</span> null</li><li><span class="opt-letter">C</span> ""</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> The parameter shadows the instance variable; the assignment is parameter-to-parameter. The instance variable keeps its default, null.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> In which of the following can <code>this</code> not be used?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> An instance method</li><li><span class="opt-letter">B</span> A constructor</li><li><span class="opt-letter">C</span> A static method</li><li><span class="opt-letter">D</span> An accessor method</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Static methods have no current object, so this is meaningless there.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>this</dt><dd>a reference to the object on which the current method or constructor was invoked</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-8.html"><span class="dir">Previous</span>3.8 Scope and Access</a>
+  <a class="to-right" href="unit-3.html"><span class="dir">Back to</span>Unit 3 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

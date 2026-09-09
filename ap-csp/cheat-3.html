@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Idea 3 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/cheat-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Algorithms and Programming — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 18 topics in this big idea. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">3.1</span>Variables and Assignments</h3>
+  <dl><div><dt>Variable</dt><dd>a named storage location that holds one value at a time</dd></div><div><dt>Assignment</dt><dd>storing the result of an expression in a variable, written with ← in AP pseudocode</dd></div><div><dt>Data type</dt><dd>the kind of value a variable holds: number, Boolean, string, or list</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> On any tracing question, draw a two-column table: variable name, current value. Update one row per line of code. Nearly every wrong answer on these questions comes from doing the update in your head and slipping.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.2</span>Data Abstraction</h3>
+  <dl><div><dt>Data abstraction</dt><dd>using a structure like a list so a collection of values can be treated as one unit</dd></div><div><dt>List</dt><dd>an ordered sequence of elements, each accessed by index</dd></div><div><dt>Element</dt><dd>a single value in a list</dd></div><div><dt>Index</dt><dd>the position of an element in a list; starts at 1 in AP pseudocode</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Index questions are a constant source of lost points. AP pseudocode is 1-indexed. <code>list[0]</code> is an error. If a question shows real-language code (Python-style), it will say so — otherwise assume 1-based.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.3</span>Mathematical Expressions</h3>
+  <dl><div><dt>MOD</dt><dd>the remainder after integer division; a MOD b</dd></div><div><dt>Expression</dt><dd>a combination of values, variables, and operators that evaluates to a single value</dd></div><div><dt>Sequencing</dt><dd>executing statements in order, one after another</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Whenever you see MOD, ask "what's the remainder?" and do the long division. For expressions mixing MOD with other operators, put parentheses around the MOD part mentally — MOD has the same precedence as multiplication, so <code>a + b MOD c</code> computes the MOD first.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.4</span>Strings</h3>
+  <dl><div><dt>String</dt><dd>an ordered sequence of characters</dd></div><div><dt>Concatenation</dt><dd>joining two strings end to end</dd></div><div><dt>Substring</dt><dd>a contiguous sequence of characters within a string</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When the exam shows string operations, it defines them in the question (e.g., "the procedure SUBSTRING(str, start, end) returns…"). Read that definition carefully — in particular, whether the end index is included — and apply it literally rather than assuming a language you know.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.5</span>Boolean Expressions</h3>
+  <dl><div><dt>Boolean</dt><dd>a value that is either true or false</dd></div><div><dt>Relational operator</dt><dd>an operator that compares two values, such as = or <</dd></div><div><dt>Logical operator</dt><dd>NOT, AND, or OR — combines or negates Boolean values</dd></div><div><dt>Equivalent expressions</dt><dd>expressions that evaluate to the same value for every possible input</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For "which expression is equivalent" questions, don't reason abstractly — plug in all four combinations of true/false (or a few boundary numbers) and compare outputs. It takes 30 seconds and is essentially error-proof.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.6</span>Conditionals</h3>
+  <dl><div><dt>Selection</dt><dd>choosing which code to execute based on a Boolean condition</dd></div><div><dt>Conditional statement</dt><dd>an IF or IF/ELSE statement</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Count the IFs. Independent IFs can each fire; an IF/ELSE chain fires exactly one branch. When a question asks "how many lines are displayed," this distinction is usually the whole question.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.7</span>Nested Conditionals</h3>
+  <dl><div><dt>Nested conditional</dt><dd>a conditional statement placed inside the block of another conditional</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Trace nested conditionals from the outside in. Decide the outer condition, cross out the branch that doesn't run, and only then look at what's inside the surviving branch. Never evaluate an inner condition before you've confirmed its outer branch runs.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.8</span>Iteration</h3>
+  <dl><div><dt>Iteration</dt><dd>repeating a block of code</dd></div><div><dt>Loop body</dt><dd>the statements inside a loop that are repeated</dd></div><div><dt>REPEAT UNTIL</dt><dd>a loop that runs while its condition is false and stops once it becomes true</dd></div><div><dt>Infinite loop</dt><dd>a loop whose exit condition is never met</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> REPEAT UNTIL runs while the condition is <em>false</em>. Students constantly flip this. Read it as "keep going until this becomes true." And always check the initial condition — a loop that's already satisfied runs zero times.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.9</span>Developing Algorithms</h3>
+  <dl><div><dt>Algorithm</dt><dd>a finite set of precise instructions that accomplishes a task</dd></div><div><dt>Sequencing</dt><dd>statements executed in order</dd></div><div><dt>Selection</dt><dd>choosing a path with a conditional</dd></div><div><dt>Iteration</dt><dd>repeating with a loop</dd></div><div><dt>Accumulator</dt><dd>a variable that builds up a result, such as a running total, across iterations</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When asked "what does this algorithm do," don't trace with random values — trace with a tiny list of 3 items and watch what the tracked variable equals at the end. The initialization line usually tells you the pattern before you've read anything else.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.10</span>Lists</h3>
+  <dl><div><dt>Traversal</dt><dd>visiting each element of a list, usually with FOR EACH</dd></div><div><dt>APPEND</dt><dd>adds a value to the end of a list</dd></div><div><dt>INSERT</dt><dd>places a value at a given index, shifting later elements right</dd></div><div><dt>REMOVE</dt><dd>deletes the element at a given index, shifting later elements left</dd></div><div><dt>Linear search</dt><dd>checking elements one by one until the target is found or the list ends</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Rewrite the list after every INSERT/REMOVE/APPEND — literally write it out with brackets. Tracking index shifts in your head is where these go wrong. And in a FOR EACH loop, changing the loop variable does <em>not</em> change the list.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.11</span>Binary Search</h3>
+  <dl><div><dt>Binary search</dt><dd>a search on a sorted list that repeatedly halves the range being examined</dd></div><div><dt>Sorted list</dt><dd>elements arranged in order, required for binary search</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question about binary search doesn't say the list is sorted, that's the answer: binary search can't be used. If it asks for the maximum number of checks, find the smallest power of 2 that is <em>greater</em> than the list size and use that exponent: 8 items → 4, 15 → 4, 16 → 5, 64 → 7, 100 → 7, 1000 → 10.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.12</span>Calling Procedures</h3>
+  <dl><div><dt>Procedure</dt><dd>a named block of code that can be called; also called a function or method</dd></div><div><dt>Parameter</dt><dd>a variable in a procedure's definition that receives a value when called</dd></div><div><dt>Argument</dt><dd>the actual value passed to a procedure when it is called</dd></div><div><dt>Return value</dt><dd>the value a procedure sends back to the code that called it</dd></div><div><dt>Modularity</dt><dd>dividing a program into separate procedures that each handle one task</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Track "where am I" during a trace. When you hit a procedure call, write down the line you'll return to, go execute the procedure with the arguments substituted for the parameters, and come back. RETURN means you stop reading the procedure instantly — even if there are lines below it.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.13</span>Developing Procedures</h3>
+  <dl><div><dt>Procedural abstraction</dt><dd>using a procedure without needing to know how its internal code works</dd></div><div><dt>Generalization</dt><dd>using parameters so a procedure works for many inputs, not one fixed case</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When a question asks why a programmer should turn repeated code into a procedure, the right answer is about <em>reducing duplication and making changes easier</em>. Answers about making the program run faster or use less memory are distractors — procedures don't do that.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.14</span>Libraries</h3>
+  <dl><div><dt>Software library</dt><dd>a collection of pre-written procedures that other programs can use</dd></div><div><dt>API</dt><dd>the specification of how to use a library: its procedures, parameters, and return values</dd></div><div><dt>Documentation</dt><dd>written explanation of how a library's procedures behave</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions here are usually scenario-based: a developer wants to add a map to an app. The correct reasoning is "use a library to avoid rewriting tested code," and the correct next step is "read its documentation/API." Any option suggesting you must understand the library's internal implementation is wrong.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.15</span>Random Values</h3>
+  <dl><div><dt>RANDOM(a, b)</dt><dd>returns a random integer from a to b, inclusive, each equally likely</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Count outcomes as b − a + 1, then count how many satisfy the condition. Students forget that both endpoints are included and get 1/9 instead of 1/10. If a question describes wanting a value "from 1 to 100," the call is <code>RANDOM(1, 100)</code>, not <code>RANDOM(0, 100)</code>.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.16</span>Simulations</h3>
+  <dl><div><dt>Simulation</dt><dd>a program that models a real-world or hypothetical process as an abstraction</dd></div><div><dt>Simplifying assumption</dt><dd>a detail intentionally left out or held constant to make a model tractable</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Two answer patterns dominate. "Why use a simulation?" → safety, cost, time, or impossibility of the real thing. "What's a limitation?" → simplifying assumptions mean results may not reflect reality. If an option says a simulation gives "exact" or "guaranteed" real-world results, it's wrong.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.17</span>Algorithmic Efficiency</h3>
+  <dl><div><dt>Efficiency</dt><dd>how an algorithm's required steps or memory grow with input size</dd></div><div><dt>Reasonable time</dt><dd>polynomial growth in steps (n, n², n³ …) as input grows</dd></div><div><dt>Unreasonable time</dt><dd>exponential or factorial growth in steps as input grows</dd></div><div><dt>Heuristic</dt><dd>a technique that finds a good-enough solution quickly when an optimal one is impractical</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question gives a table of input size vs. steps, check the growth: steps doubling when n increases by 1 = exponential = unreasonable. Steps multiplying by 4 when n doubles = n² = reasonable. When the stem says "no efficient algorithm exists" or "the solution doesn't have to be perfect," the answer involves a heuristic.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">3.18</span>Undecidable Problems</h3>
+  <dl><div><dt>Decidable problem</dt><dd>a problem for which an algorithm exists that correctly answers every input</dd></div><div><dt>Undecidable problem</dt><dd>a problem for which no algorithm can correctly answer every input</dd></div><div><dt>Halting problem</dt><dd>the undecidable problem of determining whether an arbitrary program will stop or run forever</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Three categories, don't mix them: (1) reasonable time — has a fast algorithm; (2) unreasonable time — has an algorithm, but too slow, so use a heuristic; (3) undecidable — no algorithm can exist for all cases. If the stem says "no algorithm can ever" or mentions determining whether an arbitrary program halts, it's undecidable.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-3.html"><span class="dir">Back to</span>Big Idea 3 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

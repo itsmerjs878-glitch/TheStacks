@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4: Data Collections — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/unit-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow">UNIT 4 &middot; 30–40% OF THE EXAM &middot; 17 TOPICS</div>
+<h1 class="article-title">Data Collections</h1>
+<p class="article-lede">The biggest unit and the source of three of the four FRQs. Arrays, ArrayLists, 2D arrays, then searching, sorting, and recursion. If Unit 4 is solid, a 5 is realistic.</p>
+
+<section class="block">
+  <h2>What the College Board expects you to walk away understanding</h2>
+  <ul class="points"><li>Data sets are stored in arrays, ArrayLists, and 2D arrays, each with its own creation, access, and traversal rules.</li><li>Standard algorithms — sum, max, count, filter, search, sort — are applied across all three structures.</li><li>Text files are read with Scanner and File, and wrapper classes let numbers live in ArrayLists.</li><li>Recursion is traced (not written), including recursive binary search and merge sort.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Topics in this Unit</h2>
+  <nav aria-label="Topics"><a class="toc-entry" href="4-1.html">
+  <span class="toc-num">4.1</span>
+  <span class="toc-label">Ethical and Social Issues Around Data Collection</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">privacy, consent, bias in data</span>
+</a><a class="toc-entry" href="4-2.html">
+  <span class="toc-num">4.2</span>
+  <span class="toc-label">Introduction to Using Data Sets</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">what a data set is, cleaning, structure</span>
+</a><a class="toc-entry" href="4-3.html">
+  <span class="toc-num">4.3</span>
+  <span class="toc-label">Array Creation and Access</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">int[], indexing, length</span>
+</a><a class="toc-entry" href="4-4.html">
+  <span class="toc-num">4.4</span>
+  <span class="toc-label">Array Traversals</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">for loops and enhanced for</span>
+</a><a class="toc-entry" href="4-5.html">
+  <span class="toc-num">4.5</span>
+  <span class="toc-label">Implementing Array Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">sum, max, count, shift, reverse, find</span>
+</a><a class="toc-entry" href="4-6.html">
+  <span class="toc-num">4.6</span>
+  <span class="toc-label">Using Text Files</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">File, Scanner, hasNextLine, FileNotFoundException</span>
+</a><a class="toc-entry" href="4-7.html">
+  <span class="toc-num">4.7</span>
+  <span class="toc-label">Wrapper Classes</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">Integer, Double, autoboxing</span>
+</a><a class="toc-entry" href="4-8.html">
+  <span class="toc-num">4.8</span>
+  <span class="toc-label">ArrayList Methods</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">add, get, set, remove, size</span>
+</a><a class="toc-entry" href="4-9.html">
+  <span class="toc-num">4.9</span>
+  <span class="toc-label">ArrayList Traversals</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">loops over ArrayLists, removing while traversing</span>
+</a><a class="toc-entry" href="4-10.html">
+  <span class="toc-num">4.10</span>
+  <span class="toc-label">Implementing ArrayList Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">FRQ 3 patterns</span>
+</a><a class="toc-entry" href="4-11.html">
+  <span class="toc-num">4.11</span>
+  <span class="toc-label">2D Array Creation and Access</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">int[][], rows and columns</span>
+</a><a class="toc-entry" href="4-12.html">
+  <span class="toc-num">4.12</span>
+  <span class="toc-label">2D Array Traversals</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">nested loops, row-major vs. column-major</span>
+</a><a class="toc-entry" href="4-13.html">
+  <span class="toc-num">4.13</span>
+  <span class="toc-label">Implementing 2D Array Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">FRQ 4 patterns</span>
+</a><a class="toc-entry" href="4-14.html">
+  <span class="toc-num">4.14</span>
+  <span class="toc-label">Searching Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">linear search, binary search</span>
+</a><a class="toc-entry" href="4-15.html">
+  <span class="toc-num">4.15</span>
+  <span class="toc-label">Sorting Algorithms</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">selection sort, insertion sort</span>
+</a><a class="toc-entry" href="4-16.html">
+  <span class="toc-num">4.16</span>
+  <span class="toc-label">Recursion</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">base case, recursive call, tracing</span>
+</a><a class="toc-entry" href="4-17.html">
+  <span class="toc-num">4.17</span>
+  <span class="toc-label">Recursive Searching and Sorting</span>
+  <span class="toc-leader"></span>
+  <span class="toc-page">recursive binary search, merge sort</span>
+</a></nav>
+</section>
+
+<section class="block">
+  <h2>Night-before review</h2>
+  <p class="block-note">Every key term and exam tip from this unit on one printable page.</p>
+  <a class="toc-entry" href="cheat-4.html"><span class="toc-num">&#9633;</span><span class="toc-label">Unit 4 cheat sheet</span><span class="toc-leader"></span><span class="toc-page">print</span></a>
+</section>
+
+<div class="pager">
+  <a href="unit-3.html"><span class="dir">Previous</span>Unit 3: Class Creation</a>
+  <a class="to-right" href="index.html"><span class="dir">Back to</span>Course overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

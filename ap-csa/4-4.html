@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.4 Array Traversals — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-4.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.4</div>
+<h1 class="article-title"><span class="title-num">4.4</span> Array Traversals</h1>
+<p class="article-lede">Visiting every element. The standard for loop gives you the index; the enhanced for loop gives you the element. Know when each is appropriate.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Standard traversal:</strong> <code>for (int i = 0; i &lt; arr.length; i++)</code> with <code>arr[i]</code>. Use when you need the index — to modify elements, compare neighbors, or traverse backward or partially.</li><li><strong>Enhanced for (for-each):</strong> <code>for (int x : arr)</code> — x takes each element's value in order. Cleaner when you only read elements.</li><li>In an enhanced for loop, <strong>assigning to the loop variable does not change the array</strong> — x is a copy of the element (for primitives). For objects, x is a copy of the reference, so calling mutators on it <em>does</em> affect the object in the array.</li><li>Enhanced for can't skip elements, go backward, or access the index.</li><li><strong>Backward:</strong> <code>for (int i = arr.length - 1; i &gt;= 0; i--)</code>.</li><li>Loop bound <code>i &lt;= arr.length</code> is the classic out-of-bounds bug.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int[] nums = {2, 4, 6};
+
+for (int n : nums)            // enhanced: read only
+{
+    n = n * 10;               // does NOT change nums
+}
+// nums still {2, 4, 6}
+
+for (int i = 0; i &lt; nums.length; i++)   // standard: can modify
+{
+    nums[i] = nums[i] * 10;
+}
+// nums now {20, 40, 60}</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-enhanced-for"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> If the question modifies the array through the loop variable of an enhanced for loop, the array is unchanged — that's the trick. If it calls a mutator method on an object element, the object <em>is</em> changed. Index needed? Standard loop.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Standard for loop</strong>: index available, can go any direction, any step, can modify elements, can compare neighbors (<code>arr[i]</code> and <code>arr[i + 1]</code>), can stop early. It's the general tool.</li><li><strong>Enhanced for</strong>: <code>for (type x : arr)</code> — x takes each element's value in order. No index. Cleaner for read-only traversal. The type must match the element type (or a compatible one).</li><li><strong>The enhanced-for copy rule:</strong> for primitives, x is a copy — assigning to x doesn't touch the array. For objects, x is a copy of the <em>reference</em> — <code>x.setValue(5)</code> modifies the object in the array, but <code>x = new Thing()</code> doesn't replace the array element. Same as 3.6.</li><li><strong>Backward traversal</strong> must be a standard loop: <code>for (int i = arr.length - 1; i &gt;= 0; i--)</code>. Note <code>&gt;= 0</code> to include index 0.</li><li><strong>Partial traversals:</strong> every other element (<code>i += 2</code>), first half (<code>i &lt; arr.length / 2</code>), skipping the first (<code>i = 1</code>). All need the standard loop.</li><li><strong>Bounds:</strong> <code>i &lt; arr.length</code> is right. <code>i &lt;= arr.length</code> throws on the last iteration. Comparing neighbors: <code>i &lt; arr.length - 1</code>.</li><li><strong>Nested traversal</strong> (comparing every pair): outer i over all, inner j from i + 1 to end. That's n(n−1)/2 comparisons.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Modifying the enhanced-for variable and expecting the array to change.</strong> Primitives: no change. Objects: only via mutators.</li><li><strong>&lt;= length.</strong> Exception on the last pass.</li><li><strong>Backward loop with &gt; 0.</strong> Skips index 0.</li><li><strong>Using enhanced for when you need the index.</strong> Switch to standard.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">int[] a = {1, 2, 3};
+for (int v : a)
+{
+    v += 10;
+}
+System.out.println(a[0] + a[1] + a[2]);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 6</li><li><span class="opt-letter">B</span> 36</li><li><span class="opt-letter">C</span> 16</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> v is a copy; modifying it leaves the array unchanged. 1 + 2 + 3 = 6.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following correctly prints the elements of <code>arr</code> in reverse order?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (int i = arr.length; i &gt; 0; i--) System.out.println(arr[i]);</code></li><li><span class="opt-letter">B</span> <code>for (int i = arr.length - 1; i &gt;= 0; i--) System.out.println(arr[i]);</code></li><li><span class="opt-letter">C</span> <code>for (int x : arr) System.out.println(x);</code></li><li><span class="opt-letter">D</span> <code>for (int i = arr.length - 1; i &gt; 0; i--) System.out.println(arr[i]);</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Start at length - 1, go down to and including 0. A starts out of bounds; D skips index 0.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Traversal</dt><dd>visiting every element of an array</dd></div><div><dt>Enhanced for loop</dt><dd>for (type x : arr) — iterates over elements without an index</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-3.html"><span class="dir">Previous</span>4.3 Array Creation and Access</a>
+  <a class="to-right" href="4-5.html"><span class="dir">Next</span>4.5 Implementing Array Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-enhanced-for": {"id": "csa-enhanced-for", "title": "Enhanced for loop does not modify the array", "course": "ap-csa", "code": ["int[] nums = {2, 4, 6};", "for (int v : nums)", "{", "    v = v * 10;", "}", "System.out.println(nums[0] + nums[1] + nums[2]);"], "steps": [{"line": 0, "vars": [["nums", "[2, 4, 6]"]], "out": "", "note": "the array"}, {"line": 1, "vars": [["nums", "[2, 4, 6]"], ["v", "2"]], "out": "", "note": "v gets a COPY of the next element: 2"}, {"line": 3, "vars": [["nums", "[2, 4, 6]"], ["v", "20"]], "out": "", "note": "v = 20 — the array is unchanged"}, {"line": 1, "vars": [["nums", "[2, 4, 6]"], ["v", "4"]], "out": "", "note": "v gets a COPY of the next element: 4"}, {"line": 3, "vars": [["nums", "[2, 4, 6]"], ["v", "40"]], "out": "", "note": "v = 40 — the array is unchanged"}, {"line": 1, "vars": [["nums", "[2, 4, 6]"], ["v", "6"]], "out": "", "note": "v gets a COPY of the next element: 6"}, {"line": 3, "vars": [["nums", "[2, 4, 6]"], ["v", "60"]], "out": "", "note": "v = 60 — the array is unchanged"}, {"line": 5, "vars": [["nums", "[2, 4, 6]"]], "out": "12\n", "note": "2 + 4 + 6 = 12; the multiplications were lost"}], "intro": "v is a copy. Assigning to it never touches nums."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

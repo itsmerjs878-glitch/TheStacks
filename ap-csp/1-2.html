@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.2 Program Function and Purpose — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/1-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">BIG IDEA 1: CREATIVE DEVELOPMENT</a> &middot; TOPIC 1.2</div>
+<h1 class="article-title"><span class="title-num">1.2</span> Program Function and Purpose</h1>
+<p class="article-lede">Every program is written to do something for someone. This topic covers how to describe a program's purpose, function, and its inputs and outputs — vocabulary that comes straight back in the Create Task.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>program</strong> (or software) is a collection of statements executed by a computer to complete a task.</li><li>Programs are written to solve problems, express creativity, satisfy personal curiosity, or generate new knowledge. The CED distinguishes the program's <strong>purpose</strong> (what problem/need it addresses) from its <strong>function</strong> (what it actually does when it runs).</li><li><strong>Inputs</strong> are data the program receives — from a user (tactile, audio, visual, text), from a file, from a sensor, or from another program. <strong>Outputs</strong> are what it produces: text, graphics, audio, or data sent elsewhere.</li><li>An <strong>event</strong> is an action (mouse click, key press, sensor reading) that triggers a specific program response. Event-driven programs run code in response to events rather than in a fixed sequence.</li><li>Program behavior is defined by how it responds to inputs; the same program can produce different outputs given different inputs.</li><li>A <strong>code segment</strong> is a portion of a larger program. A <strong>code statement</strong> is one complete instruction. The exam uses both terms.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A weather program's <strong>purpose</strong> is to help someone decide what to wear. Its <strong>function</strong> is: take a ZIP code as input, request a forecast from a weather service, and display the high, low, and chance of rain. The user typing a ZIP code is an <strong>input</strong>; the displayed forecast is an <strong>output</strong>; pressing "refresh" is an <strong>event</strong> that triggers a new request. On the Create Task you must describe your own program in exactly these terms.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> The Create Task written response asks you to state your program's purpose and its function separately. Purpose = the human problem it addresses. Function = the behavior when it runs. Practice writing both in one sentence each for any program you look at.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED distinguishes input types you should be able to name: <strong>tactile</strong> (keyboard, touchscreen), <strong>audio</strong> (microphone), <strong>visual</strong> (camera), and <strong>text</strong>. A sensor reading — temperature, GPS — is also input. Output can be tactile too (a phone vibrating).</li><li><strong>Event-driven programming</strong> is a distinct model from sequential: the program sets up handlers and then waits. Nothing happens until a click, key press, timer, or message arrives. Most apps you use are event-driven; most exam pseudocode is sequential. Know both.</li><li>A program's <strong>purpose</strong> can be for the developer alone — to learn, to satisfy curiosity, to create art. The exam explicitly says a program "can be developed for creative expression" or "to satisfy personal curiosity," and those are as legitimate as solving a business problem.</li><li>"Programs can generate new knowledge" means the <em>output</em> teaches the programmer something they didn't know. Running a simulation of a coin flip 10,000 times and seeing the ratio converge is new knowledge even though you wrote the program.</li><li>A <strong>code statement</strong> is a single instruction (<code>x ← 5</code>). A <strong>code segment</strong> is several statements together. An <strong>expression</strong> is something that evaluates to a value (<code>x + 1</code>) and isn't a complete statement on its own. The exam uses all three terms precisely.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Swapping purpose and function on the Create Task.</strong> Purpose = why the program exists (the problem or need). Function = what it does when it runs (inputs → processing → outputs). Writing "the purpose is to display a menu" describes function, not purpose.</li><li><strong>Calling an output an event.</strong> An event is something that <em>happens to</em> the program (user clicks). The display that results is output. In a question about a button that shows a quote, the click is the event and the quote is the output — not the reverse.</li><li><strong>Assuming every program must have user input.</strong> A program can take input from a file or sensor with no human involved, or take no input at all and still produce output.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A student writes a program that displays a random motivational quote each time the user clicks a button. Which of the following best describes the role of the button click in this program?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> An output of the program</li><li><span class="opt-letter">B</span> A procedure that must be defined by the user</li><li><span class="opt-letter">C</span> An event that triggers the program to run a segment of code</li><li><span class="opt-letter">D</span> A data abstraction that stores the quotes</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> A user action that causes the program to respond is an event. The quote displayed is the output; the click is the trigger.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best distinguishes the purpose of a program from its function?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Purpose is what the program does when it runs; function is the problem it solves.</li><li><span class="opt-letter">B</span> Purpose is the problem or need the program addresses; function is how the program behaves when it runs.</li><li><span class="opt-letter">C</span> Purpose refers to the program's inputs; function refers to its outputs.</li><li><span class="opt-letter">D</span> Purpose is defined by the computer; function is defined by the user.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> This is the CED's definition and the exact distinction the Create Task asks you to write about.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Program</dt><dd>a collection of statements a computer executes to accomplish a task</dd></div><div><dt>Input</dt><dd>data a program receives from a user, file, sensor, or another program</dd></div><div><dt>Output</dt><dd>data or behavior a program produces, such as text, graphics, or audio</dd></div><div><dt>Event</dt><dd>an action, such as a click or key press, that triggers a program response</dd></div><div><dt>Code segment</dt><dd>a portion of a program's code</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-1.html"><span class="dir">Previous</span>1.1 Collaboration</a>
+  <a class="to-right" href="1-3.html"><span class="dir">Next</span>1.3 Program Design and Development</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

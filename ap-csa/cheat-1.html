@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 1 cheat sheet — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/cheat-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; CHEAT SHEET</div>
+<h1 class="article-title">Using Objects and Methods — the one-page version</h1>
+<p class="article-lede">Every key term and every exam tip from the 15 topics in this unit. Print it, fold it, read it on the bus.</p>
+<button type="button" class="print-btn" onclick="window.print()">Print this page</button>
+
+<section class="block">
+  <div class="cheat-grid"><div class="cheat-topic">
+  <h3><span class="tnum">1.1</span>Introduction to Algorithms, Programming, and Compilers</h3>
+  <dl><div><dt>Compiler</dt><dd>translates Java source code into a form the computer can run, reporting syntax errors</dd></div><div><dt>Compile-time error</dt><dd>an error the compiler detects; the program cannot run</dd></div><div><dt>Run-time error</dt><dd>an error that occurs during execution, such as an exception</dd></div><div><dt>Logic error</dt><dd>code that runs but produces incorrect results</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question shows code and asks "what happens," check syntax first (missing semicolon, mismatched braces, undeclared variable = won't compile), then look for run-time traps (division by zero, null, bad index), then trace for logic.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.2</span>Variables and Data Types</h3>
+  <dl><div><dt>Primitive type</dt><dd>int, double, boolean — stores the value directly</dd></div><div><dt>Reference type</dt><dd>a variable that stores the address of an object</dd></div><div><dt>final</dt><dd>keyword that makes a variable's value unchangeable after initialization</dd></div><div><dt>Overflow</dt><dd>an int calculation exceeding the representable range wraps around</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions on ranges are usually about overflow: <code>Integer.MAX_VALUE + 1</code> equals <code>Integer.MIN_VALUE</code>, not an error. And a variable declared but never assigned can't be used — that's a compile error, not a default of 0.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.3</span>Expressions and Output</h3>
+  <dl><div><dt>Integer division</dt><dd>int / int drops the fractional part</dd></div><div><dt>Remainder (%)</dt><dd>the remainder after division; sign follows the left operand</dd></div><div><dt>Concatenation</dt><dd>joining Strings with +; any + involving a String produces a String</dd></div><div><dt>println</dt><dd>prints a value followed by a newline</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Look at both operands of every <code>/</code>. Both int? Truncate. Either double? Decimal result. For the <code>+</code> trap, scan left to right and note the moment a String appears — from then on everything is concatenation.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.4</span>Assignment Statements and Input</h3>
+  <dl><div><dt>Assignment (=)</dt><dd>stores the value of the right-side expression in the left-side variable</dd></div><div><dt>Scanner</dt><dd>a class for reading input from the keyboard or a file</dd></div><div><dt>nextLine()</dt><dd>reads an entire line of input as a String</dd></div><div><dt>nextInt()</dt><dd>reads the next integer token, leaving the newline in the buffer</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions about Scanner are usually "which method reads a whole line vs. one token" (<code>nextLine</code> vs <code>next</code>) or the nextInt-then-nextLine trap. Also remember: <code>=</code> assigns; a question with <code>if (x = 5)</code> is a compile error because an int isn't a boolean.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.5</span>Casting and Range of Variables</h3>
+  <dl><div><dt>Cast</dt><dd>an explicit conversion, e.g. (int) or (double)</dd></div><div><dt>Truncation</dt><dd>dropping the fractional part when casting to int</dd></div><div><dt>Widening</dt><dd>automatic conversion from int to double</dd></div><div><dt>Narrowing</dt><dd>conversion from double to int, requires a cast</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Ask two things for every cast: what exactly is being cast (the next value only, unless parentheses say otherwise), and is it truncation or rounding (a bare (int) always truncates). Toward zero: (int) -2.9 is -2.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.6</span>Compound Assignment Operators</h3>
+  <dl><div><dt>Compound assignment</dt><dd>operators like += that combine arithmetic with assignment</dd></div><div><dt>Increment (++)</dt><dd>adds 1 to a variable</dd></div><div><dt>Decrement (--)</dt><dd>subtracts 1 from a variable</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Rewrite every compound operator as its long form before tracing: <code>x *= a + b</code> → <code>x = x * (a + b)</code>. The parentheses are the part students drop.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.7</span>Application Program Interface (API) and Libraries</h3>
+  <dl><div><dt>Library</dt><dd>a collection of pre-written classes available for use</dd></div><div><dt>API</dt><dd>documentation describing how to use a library's classes and methods</dd></div><div><dt>import</dt><dd>a statement that makes a class outside java.lang available in a file</dd></div><div><dt>Java Quick Reference</dt><dd>the list of methods provided on the AP exam</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> If a question asks why a program won't compile and it uses Scanner or ArrayList without an import, that's the answer. If it asks what a method returns, look at the header's return type — the exam sometimes gives you a header for a made-up method and expects you to use it correctly from the header alone.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.8</span>Documentation with Comments</h3>
+  <dl><div><dt>Precondition</dt><dd>a condition that must be true before a method is called</dd></div><div><dt>Postcondition</dt><dd>a condition guaranteed to be true after a method finishes</dd></div><div><dt>Javadoc</dt><dd>a /** */ comment used to document classes and methods</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Questions ask "which statement is a precondition?" — look for what must be true of the <em>input</em> before calling. Postconditions describe the <em>result</em>. And when an FRQ states a precondition, don't waste time writing code to check it.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.9</span>Method Signatures</h3>
+  <dl><div><dt>Method signature</dt><dd>the method name and its parameter types in order</dd></div><div><dt>Return type</dt><dd>the type of value a method produces, or void</dd></div><div><dt>Overloading</dt><dd>multiple methods with the same name but different parameter lists</dd></div><div><dt>Parameter</dt><dd>a variable in a method header</dd></div><div><dt>Argument</dt><dd>a value passed to a method when it is called</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> To decide which overloaded method a call uses, count the arguments and match their types. When an FRQ gives you a method header to implement, copy it exactly — changing the return type or a parameter name costs points.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.10</span>Calling Class Methods</h3>
+  <dl><div><dt>Class method / static method</dt><dd>a method that belongs to the class and is called with the class name</dd></div><div><dt>Return statement</dt><dd>ends the method and sends a value back to the caller</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Trace method calls by writing down the line you're returning to, evaluating the method with the argument values, then substituting the return value back. Multiple calls on one line are evaluated left to right.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.11</span>Math Class</h3>
+  <dl><div><dt>Math.random()</dt><dd>returns a double in [0.0, 1.0)</dd></div><div><dt>Math.pow(a, b)</dt><dd>a raised to b, returned as a double</dd></div><div><dt>Math.abs(x)</dt><dd>absolute value</dd></div><div><dt>Math.sqrt(x)</dt><dd>square root as a double</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> For "which expression produces a random integer from a to b," check two things: the multiplier equals the count (b − a + 1), and the added value is a. For "what range does this produce," the minimum is the added value and the maximum is that plus the multiplier minus one.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.12</span>Objects: Instances of Classes</h3>
+  <dl><div><dt>Class</dt><dd>a template that defines the attributes and behaviors of a type of object</dd></div><div><dt>Object</dt><dd>a specific instance of a class</dd></div><div><dt>Attribute</dt><dd>data stored in an object, held in instance variables</dd></div><div><dt>Behavior</dt><dd>what an object can do, defined by its methods</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Class vs. object questions are definitional: class = template/type, object = one instance with specific values. "How many objects are created" = count the <code>new</code> keywords (plus string literals).</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.13</span>Object Creation and Storage (Instantiation)</h3>
+  <dl><div><dt>Instantiation</dt><dd>creating an object with new</dd></div><div><dt>Constructor</dt><dd>a special method that initializes a new object; same name as the class, no return type</dd></div><div><dt>Reference</dt><dd>the address of an object, stored in a reference variable</dd></div><div><dt>Aliasing</dt><dd>two reference variables referring to the same object</dd></div><div><dt>null</dt><dd>a reference value meaning 'no object'</dd></div><div><dt>NullPointerException</dt><dd>the run-time error from calling a method on null</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Draw boxes and arrows. Each <code>new</code> is a box; each variable is an arrow. Assignment between reference variables re-points an arrow — it never copies a box. If an arrow points to nothing (null) and you call a method through it, the program crashes.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.14</span>Calling Instance Methods</h3>
+  <dl><div><dt>Instance method</dt><dd>a method called on an object that operates on that object's data</dd></div><div><dt>Accessor</dt><dd>a method that returns information about an object without modifying it</dd></div><div><dt>Mutator</dt><dd>a method that changes an object's state</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> When a question gives you a class's method headers and asks what a code segment does, check each call: is it a mutator (state changed for later lines) or an accessor (value used now)? Track object state in a table just like variables.</div>
+</div><div class="cheat-topic">
+  <h3><span class="tnum">1.15</span>String Manipulation</h3>
+  <dl><div><dt>Immutable</dt><dd>cannot be changed; String methods return new Strings</dd></div><div><dt>substring(a, b)</dt><dd>characters from index a up to but not including b</dd></div><div><dt>indexOf(str)</dt><dd>index of the first occurrence, or -1 if not found</dd></div><div><dt>equals</dt><dd>compares String contents</dd></div><div><dt>compareTo</dt><dd>returns a negative, zero, or positive int based on alphabetical order</dd></div></dl>
+  <div class="cheat-tip"><strong>Tip:</strong> Three checks on every String question: (1) substring's second index is exclusive — count characters from <code>from</code> to <code>to - 1</code>; (2) any content comparison must use <code>.equals</code>, never <code>==</code>; (3) <code>compareTo</code> gives an int, so <code>if (a.compareTo(b))</code> won't compile — you need <code>&lt; 0</code>, <code>== 0</code>, or <code>&gt; 0</code>.</div>
+</div></div>
+</section>
+
+<div class="pager">
+  <a href="unit-1.html"><span class="dir">Back to</span>Unit 1 overview</a>
+  <span></span>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

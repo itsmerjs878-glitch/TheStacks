@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.15 String Manipulation — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-15.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.15</div>
+<h1 class="article-title"><span class="title-num">1.15</span> String Manipulation</h1>
+<p class="article-lede">The single most-tested class on the exam. Know every method on the reference sheet and the three traps that account for most lost points.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Strings are <strong>immutable</strong>: methods return a <em>new</em> String; the original never changes. <code>s.toUpperCase()</code> by itself does nothing unless you store the result.</li><li>Indices start at <strong>0</strong>. The last character is at <code>length() - 1</code>.</li><li><code>length()</code> — number of characters. <code>substring(from, to)</code> — characters from index <code>from</code> up to but <strong>not including</strong> <code>to</code>. <code>substring(from)</code> — from that index to the end.</li><li><code>indexOf(str)</code> — index of the first occurrence, or <strong>−1</strong> if absent. <code>charAt</code> is <em>not</em> on the reference sheet; use <code>substring(i, i + 1)</code> to get one character as a String.</li><li><code>equals(other)</code> — true if contents match. <code>==</code> compares references and is <strong>wrong</strong> for comparing String contents.</li><li><code>compareTo(other)</code> — returns a negative int if this comes before other alphabetically, 0 if equal, positive if after. It's an int, never a boolean. Uppercase letters come before lowercase.</li><li>Also available: <code>toUpperCase()</code>, <code>toLowerCase()</code>, and string concatenation with <code>+</code>. Concatenating anything with a String produces a String.</li><li>A String literal with escape sequences: <code>"\"quoted\""</code>, <code>"line1\nline2"</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">String s = "Computer";
+s.length();               // 8
+s.substring(3, 6);        // "put"   (indices 3,4,5)
+s.substring(5);           // "ter"
+s.indexOf("put");         // 3
+s.indexOf("z");           // -1
+s.substring(0, 1);        // "C"  (one character)
+"apple".compareTo("banana");    // negative
+"Zebra".compareTo("apple");     // negative: 'Z' &lt; 'a'
+s.equals("Computer");     // true
+s == "Computer";          // unreliable — never use for content
+
+s.toUpperCase();          // returns "COMPUTER" but s is still "Computer"
+s = s.toUpperCase();      // now s is "COMPUTER"</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Three checks on every String question: (1) substring's second index is exclusive — count characters from <code>from</code> to <code>to - 1</code>; (2) any content comparison must use <code>.equals</code>, never <code>==</code>; (3) <code>compareTo</code> gives an int, so <code>if (a.compareTo(b))</code> won't compile — you need <code>&lt; 0</code>, <code>== 0</code>, or <code>&gt; 0</code>.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Every String method returns a new String or a value; none modify the original.</strong> This is immutability. <code>s.toUpperCase()</code> on its own line does nothing visible. <code>s = s.toUpperCase()</code> reassigns s to the new String.</li><li><code>substring(from, to)</code>: characters at indices from, from+1, …, to−1. Length of result = to − from. <code>substring(from)</code>: from to the end. <code>substring(i, i)</code> is the empty string. <code>substring(i, i + 1)</code> is one character — this is the exam's replacement for <code>charAt</code>.</li><li><strong>Valid substring indices:</strong> 0 ≤ from ≤ to ≤ length(). Note that <code>to</code> can equal length() (that's "to the end"). <code>from &gt; to</code> or <code>to &gt; length()</code> throws <code>StringIndexOutOfBoundsException</code>.</li><li><code>indexOf(str)</code> returns the index where <code>str</code> <em>starts</em>, or −1. Only the first occurrence. <code>"banana".indexOf("an")</code> is 1. To find later occurrences, search a substring of the remainder.</li><li><code>compareTo</code> compares character by character using Unicode values. Uppercase letters (65–90) come before lowercase (97–122), so <code>"Zoo".compareTo("apple")</code> is negative. If one string is a prefix of the other, the shorter one is smaller. The magnitude of the result is the difference of the first differing characters (or lengths) — but the exam only cares about the sign.</li><li><code>equals</code> is case-sensitive: <code>"Hi".equals("hi")</code> is false. To compare ignoring case, lowercase both first.</li><li><code>length()</code> counts all characters including spaces and punctuation. <code>"a b".length()</code> is 3.</li><li><strong>Concatenation makes a new String</strong>, so building a long String in a loop by <code>+=</code> creates many intermediate Strings. Fine at exam scale; worth knowing why StringBuilder exists in real code.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Including the end index in substring.</strong> <code>"hello".substring(1, 3)</code> is <code>"el"</code>, not <code>"ell"</code>.</li><li><strong>Using <code>==</code> on Strings.</strong> Sometimes true for literals, unreliable in general, and the exam treats it as wrong. Use <code>.equals</code>.</li><li><strong>Treating compareTo as boolean.</strong> <code>if (a.compareTo(b))</code> won't compile. Compare the int to 0.</li><li><strong>Forgetting immutability.</strong> Calling a String method without storing the result changes nothing.</li><li><strong>Using charAt.</strong> Not on the reference sheet. <code>substring(i, i + 1)</code> instead.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">String w = "programming";
+System.out.println(w.substring(3, 7) + w.indexOf("g"));</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> gram3</li><li><span class="opt-letter">B</span> gramm3</li><li><span class="opt-letter">C</span> gram10</li><li><span class="opt-letter">D</span> ram3</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> substring(3, 7) is indices 3–6: "gram". indexOf("g") is the first g, at index 3. Concatenated: "gram3".</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which expression correctly checks whether the String <code>a</code> comes alphabetically before the String <code>b</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>a &lt; b</code></li><li><span class="opt-letter">B</span> <code>a.compareTo(b) &lt; 0</code></li><li><span class="opt-letter">C</span> <code>a.compareTo(b)</code></li><li><span class="opt-letter">D</span> <code>a.equals(b) &lt; 0</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> compareTo returns a negative int when a precedes b. Strings can't be compared with <, and equals returns a boolean.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is printed by the following code?
+<pre class="code">String s = "hello";
+s.toUpperCase();
+System.out.println(s);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> HELLO</li><li><span class="opt-letter">B</span> hello</li><li><span class="opt-letter">C</span> Hello</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Strings are immutable. toUpperCase() returns a new String that was discarded; s is unchanged.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q4</span> Which of the following returns the last character of a non-empty String <code>s</code> as a String?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>s.substring(s.length())</code></li><li><span class="opt-letter">B</span> <code>s.substring(s.length() - 1)</code></li><li><span class="opt-letter">C</span> <code>s.substring(s.length() - 1, s.length() - 1)</code></li><li><span class="opt-letter">D</span> <code>s.charAt(s.length() - 1)</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> substring(length - 1) returns from the last index to the end — one character. Option A returns an empty string; C returns empty (from == to); D returns a char, and charAt isn't on the reference sheet.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Immutable</dt><dd>cannot be changed; String methods return new Strings</dd></div><div><dt>substring(a, b)</dt><dd>characters from index a up to but not including b</dd></div><div><dt>indexOf(str)</dt><dd>index of the first occurrence, or -1 if not found</dd></div><div><dt>equals</dt><dd>compares String contents</dd></div><div><dt>compareTo</dt><dd>returns a negative, zero, or positive int based on alphabetical order</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-14.html"><span class="dir">Previous</span>1.14 Calling Instance Methods</a>
+  <a class="to-right" href="unit-1.html"><span class="dir">Back to</span>Unit 1 overview</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

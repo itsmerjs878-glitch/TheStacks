@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.12 2D Array Traversals — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-12.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.12</div>
+<h1 class="article-title"><span class="title-num">4.12</span> 2D Array Traversals</h1>
+<p class="article-lede">Nested loops visit every cell. Which loop is outer determines the order — and the exam asks about that order.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Row-major traversal:</strong> outer loop over rows, inner over columns. Visits row 0 left to right, then row 1, etc. This is the default.</li><li><strong>Column-major traversal:</strong> outer loop over columns, inner over rows. Visits column 0 top to bottom, then column 1.</li><li><strong>Nested enhanced for:</strong> <code>for (int[] row : grid) { for (int v : row) { ... } }</code> — row-major, read only.</li><li>Use <code>grid.length</code> for the row bound and <code>grid[0].length</code> (or <code>grid[r].length</code>) for the column bound.</li><li>Partial traversals: a single row (<code>grid[r][c]</code> for c), a single column (<code>grid[r][c]</code> for r), the diagonal (<code>grid[i][i]</code>), or a sub-region.</li><li>Traversal order matters when output is printed in sequence or when elements are appended to a list.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int[][] g = {{1, 2, 3},
+             {4, 5, 6}};
+
+// row-major: 1 2 3 4 5 6
+for (int r = 0; r &lt; g.length; r++)
+{
+    for (int c = 0; c &lt; g[0].length; c++)
+    {
+        System.out.print(g[r][c] + " ");
+    }
+}
+
+// column-major: 1 4 2 5 3 6
+for (int c = 0; c &lt; g[0].length; c++)
+{
+    for (int r = 0; r &lt; g.length; r++)
+    {
+        System.out.print(g[r][c] + " ");
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Look at which index the outer loop controls. Outer over r → row-major. Outer over c → column-major. When asked for the printed output, write out the grid and read it in that order.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Row-major</strong> (outer r, inner c) visits row 0 fully, then row 1, etc. Reading order for English text. <strong>Column-major</strong> (outer c, inner r) visits column 0 top to bottom, then column 1. The loop nesting order determines which.</li><li><strong>Nested enhanced for:</strong> <code>for (int[] row : g) for (int v : row)</code> — row-major only, read-only. To modify cells you need indices.</li><li><strong>Single row:</strong> <code>for (int c = 0; c &lt; g[r].length; c++) g[r][c]</code>. <strong>Single column:</strong> <code>for (int r = 0; r &lt; g.length; r++) g[r][c]</code>. There's no <code>g[][c]</code> — a column has to be assembled by looping rows.</li><li><strong>Diagonals:</strong> main diagonal <code>g[i][i]</code>; anti-diagonal <code>g[i][n - 1 - i]</code> for a square grid.</li><li><strong>Bounds:</strong> row bound is <code>g.length</code>, column bound <code>g[0].length</code> (or <code>g[r].length</code>). Swapping them works only for square grids and fails otherwise — the exam uses non-square grids to catch it.</li><li><strong>Output order questions:</strong> write the grid, then read it in the traversal order (across rows or down columns). Trust the loop nesting, not the variable names.</li><li><strong>Traversal with a running index:</strong> when copying between a 1D array and a 2D array, keep a separate counter <code>k</code> that increments once per cell.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Assuming the outer loop is always rows.</strong> Check which variable it controls.</li><li><strong>Swapping bounds on a non-square grid.</strong> Exception or missed cells.</li><li><strong>Trying to grab a column as an array.</strong> No such thing. Loop rows.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by the following code?
+<pre class="code">int[][] m = {{1, 2}, {3, 4}, {5, 6}};
+for (int c = 0; c &lt; m[0].length; c++)
+{
+    for (int r = 0; r &lt; m.length; r++)
+    {
+        System.out.print(m[r][c]);
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 123456</li><li><span class="opt-letter">B</span> 135246</li><li><span class="opt-letter">C</span> 246135</li><li><span class="opt-letter">D</span> 654321</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Column-major: column 0 (1, 3, 5) then column 1 (2, 4, 6).</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following computes the sum of the elements on the main diagonal of a square 2D array <code>sq</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (int i = 0; i &lt; sq.length; i++) sum += sq[i][i];</code></li><li><span class="opt-letter">B</span> <code>for (int i = 0; i &lt; sq.length; i++) sum += sq[i][0];</code></li><li><span class="opt-letter">C</span> <code>for (int i = 0; i &lt; sq.length; i++) sum += sq[0][i];</code></li><li><span class="opt-letter">D</span> <code>for (int[] row : sq) sum += row[0];</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> The main diagonal is where row == column: sq[i][i].</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Row-major traversal</dt><dd>outer loop over rows, inner over columns</dd></div><div><dt>Column-major traversal</dt><dd>outer loop over columns, inner over rows</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-11.html"><span class="dir">Previous</span>4.11 2D Array Creation and Access</a>
+  <a class="to-right" href="4-13.html"><span class="dir">Next</span>4.13 Implementing 2D Array Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

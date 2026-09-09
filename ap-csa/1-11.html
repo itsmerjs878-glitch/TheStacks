@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.11 Math Class — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-11.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.11</div>
+<h1 class="article-title"><span class="title-num">1.11</span> Math Class</h1>
+<p class="article-lede">Five Math methods are on the reference sheet. Math.random is the one with a formula you must memorize.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>Math.abs(x)</code> — absolute value; returns int for int input, double for double.</li><li><code>Math.pow(base, exp)</code> — base raised to exp; <em>always returns a double</em>, even <code>Math.pow(2, 3)</code> is <code>8.0</code>.</li><li><code>Math.sqrt(x)</code> — square root, returns a double.</li><li><code>Math.random()</code> — returns a double <strong>≥ 0.0 and &lt; 1.0</strong>. Never exactly 1.0.</li><li><strong>Random int in a range</strong> [low, high] inclusive: <code>(int) (Math.random() * (high - low + 1)) + low</code>. Number of possible values = high − low + 1.</li><li>Example: die roll 1–6 is <code>(int) (Math.random() * 6) + 1</code>. Random 10–20: <code>(int) (Math.random() * 11) + 10</code>.</li><li>All Math methods are static: always <code>Math.method(...)</code>, never <code>new Math()</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int a = Math.abs(-7);                          // 7
+double b = Math.pow(2, 10);                     // 1024.0
+double c = Math.sqrt(2.25);                     // 1.5
+int roll = (int) (Math.random() * 6) + 1;       // 1..6
+int r = (int) (Math.random() * 50) + 25;        // 25..74 (50 values)
+int wrong = (int) Math.random() * 6 + 1;        // always 1! cast binds first</pre>
+<p>The last line is the classic error: <code>(int) Math.random()</code> is 0 before the multiplication happens.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> For "which expression produces a random integer from a to b," check two things: the multiplier equals the count (b − a + 1), and the added value is a. For "what range does this produce," the minimum is the added value and the maximum is that plus the multiplier minus one.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>Math.abs</code> is overloaded: <code>abs(int)</code> returns int, <code>abs(double)</code> returns double. <code>Math.abs(-3)</code> is <code>3</code>; <code>Math.abs(-3.0)</code> is <code>3.0</code>.</li><li><code>Math.pow</code> takes two doubles (ints widen) and <em>always</em> returns a double. <code>Math.pow(2, 3)</code> is <code>8.0</code>. Assigning it to an int requires a cast: <code>int x = (int) Math.pow(2, 3);</code>.</li><li><code>Math.sqrt</code> returns a double. Negative input gives <code>NaN</code>, not an exception.</li><li><code>Math.random()</code> returns a double in <strong>[0.0, 1.0)</strong> — 0 possible, 1 impossible. Multiply by n → [0, n). Cast to int → 0 to n−1. Add low → low to low+n−1.</li><li><strong>The formula, fully:</strong> <code>(int) (Math.random() * (high - low + 1)) + low</code>. Parentheses around the multiplication are essential — the cast must apply to the product, not to <code>Math.random()</code> alone (which would always give 0).</li><li><strong>Reverse-engineering a range:</strong> for <code>(int) (Math.random() * 7) + 3</code>: multiplier 7 → 7 values; added 3 → starts at 3; so 3 through 9.</li><li>Probability questions: <code>Math.random() &lt; 0.3</code> is true 30% of the time. <code>(int) (Math.random() * 4) == 0</code> is true 25% of the time.</li><li>All Math methods are static: <code>Math.sqrt(x)</code>, never <code>x.sqrt()</code> or <code>new Math()</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Casting Math.random() before multiplying.</strong> <code>(int) Math.random() * 6</code> is always 0. The cast binds first.</li><li><strong>Off-by-one in the multiplier.</strong> For 1–6 you need 6 values → multiply by 6. For 5–15 you need 11 values → multiply by 11, not 10.</li><li><strong>Treating Math.pow's result as an int.</strong> It's a double. <code>Math.pow(2, 3) + 1</code> is <code>9.0</code>.</li><li><strong>Thinking Math.random() can return 1.0.</strong> It can't. The upper bound is exclusive.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which expression generates a random integer between 5 and 15, inclusive?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>(int) (Math.random() * 10) + 5</code></li><li><span class="opt-letter">B</span> <code>(int) (Math.random() * 11) + 5</code></li><li><span class="opt-letter">C</span> <code>(int) (Math.random() * 15) + 5</code></li><li><span class="opt-letter">D</span> <code>(int) (Math.random() * 11) + 4</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 15 - 5 + 1 = 11 possible values, so multiply by 11 and add the low value 5. Option A only reaches 14.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is printed by <code>System.out.println(Math.pow(3, 2) + Math.abs(-4));</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 13</li><li><span class="opt-letter">B</span> 13.0</li><li><span class="opt-letter">C</span> 9.04</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Math.pow returns a double (9.0). 9.0 + 4 = 13.0.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What range of values can <code>(int) (Math.random() * 4) * 2</code> produce?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0 to 8</li><li><span class="opt-letter">B</span> 0, 2, 4, or 6</li><li><span class="opt-letter">C</span> 1 to 8</li><li><span class="opt-letter">D</span> 0 to 7</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> (int)(Math.random() * 4) is 0, 1, 2, or 3. Times 2 gives 0, 2, 4, 6.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Math.random()</dt><dd>returns a double in [0.0, 1.0)</dd></div><div><dt>Math.pow(a, b)</dt><dd>a raised to b, returned as a double</dd></div><div><dt>Math.abs(x)</dt><dd>absolute value</dd></div><div><dt>Math.sqrt(x)</dt><dd>square root as a double</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-10.html"><span class="dir">Previous</span>1.10 Calling Class Methods</a>
+  <a class="to-right" href="1-12.html"><span class="dir">Next</span>1.12 Objects: Instances of Classes</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

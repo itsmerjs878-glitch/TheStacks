@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.2 Impact of Program Design — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/3-2.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">UNIT 3: CLASS CREATION</a> &middot; TOPIC 3.2</div>
+<h1 class="article-title"><span class="title-num">3.2</span> Impact of Program Design</h1>
+<p class="article-lede">The CED's ethics topic for this unit: design decisions affect people. Short, but it appears on the exam.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Programs are used by people, and design decisions can help or harm them. Programmers have a responsibility to consider effects on <strong>all</strong> potential users.</li><li><strong>Privacy:</strong> deciding what data to store, how long, and who can access it is a design choice. Storing less is safer.</li><li><strong>Security:</strong> keeping data private (encapsulation) and validating inputs reduces the chance of misuse.</li><li><strong>Accessibility and inclusion:</strong> programs should work for people with disabilities and across different devices, languages, and contexts. Assuming every user is like the developer produces exclusion.</li><li><strong>Bias:</strong> a program's logic and data can embed assumptions that treat groups unfairly; testing with diverse inputs and users helps surface it.</li><li>Legal and ethical obligations include respecting intellectual property (citing code you use) and not collecting data without consent.</li><li>These considerations apply during design, not as an afterthought.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>A class <code>UserProfile</code> stores name, email, and — because it was convenient — full date of birth and home address, all with public getters. Reconsidered: date of birth is only needed to check age, so store a boolean <code>isAdult</code> instead; make the address private with no getter since nothing needs it. Same functionality, far less exposure if the data leaks. That's design impact.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Questions here are scenario-based and the right answer usually involves collecting less data, validating before storing, considering users unlike the developer, or getting consent. Options that maximize data collection "just in case" are wrong.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>This is Unit 3's ethics topic, and it's specifically about <strong>design</strong> decisions — what a class stores, who can access it, what it assumes about users. Unit 4 has a parallel topic (4.1) about <strong>data collection</strong>. Together they're the CSA equivalent of CSP's Big Idea 5.</li><li><strong>Data minimization</strong> is the design principle: store only what the program needs. Every extra field is a privacy risk if the data leaks and a maintenance cost if it changes. A class that stores a full date of birth to check "is 18+" should store a boolean instead.</li><li><strong>Encapsulation is a security tool:</strong> private fields with validating setters mean bad data can't get in. A public field can be set to anything by anyone. This is why 3.1's design advice and 3.2's ethics overlap.</li><li><strong>Accessibility</strong> means designing for people with disabilities (screen readers, motor impairments, color blindness) and for varied contexts (slow devices, small screens, different languages). A program that only works for users like the developer excludes everyone else. The fix is investigating users during design and testing with diverse people.</li><li><strong>Bias in program logic</strong>: a class whose validation assumes names have no spaces, ages are under 100, or addresses have a US format encodes assumptions. When the assumption is wrong for a group, the program fails for that group. Testing with diverse inputs surfaces this.</li><li><strong>Consent and transparency:</strong> users should know what a program stores and does. Storing data silently, even if legal, is an ethical problem the CED wants you to recognize.</li><li><strong>Intellectual property</strong> applies to code you use: cite libraries and borrowed code. On the exam this is conceptual; in practice it's licenses and attribution.</li><li>The CED frames all of this as <em>the programmer's responsibility</em>. The correct answer to "who should consider these impacts" is the developer, during design — not a legal team afterward.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Choosing the "collect everything" option.</strong> Minimization is always the responsible choice.</li><li><strong>Treating accessibility as optional polish.</strong> The CED treats it as a design responsibility.</li><li><strong>Assuming legal = ethical.</strong> The exam distinguishes them. A design can be legal and still irresponsible.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> A developer is designing a class to store user information for a fitness app. Which of the following is the most responsible design decision regarding user data?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Store every piece of data the user could possibly provide, in case it is useful later.</li><li><span class="opt-letter">B</span> Store only the data the app needs to function, and keep it private with controlled access.</li><li><span class="opt-letter">C</span> Make all instance variables public so other classes can access them easily.</li><li><span class="opt-letter">D</span> Share the data with third parties to improve the app.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Minimizing collected data and encapsulating it protects privacy and security.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following best describes why a programmer should test a program with a diverse group of users?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> To make the program run faster</li><li><span class="opt-letter">B</span> To discover assumptions in the design that exclude or disadvantage some users</li><li><span class="opt-letter">C</span> To reduce the number of classes</li><li><span class="opt-letter">D</span> To avoid needing documentation</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Diverse testing surfaces bias and accessibility problems that the developer's own perspective misses.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Data minimization</dt><dd>collecting and storing only the data a program actually needs</dd></div><div><dt>Accessibility</dt><dd>designing so people with disabilities and varied contexts can use the program</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-1.html"><span class="dir">Previous</span>3.1 Abstraction and Program Design</a>
+  <a class="to-right" href="3-3.html"><span class="dir">Next</span>3.3 Anatomy of a Class</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

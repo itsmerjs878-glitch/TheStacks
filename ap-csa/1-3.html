@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.3 Expressions and Output — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-3.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.3</div>
+<h1 class="article-title"><span class="title-num">1.3</span> Expressions and Output</h1>
+<p class="article-lede">Arithmetic in Java has one rule that catches everyone: dividing two ints gives an int. Everything else follows normal math.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>. Normal precedence: parentheses, then <code>* / %</code> left to right, then <code>+ -</code> left to right.</li><li><strong>Integer division:</strong> when both operands are <code>int</code>, <code>/</code> truncates (drops the decimal). <code>7 / 2</code> is <code>3</code>, <code>-7 / 2</code> is <code>-3</code>. If either operand is a <code>double</code>, the result is a double: <code>7 / 2.0</code> is <code>3.5</code>.</li><li><code>%</code> is the <strong>remainder</strong>: <code>7 % 2</code> is <code>1</code>, <code>10 % 5</code> is <code>0</code>. For negative dividends the result is negative: <code>-7 % 2</code> is <code>-1</code>.</li><li>Dividing an int by zero throws an <code>ArithmeticException</code>. Dividing a double by zero gives <code>Infinity</code> or <code>NaN</code>, no exception.</li><li><code>System.out.println(x)</code> prints x and moves to a new line; <code>System.out.print(x)</code> prints without a newline.</li><li><code>+</code> with a String is <strong>concatenation</strong>. Evaluation is left to right: <code>"Sum: " + 1 + 2</code> is <code>"Sum: 12"</code>, but <code>"Sum: " + (1 + 2)</code> is <code>"Sum: 3"</code>.</li><li>String literals are in double quotes; escape sequences include <code>\n</code> (newline), <code>\"</code> (quote), <code>\\</code> (backslash).</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">System.out.println(17 / 5);        // 3
+System.out.println(17 % 5);        // 2
+System.out.println(17 / 5.0);      // 3.4
+System.out.println(17.0 / 5);      // 3.4
+System.out.println(1 + 2 + "3");   // 33
+System.out.println("1" + 2 + 3);   // 123
+System.out.println(2 * 3 % 4);     // 2   (6 % 4)</pre>
+<p>Lines 5 and 6 are the concatenation trap: left-to-right evaluation means the ints are added <em>before</em> the String is reached in line 5, but not in line 6.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Look at both operands of every <code>/</code>. Both int? Truncate. Either double? Decimal result. For the <code>+</code> trap, scan left to right and note the moment a String appears — from then on everything is concatenation.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Integer division truncates toward zero.</strong> <code>7 / 2</code> is 3; <code>-7 / 2</code> is −3 (not −4). Truncation, not floor. The exam tests negatives specifically.</li><li><strong>Remainder sign follows the dividend</strong> (left operand): <code>-7 % 3</code> is −1; <code>7 % -3</code> is 1. The identity that always holds: <code>a == (a / b) * b + a % b</code>.</li><li><strong>Mixed arithmetic promotes to double</strong>: if either operand is a double, the whole operation is done in double. <code>1 / 2 * 2.0</code> is 0.0 (integer division first: 0, then 0 * 2.0). <code>1 / 2.0 * 2</code> is 1.0. Order matters because promotion happens per operation, not per expression.</li><li><strong>String concatenation is left-to-right.</strong> Once a String is on the left of a <code>+</code>, everything after is concatenated. <code>1 + 2 + "3" + 4 + 5</code> is <code>"3345"</code>: 1 + 2 = 3, then "3" + "3" = "33", then + 4 → "334", + 5 → "3345".</li><li><code>System.out.println()</code> with no argument prints a blank line. <code>print</code> vs <code>println</code> matters for exact-output questions: with <code>print</code>, consecutive outputs run together on one line.</li><li>Printing a double prints the full value: <code>System.out.println(10.0 / 4)</code> shows <code>2.5</code>; <code>10.0 / 5</code> shows <code>2.0</code>, not <code>2</code>. The <code>.0</code> is part of the answer.</li><li>Escape sequences: <code>\n</code> newline, <code>\t</code> tab, <code>\"</code> literal quote, <code>\\</code> literal backslash. The exam uses <code>\n</code> and <code>\"</code> most.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Rounding integer division.</strong> <code>7 / 2</code> is 3, never 3.5 or 4. Two ints in, int out, fraction dropped.</li><li><strong>Flooring negative division.</strong> <code>-7 / 2</code> is −3. Java truncates toward zero.</li><li><strong>Adding before concatenating.</strong> <code>"Total: " + 5 + 10</code> is <code>"Total: 510"</code>. The String came first, so no addition happens.</li><li><strong>Dropping the .0 on doubles.</strong> If the result is a double, the output shows a decimal point. <code>4.0</code>, not <code>4</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is printed by <code>System.out.println(25 / 4 * 2.0);</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 12.5</li><li><span class="opt-letter">B</span> 12.0</li><li><span class="opt-letter">C</span> 12</li><li><span class="opt-letter">D</span> 13.0</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> 25 / 4 is integer division = 6. Then 6 * 2.0 = 12.0 (double).</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is printed by <code>System.out.println("Total: " + 5 + 10);</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Total: 15</li><li><span class="opt-letter">B</span> Total: 510</li><li><span class="opt-letter">C</span> A compile-time error</li><li><span class="opt-letter">D</span> 15</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Left to right: "Total: " + 5 → "Total: 5", then + 10 → "Total: 510".</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q3</span> What is the value of <code>-13 % 5</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 3</li><li><span class="opt-letter">B</span> -3</li><li><span class="opt-letter">C</span> 2</li><li><span class="opt-letter">D</span> -2</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Java's remainder keeps the sign of the dividend: -13 = 5 × (-2) + (-3), so the result is -3.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Integer division</dt><dd>int / int drops the fractional part</dd></div><div><dt>Remainder (%)</dt><dd>the remainder after division; sign follows the left operand</dd></div><div><dt>Concatenation</dt><dd>joining Strings with +; any + involving a String produces a String</dd></div><div><dt>println</dt><dd>prints a value followed by a newline</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-2.html"><span class="dir">Previous</span>1.2 Variables and Data Types</a>
+  <a class="to-right" href="1-4.html"><span class="dir">Next</span>1.4 Assignment Statements and Input</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

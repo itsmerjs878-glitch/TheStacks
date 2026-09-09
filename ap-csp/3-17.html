@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.17 Algorithmic Efficiency — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csp/3-17.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-3.html">BIG IDEA 3: ALGORITHMS AND PROGRAMMING</a> &middot; TOPIC 3.17</div>
+<h1 class="article-title"><span class="title-num">3.17</span> Algorithmic Efficiency</h1>
+<p class="article-lede">How does the work an algorithm does grow as the input grows? The CED draws one line — polynomial vs. exponential — and everything here follows from it.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Efficiency</strong> is measured by how the number of steps (or memory) an algorithm needs grows as the <strong>input size</strong> grows — not by a stopwatch on one computer.</li><li>An algorithm runs in <strong>reasonable time</strong> if its steps grow <em>polynomially</em> with input size: constant, linear (n), quadratic (n²), cubic, etc.</li><li>An algorithm runs in <strong>unreasonable time</strong> if its steps grow <em>exponentially</em> (2<sup>n</sup>) or <em>factorially</em> (n!). Doubling the input can square or worse the time — these become impossible for even modest inputs.</li><li>Comparing algorithms: count the operations as a function of n. Linear search is about n steps; binary search about log₂ n; comparing every pair of items is about n².</li><li>Some problems have <strong>no known</strong> reasonable-time algorithm. For these, a <strong>heuristic</strong> — an approach that finds a good-enough, not necessarily optimal, solution quickly — is used instead.</li><li>Heuristic example: the traveling salesperson problem (shortest route visiting every city). Checking all routes is factorial time; "always go to the nearest unvisited city" is a fast heuristic that gives a decent route.</li><li>Efficiency often involves a trade-off with simplicity or memory. The most efficient algorithm isn't always the best choice for a small, one-time task.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Two algorithms check whether a list of n names contains any duplicate.</p>
+<ul class="points">
+<li><strong>Algorithm A:</strong> compare every name to every other name. For n = 10 that's about 45 comparisons; for n = 1,000, about 500,000. Steps grow roughly as n² — polynomial, so reasonable.</li>
+<li><strong>Algorithm B:</strong> try every possible ordering of the list looking for a pattern. For n = 10 that's 3.6 million orderings; for n = 20, over 2 quintillion. Factorial — unreasonable.</li>
+</ul>
+<p>A is slower than a smarter approach but fine; B is unusable past tiny inputs no matter how fast the computer is.</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If a question gives a table of input size vs. steps, check the growth: steps doubling when n increases by 1 = exponential = unreasonable. Steps multiplying by 4 when n doubles = n² = reasonable. When the stem says "no efficient algorithm exists" or "the solution doesn't have to be perfect," the answer involves a heuristic.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The CED defines efficiency by how an algorithm's resource use (steps or memory) <strong>grows with input size</strong>, and draws one line: <strong>polynomial</strong> growth (constant, linear, quadratic, cubic…) is <em>reasonable</em>; <strong>exponential</strong> (2<sup>n</sup>) or <strong>factorial</strong> (n!) growth is <em>unreasonable</em>.</li><li>Why the line is there: doubling the input for a quadratic algorithm quadruples the work — manageable. Doubling the input for an exponential algorithm <em>squares</em> the work. At n = 50, 2<sup>n</sup> is a quadrillion. No hardware improvement fixes that.</li><li><strong>Recognizing growth from a table:</strong> steps double when n increases by 1 → exponential. Steps multiply by 4 when n doubles → quadratic. Steps double when n doubles → linear. Steps increase by 1 when n doubles → logarithmic.</li><li><strong>Reading growth from code:</strong> one loop over n items → linear. Nested loops each over n → quadratic. A loop that halves the range each time → logarithmic. Trying every subset or every ordering → exponential or factorial.</li><li><strong>Heuristics</strong> are for problems where the exact solution is unreasonable. A heuristic gives a good-enough answer fast, without guaranteeing the best. The traveling salesperson problem (shortest route through all cities) is the canonical example: exact = factorial time; nearest-neighbor heuristic = fast and usually decent.</li><li>A problem can have both reasonable and unreasonable algorithms. Sorting by trying every ordering is factorial; sorting with merge sort is n log n. The problem isn't hard; the first algorithm is just bad.</li><li>The CED explicitly says efficiency is <em>not</em> measured by running time on a specific computer — faster hardware changes the constant, not the growth. An unreasonable algorithm on a supercomputer is still unreasonable.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Calling quadratic "unreasonable."</strong> It's polynomial, so it's reasonable per the CED. Slow for large n, but reasonable.</li><li><strong>Thinking a faster computer fixes exponential growth.</strong> It shifts the wall by a few units of n. It doesn't remove it.</li><li><strong>Expecting a heuristic to find the optimal answer.</strong> Heuristics trade optimality for speed. If an option says a heuristic "always finds the best solution," it's wrong.</li><li><strong>Reading a steps table without computing ratios.</strong> Look at how steps change as n changes. That ratio is the growth type.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> The table shows the number of steps an algorithm takes for different input sizes.
+<table class="trace"><tr><th>Input size</th><th>Steps</th></tr><tr><td>10</td><td>1,024</td></tr><tr><td>11</td><td>2,048</td></tr><tr><td>12</td><td>4,096</td></tr></table>Which of the following best describes the algorithm?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> It runs in reasonable time because the steps increase for each input size.</li><li><span class="opt-letter">B</span> It runs in unreasonable time because the steps double with each additional input, indicating exponential growth.</li><li><span class="opt-letter">C</span> It runs in constant time.</li><li><span class="opt-letter">D</span> It runs in linear time.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Steps double each time n increases by 1 — that's 2ⁿ, exponential, unreasonable.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A delivery company must plan a route through 50 cities. Checking every possible route would take longer than the age of the universe. Which approach is most appropriate?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Use a heuristic that finds a good route quickly, even if it is not guaranteed to be the shortest.</li><li><span class="opt-letter">B</span> Buy a faster computer so that all routes can be checked.</li><li><span class="opt-letter">C</span> Use binary search to find the shortest route.</li><li><span class="opt-letter">D</span> Reduce the problem to one city.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> When the exact algorithm is unreasonable, a heuristic gives a usable answer in reasonable time. A faster computer doesn't overcome factorial growth.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Efficiency</dt><dd>how an algorithm's required steps or memory grow with input size</dd></div><div><dt>Reasonable time</dt><dd>polynomial growth in steps (n, n², n³ …) as input grows</dd></div><div><dt>Unreasonable time</dt><dd>exponential or factorial growth in steps as input grows</dd></div><div><dt>Heuristic</dt><dd>a technique that finds a good-enough solution quickly when an optimal one is impractical</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="3-16.html"><span class="dir">Previous</span>3.16 Simulations</a>
+  <a class="to-right" href="3-18.html"><span class="dir">Next</span>3.18 Undecidable Problems</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

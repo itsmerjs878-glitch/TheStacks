@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.9 ArrayList Traversals — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-9.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.9</div>
+<h1 class="article-title"><span class="title-num">4.9</span> ArrayList Traversals</h1>
+<p class="article-lede">Same two loop styles as arrays, with one extra hazard: modifying the list's size while looping over it.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Standard:</strong> <code>for (int i = 0; i &lt; list.size(); i++)</code> with <code>list.get(i)</code>. <strong>Enhanced:</strong> <code>for (String s : list)</code>.</li><li><strong>Removing during a forward loop skips elements.</strong> After <code>remove(i)</code>, the next element shifts into index i, then i++ jumps past it.</li><li>Fixes: after removing, do <code>i--</code> (or don't increment); or traverse <strong>backward</strong> with <code>for (int i = list.size() - 1; i &gt;= 0; i--)</code>, where removals don't affect unvisited indices.</li><li><strong>Never add or remove inside an enhanced for loop</strong> — it throws <code>ConcurrentModificationException</code>.</li><li>Enhanced for over an ArrayList of objects lets you call mutators on each element (the reference is shared); over <code>ArrayList&lt;Integer&gt;</code>, assigning to the loop variable does nothing to the list.</li><li>The loop condition <code>i &lt; list.size()</code> is re-evaluated each iteration, so a shrinking list shortens the loop.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
+// a = [4, 4, 7, 4]
+// BUGGY: remove all 4s
+for (int i = 0; i &lt; a.size(); i++)
+{
+    if (a.get(i) == 4) a.remove(i);
+}
+// result: [4, 7]  — second 4 was skipped
+
+// CORRECT: backward
+for (int i = a.size() - 1; i &gt;= 0; i--)
+{
+    if (a.get(i) == 4) a.remove(i);
+}
+// result: [7]</pre>
+</section>
+
+<section class="block">
+  <h2>Trace it yourself</h2>
+  <div class="tracer" data-trace-id="csa-arraylist-remove"></div><p class="tracer-hint">Step through with the buttons, or use the &larr; &rarr; keys. Changed variables are highlighted.</p>
+</section>
+<div class="callout"><strong>Exam tip:</strong> If a question removes elements in a forward loop, trace it literally — the answer usually has "leftover" elements that were skipped. If asked for the correct version, pick the backward loop or the one with <code>i--</code> after remove.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>The removal bug, step by step:</strong> list <code>[2, 2, 5]</code>, remove all 2s with a forward loop. i=0: get(0)=2, remove → <code>[2, 5]</code>. i=1: get(1)=5, no. Done. Result <code>[2, 5]</code> — the second 2 shifted into index 0 and was never examined.</li><li><strong>Fix A — backward:</strong> <code>for (int i = list.size() - 1; i &gt;= 0; i--)</code>. Removing at i shifts elements <em>after</em> i, which you've already visited. Unvisited elements (before i) keep their indices.</li><li><strong>Fix B — don't advance after removing:</strong> use a while loop with manual increment, or <code>i--</code> right after <code>remove(i)</code> in a for loop. Either way, the shifted-in element is re-examined.</li><li><strong>Enhanced for + structural change = ConcurrentModificationException.</strong> Adding or removing inside <code>for (T x : list)</code> throws at run time (not compile time). Calling mutators on the <em>elements</em> is fine; changing the list's <em>size</em> is not.</li><li><strong>Adding in a forward loop:</strong> inserting at i pushes the current element to i+1, so i++ lands on it again — potential infinite loop if you insert every time. Insert, then <code>i++</code> extra to skip.</li><li><strong>size() is re-evaluated each iteration.</strong> A shrinking list ends the loop sooner; a growing list extends it. This is different from a for loop over an array, where length is fixed.</li><li><strong>Object elements:</strong> <code>for (Student s : roster) s.setGrade(…)</code> changes the objects in the list — the reference is shared. <code>for (Integer n : nums) n = 0;</code> changes nothing — n is a copy.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Forward-loop removal.</strong> Skips the element after each removal. The exam asks for the buggy output; trace it literally.</li><li><strong>Removing inside an enhanced for.</strong> Run-time exception.</li><li><strong>Caching size() before the loop.</strong> If the list shrinks, you go out of bounds.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What is the contents of <code>list</code> after the following code, where <code>list</code> starts as <code>[1, 2, 2, 3, 2]</code>?
+<pre class="code">for (int i = 0; i &lt; list.size(); i++)
+{
+    if (list.get(i) == 2)
+    {
+        list.remove(i);
+    }
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> [1, 3]</li><li><span class="opt-letter">B</span> [1, 2, 3]</li><li><span class="opt-letter">C</span> [1, 2, 3, 2]</li><li><span class="opt-letter">D</span> [1, 3, 2]</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> i=1 removes the first 2 → [1, 2, 3, 2]; i=2 is 3 (the second 2 shifted to index 1 and was skipped); i=3 removes the last 2 → [1, 2, 3].</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following correctly removes every element equal to <code>target</code> from an <code>ArrayList&lt;Integer&gt; nums</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>for (Integer n : nums) { if (n == target) nums.remove(n); }</code></li><li><span class="opt-letter">B</span> <code>for (int i = nums.size() - 1; i &gt;= 0; i--) { if (nums.get(i) == target) nums.remove(i); }</code></li><li><span class="opt-letter">C</span> <code>for (int i = 0; i &lt; nums.size(); i++) { if (nums.get(i) == target) nums.remove(i); }</code></li><li><span class="opt-letter">D</span> <code>for (int i = 0; i &lt;= nums.size(); i++) { if (nums.get(i) == target) nums.remove(i); }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Backward traversal handles removals safely. A throws ConcurrentModificationException; C skips adjacent matches; D goes out of bounds.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>ConcurrentModificationException</dt><dd>the error from modifying an ArrayList inside an enhanced for loop</dd></div><div><dt>Backward traversal</dt><dd>looping from size - 1 down to 0, safe for removals</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-8.html"><span class="dir">Previous</span>4.8 ArrayList Methods</a>
+  <a class="to-right" href="4-10.html"><span class="dir">Next</span>4.10 Implementing ArrayList Algorithms</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+<script>window.TRACES = {"csa-arraylist-remove": {"id": "csa-arraylist-remove", "title": "Removing from an ArrayList in a forward loop (the bug)", "course": "ap-csa", "code": ["// list = [1, 2, 2, 3, 2]", "for (int i = 0; i < list.size(); i++)", "{", "    if (list.get(i) == 2)", "    {", "        list.remove(i);", "    }", "}", "System.out.println(list);"], "steps": [{"line": 0, "vars": [["list", "[1, 2, 2, 3, 2]"]], "out": "", "note": "starting list"}, {"line": 1, "vars": [["list", "[1, 2, 2, 3, 2]"], ["i", "0"]], "out": "", "note": "check i < size: 0 < 5 is true"}, {"line": 3, "vars": [["list", "[1, 2, 2, 3, 2]"], ["i", "0"]], "out": "", "note": "list.get(0) is 1; equals 2? no"}, {"line": 1, "vars": [["list", "[1, 2, 2, 3, 2]"], ["i", "1"]], "out": "", "note": "i++ → 1"}, {"line": 1, "vars": [["list", "[1, 2, 2, 3, 2]"], ["i", "1"]], "out": "", "note": "check i < size: 1 < 5 is true"}, {"line": 3, "vars": [["list", "[1, 2, 2, 3, 2]"], ["i", "1"]], "out": "", "note": "list.get(1) is 2; equals 2? yes"}, {"line": 5, "vars": [["list", "[1, 2, 3, 2]"], ["i", "1"]], "out": "", "note": "removed index 1; elements after it shift LEFT"}, {"line": 1, "vars": [["list", "[1, 2, 3, 2]"], ["i", "2"]], "out": "", "note": "i++ → 2 — the element that shifted into the old index was skipped"}, {"line": 1, "vars": [["list", "[1, 2, 3, 2]"], ["i", "2"]], "out": "", "note": "check i < size: 2 < 4 is true"}, {"line": 3, "vars": [["list", "[1, 2, 3, 2]"], ["i", "2"]], "out": "", "note": "list.get(2) is 3; equals 2? no"}, {"line": 1, "vars": [["list", "[1, 2, 3, 2]"], ["i", "3"]], "out": "", "note": "i++ → 3"}, {"line": 1, "vars": [["list", "[1, 2, 3, 2]"], ["i", "3"]], "out": "", "note": "check i < size: 3 < 4 is true"}, {"line": 3, "vars": [["list", "[1, 2, 3, 2]"], ["i", "3"]], "out": "", "note": "list.get(3) is 2; equals 2? yes"}, {"line": 5, "vars": [["list", "[1, 2, 3]"], ["i", "3"]], "out": "", "note": "removed index 3; elements after it shift LEFT"}, {"line": 1, "vars": [["list", "[1, 2, 3]"], ["i", "4"]], "out": "", "note": "i++ → 4"}, {"line": 1, "vars": [["list", "[1, 2, 3]"], ["i", "4"]], "out": "", "note": "check i < size: 4 < 3 is false → exit"}, {"line": 8, "vars": [["list", "[1, 2, 3]"], ["i", "4"]], "out": "[1, 2, 3]\n", "note": "a 2 survived because it was skipped"}], "intro": "After a remove, the next element shifts into the current index — then i++ jumps past it."}};</script>
+<script src="../tracer.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.11 2D Array Creation and Access — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-11.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.11</div>
+<h1 class="article-title"><span class="title-num">4.11</span> 2D Array Creation and Access</h1>
+<p class="article-lede">A 2D array is an array of arrays. Row first, then column — and each row is itself a 1D array you can pass around.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Declare and create: <code>int[][] grid = new int[3][4];</code> — 3 rows, 4 columns, all 0. <code>grid.length</code> is the number of <strong>rows</strong>; <code>grid[0].length</code> is the number of <strong>columns</strong>.</li><li>Initializer: <code>int[][] g = {{1, 2, 3}, {4, 5, 6}};</code> — 2 rows, 3 columns.</li><li>Access: <code>grid[row][col]</code>. <code>grid[1][2]</code> is row 1, column 2 (both from 0).</li><li><code>grid[r]</code> by itself is a 1D array — row r. You can pass it to a method that takes <code>int[]</code>.</li><li>On the AP exam, 2D arrays are <strong>rectangular</strong> — every row has the same length. (Java allows ragged arrays, but they aren't tested.)</li><li>Default values follow 1D rules: 0, 0.0, false, null.</li><li>Out of bounds in either dimension throws ArrayIndexOutOfBoundsException.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int[][] m = {{1, 2, 3},
+             {4, 5, 6}};
+System.out.println(m.length);        // 2  (rows)
+System.out.println(m[0].length);     // 3  (columns)
+System.out.println(m[1][2]);         // 6
+m[0][1] = 9;                         // row 0 becomes {1, 9, 3}
+int[] secondRow = m[1];              // {4, 5, 6}
+// m[2][0]                            // exception: no row 2</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Read <code>m[a][b]</code> as "row a, column b" every time — never reverse it. <code>length</code> counts rows; <code>[0].length</code> counts columns. A question that flips these is the standard distractor.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>int[][] g = new int[R][C]</code> creates R row-arrays each of length C. <code>g</code> is an array of references to those rows. <code>g.length</code> = R. <code>g[r].length</code> = C for every r (rectangular).</li><li><strong>Initializer:</strong> <code>{{1, 2}, {3, 4}, {5, 6}}</code> — outer braces list rows, inner braces list each row's values. Count outer groups for rows, inner elements for columns.</li><li><strong>Access</strong> <code>g[r][c]</code>: first bracket row, second column. Always. The exam never varies this convention.</li><li><code>g[r]</code> is a 1D array — a real object you can pass to a method taking <code>int[]</code>, iterate with enhanced for, or alias with <code>int[] row = g[r];</code> (changes to <code>row[i]</code> affect <code>g[r][i]</code>).</li><li><strong>Defaults</strong> as for 1D. A <code>String[][]</code> is all null.</li><li><strong>Ragged arrays</strong> (rows of different lengths) are possible in Java but excluded from the CED. Assume rectangular; use <code>g[0].length</code> for column count.</li><li><strong>Out of bounds</strong> in either dimension throws. <code>g[R][0]</code> — no row R. <code>g[0][C]</code> — no column C.</li><li><strong>Mental model:</strong> a table. Rows go down, columns go across. Row index first because you pick the row, then the position within it.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Swapping row and column.</strong> <code>g[c][r]</code> when you mean <code>g[r][c]</code>. Read as row-then-column every time.</li><li><strong>g.length for columns.</strong> It's rows. Columns is <code>g[0].length</code>.</li><li><strong>Counting inner elements as rows.</strong> In the initializer, outer braces = rows.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> After <code>double[][] t = new double[4][6];</code>, what are <code>t.length</code> and <code>t[0].length</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 4 and 6</li><li><span class="opt-letter">B</span> 6 and 4</li><li><span class="opt-letter">C</span> 24 and 1</li><li><span class="opt-letter">D</span> 4 and 4</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> First dimension is rows (4), second is columns (6).</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> What is printed by the following code?
+<pre class="code">int[][] a = {{2, 4}, {6, 8}, {10, 12}};
+System.out.println(a[2][0] + a[0][1]);</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 14</li><li><span class="opt-letter">B</span> 12</li><li><span class="opt-letter">C</span> 16</li><li><span class="opt-letter">D</span> 8</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> a[2][0] is 10 (row 2, col 0); a[0][1] is 4. 10 + 4 = 14.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>2D array</dt><dd>an array whose elements are arrays; rows of columns</dd></div><div><dt>Row-major</dt><dd>the convention that the first index is the row</dd></div><div><dt>Rectangular array</dt><dd>a 2D array where every row has the same length</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-10.html"><span class="dir">Previous</span>4.10 Implementing ArrayList Algorithms</a>
+  <a class="to-right" href="4-12.html"><span class="dir">Next</span>4.12 2D Array Traversals</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

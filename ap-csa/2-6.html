@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.6 Comparing Boolean Expressions — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-6.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.6</div>
+<h1 class="article-title"><span class="title-num">2.6</span> Comparing Boolean Expressions</h1>
+<p class="article-lede">Two conditions can look different and mean the same thing. The exam asks which is equivalent — De Morgan's laws and truth tables are how you answer.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>Boolean expressions are <strong>equivalent</strong> if they evaluate to the same value for every possible input.</li><li><strong>De Morgan's laws:</strong> <code>!(a &amp;&amp; b)</code> ≡ <code>!a || !b</code>; <code>!(a || b)</code> ≡ <code>!a &amp;&amp; !b</code>. Negating flips the operator and negates each part.</li><li>Negating a comparison flips it to include the boundary: <code>!(x &lt; 5)</code> ≡ <code>x &gt;= 5</code>; <code>!(x == y)</code> ≡ <code>x != y</code>.</li><li>A <strong>truth table</strong> lists every combination of inputs and the result — the reliable way to prove equivalence when reasoning gets confusing.</li><li>Simplifications: <code>a == true</code> ≡ <code>a</code>; <code>a == false</code> ≡ <code>!a</code>; <code>!!a</code> ≡ <code>a</code>.</li><li>Two if/else structures are equivalent if every input takes the same action, regardless of how the conditions are written.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<p>Is <code>!(x &gt; 10 || y &lt;= 0)</code> equivalent to <code>x &lt;= 10 &amp;&amp; y &gt; 0</code>?</p>
+<p>De Morgan: <code>!(A || B)</code> = <code>!A &amp;&amp; !B</code>. <code>!(x &gt; 10)</code> = <code>x &lt;= 10</code>. <code>!(y &lt;= 0)</code> = <code>y &gt; 0</code>. So yes. Check one case: x = 3, y = 4 → original: !(false || false) = true; rewrite: true &amp;&amp; true = true. ✓</p>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Apply De Morgan mechanically: flip the operator, negate each side, and flip each comparison to its boundary-inclusive opposite. Then test one or two values. Options that negate the parts but keep the same &amp;&amp;/|| are the standard distractor.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>De Morgan mechanically:</strong> to negate <code>(P &amp;&amp; Q)</code>, negate P, negate Q, change && to ||. To negate <code>(P || Q)</code>, negate P, negate Q, change || to &&. Then simplify each negated comparison by flipping it: <code>!(x &lt; 5)</code> → <code>x &gt;= 5</code>.</li><li><strong>Comparison negations:</strong> <code>&lt;</code>↔<code>&gt;=</code>, <code>&gt;</code>↔<code>&lt;=</code>, <code>==</code>↔<code>!=</code>. The negation always flips the boundary's membership.</li><li><strong>Truth tables</strong> prove equivalence with certainty. Two variables: four rows. Three: eight. If every row matches, equivalent. If any row differs, not — and that row is your counterexample.</li><li><strong>Simplifications the exam expects:</strong> <code>x == true</code> → <code>x</code>; <code>x == false</code> → <code>!x</code>; <code>!!x</code> → <code>x</code>; <code>x &amp;&amp; true</code> → <code>x</code>; <code>x || false</code> → <code>x</code>; <code>x &amp;&amp; false</code> → <code>false</code>; <code>x || true</code> → <code>true</code>.</li><li><strong>Code equivalence</strong> extends beyond boolean expressions: two if/else structures are equivalent if every input takes the same action. Nested ifs vs. compound conditions, chains vs. separate ifs — all can be equivalent or not depending on details. Test.</li><li>A boolean-returning method can often be simplified: <code>if (c) return true; else return false;</code> is just <code>return c;</code>. And <code>if (c) return false; else return true;</code> is <code>return !c;</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Negating parts but not the operator.</strong> <code>!(a &amp;&amp; b)</code> ≠ <code>!a &amp;&amp; !b</code>. The && must become ||.</li><li><strong>Dropping the boundary.</strong> <code>!(x &gt; 5)</code> is <code>x &lt;= 5</code>, not <code>x &lt; 5</code>.</li><li><strong>Trusting intuition on equivalence.</strong> Build the table. It's faster than being wrong.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which expression is equivalent to <code>!(a &lt; 3 &amp;&amp; b != 7)</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>a &gt;= 3 || b == 7</code></li><li><span class="opt-letter">B</span> <code>a &gt;= 3 &amp;&amp; b == 7</code></li><li><span class="opt-letter">C</span> <code>a &gt; 3 || b == 7</code></li><li><span class="opt-letter">D</span> <code>a &lt; 3 || b != 7</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> De Morgan: !(A && B) = !A || !B. !(a < 3) = a >= 3; !(b != 7) = b == 7.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following is equivalent to the code segment below?
+<pre class="code">if (x &gt; 0)
+{
+    if (y &gt; 0)
+    {
+        return true;
+    }
+}
+return false;</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>return x &gt; 0 || y &gt; 0;</code></li><li><span class="opt-letter">B</span> <code>return x &gt; 0 &amp;&amp; y &gt; 0;</code></li><li><span class="opt-letter">C</span> <code>return !(x &gt; 0 &amp;&amp; y &gt; 0);</code></li><li><span class="opt-letter">D</span> <code>return x &gt; 0;</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> true is returned only when both are positive — that's &&.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Equivalent expressions</dt><dd>expressions with the same value for all inputs</dd></div><div><dt>De Morgan's laws</dt><dd>rules for negating && and || expressions</dd></div><div><dt>Truth table</dt><dd>a table of all input combinations and their resulting values</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="2-5.html"><span class="dir">Previous</span>2.5 Compound Boolean Expressions</a>
+  <a class="to-right" href="2-7.html"><span class="dir">Next</span>2.7 while Loops</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.13 Object Creation and Storage (Instantiation) — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-13.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.13</div>
+<h1 class="article-title"><span class="title-num">1.13</span> Object Creation and Storage (Instantiation)</h1>
+<p class="article-lede">new calls a constructor and returns a reference. Understanding that variables hold references — not objects — explains aliasing and every null crash.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><code>ClassName var = new ClassName(args);</code> — <strong>instantiation</strong>. The <code>new</code> keyword allocates memory, runs the <strong>constructor</strong> with the arguments, and returns a <strong>reference</strong> to the new object.</li><li>A <strong>constructor</strong> has the same name as the class and no return type. Constructors can be overloaded; the arguments determine which one runs.</li><li>A reference variable stores an <strong>address</strong>, not the object. <code>Dog b = a;</code> makes <code>b</code> refer to the <em>same</em> object as <code>a</code> — this is called <strong>aliasing</strong>. Changing the object through <code>b</code> is visible through <code>a</code>.</li><li><code>null</code> is the value of a reference variable that doesn't refer to any object. Calling a method on a null reference throws a <strong>NullPointerException</strong> at run time.</li><li>Instance variables of reference type default to <code>null</code> if not initialized; a declared local variable has no default and must be assigned before use.</li><li><code>==</code> on references compares <em>addresses</em>: true only if both refer to the same object. Two separate objects with identical contents are <code>!=</code>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">Dog a = new Dog("Rex", 3);
+Dog b = a;              // alias: same object
+Dog c = new Dog("Rex", 3);
+Dog d = null;
+
+b.setAge(4);
+System.out.println(a.getAge());    // 4  — a and b share the object
+System.out.println(a == b);        // true
+System.out.println(a == c);        // false — different objects
+d.getAge();                        // NullPointerException</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Draw boxes and arrows. Each <code>new</code> is a box; each variable is an arrow. Assignment between reference variables re-points an arrow — it never copies a box. If an arrow points to nothing (null) and you call a method through it, the program crashes.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><code>new</code> does three things: <strong>allocates</strong> memory for the object, <strong>runs the constructor</strong> to initialize it, and <strong>returns a reference</strong> (the address). The variable on the left stores that reference.</li><li><strong>Constructor overloading</strong> works like method overloading: the arguments' count and types select which constructor runs. <code>new Dog()</code> and <code>new Dog("Rex", 3)</code> call different constructors.</li><li><strong>Aliasing</strong> is the single most important reference concept. After <code>Dog b = a;</code>, there is <em>one</em> Dog and two names for it. <code>b.setAge(5)</code> changes the Dog that <code>a</code> also points to. This surprises students every year.</li><li><strong>Reassignment breaks the alias.</strong> <code>b = new Dog("Bo", 1);</code> makes b point to a new object; a still points to the original. Now there are two Dogs.</li><li><code>null</code> means "points to nothing." It's a valid value for any reference variable. Calling any method on it — even <code>toString</code>, even <code>equals</code> — throws <code>NullPointerException</code>. Checking <code>if (x == null)</code> is safe (no method call).</li><li><code>==</code> on references compares addresses. Two variables are <code>==</code> only if they alias the same object. Contents don't matter. For Strings and most classes, use <code>.equals</code> for content comparison.</li><li>Drawing it: boxes for objects, labeled arrows for variables. Assignment between reference variables redraws an arrow. It never duplicates a box.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Expecting <code>Dog b = a;</code> to make a copy.</strong> It doesn't. Same object.</li><li><strong>Expecting <code>a == b</code> to be true for two separate objects with the same values.</strong> Different objects, different addresses, false.</li><li><strong>Calling a method on null.</strong> If a question declares a reference variable and never assigns it (or assigns null), any method call on it crashes.</li><li><strong>Writing <code>public void ClassName()</code> for a constructor.</strong> The void makes it a method, not a constructor. Constructors have no return type.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Consider the following code, where <code>Counter</code> has a method <code>increment()</code> that adds 1 to its count and <code>getCount()</code> that returns it.
+<pre class="code">Counter x = new Counter();
+Counter y = x;
+x.increment();
+y.increment();
+System.out.println(x.getCount());</pre>What is printed?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 0</li><li><span class="opt-letter">B</span> 1</li><li><span class="opt-letter">C</span> 2</li><li><span class="opt-letter">D</span> A compile-time error</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> x and y refer to the same Counter. Both increments apply to it, so the count is 2.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following will cause a NullPointerException at run time?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>String s = ""; int n = s.length();</code></li><li><span class="opt-letter">B</span> <code>String s = null; int n = s.length();</code></li><li><span class="opt-letter">C</span> <code>String s = "abc"; s = null;</code></li><li><span class="opt-letter">D</span> <code>String s = null; s = "abc";</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> Calling a method on a null reference throws NullPointerException. Assigning null (C, D) is fine; an empty String (A) is a valid object.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Instantiation</dt><dd>creating an object with new</dd></div><div><dt>Constructor</dt><dd>a special method that initializes a new object; same name as the class, no return type</dd></div><div><dt>Reference</dt><dd>the address of an object, stored in a reference variable</dd></div><div><dt>Aliasing</dt><dd>two reference variables referring to the same object</dd></div><div><dt>null</dt><dd>a reference value meaning 'no object'</dd></div><div><dt>NullPointerException</dt><dd>the run-time error from calling a method on null</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-12.html"><span class="dir">Previous</span>1.12 Objects: Instances of Classes</a>
+  <a class="to-right" href="1-14.html"><span class="dir">Next</span>1.14 Calling Instance Methods</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

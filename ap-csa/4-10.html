@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.10 Implementing ArrayList Algorithms — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/4-10.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-4.html">UNIT 4: DATA COLLECTIONS</a> &middot; TOPIC 4.10</div>
+<h1 class="article-title"><span class="title-num">4.10</span> Implementing ArrayList Algorithms</h1>
+<p class="article-lede">The same algorithms as arrays, in ArrayList syntax, plus the ones that only make sense with a resizable list: insert in order, remove matches, build a filtered list.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>All the array algorithms (min/max, sum, count, any/all, duplicates, reverse) apply — swap <code>arr[i]</code> for <code>list.get(i)</code>, <code>length</code> for <code>size()</code>.</li><li><strong>Filter into a new list:</strong> create an empty ArrayList, traverse the original, <code>add</code> matches. The original is unchanged.</li><li><strong>Insert in sorted position:</strong> traverse until you find an element bigger than the new one, <code>add(i, value)</code> there; if none, <code>add(value)</code> at the end.</li><li><strong>Remove all matches:</strong> backward traversal with <code>remove(i)</code> (4.9).</li><li><strong>Traversing a list of objects:</strong> call accessors on each element (<code>list.get(i).getName()</code>). This is FRQ 3's shape: a class is given, and you process an ArrayList of its objects.</li><li>Returning a new list vs. modifying the parameter: read the prompt. "Returns a list of…" → build and return a new one. "Removes from the list…" → mutate the parameter.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">// FRQ 3-style: return names of students with gpa above a threshold
+public static ArrayList&lt;String&gt; honorRoll(ArrayList&lt;Student&gt; roster, double min)
+{
+    ArrayList&lt;String&gt; result = new ArrayList&lt;String&gt;();
+    for (Student s : roster)
+    {
+        if (s.getGpa() &gt;= min)
+        {
+            result.add(s.getName());
+        }
+    }
+    return result;
+}
+
+// insert keeping ascending order
+public static void insertSorted(ArrayList&lt;Integer&gt; list, int v)
+{
+    for (int i = 0; i &lt; list.size(); i++)
+    {
+        if (v &lt; list.get(i))
+        {
+            list.add(i, v);
+            return;
+        }
+    }
+    list.add(v);
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> FRQ 3 rubrics typically award: correct loop over the list, correct accessor call on each element, correct condition, correct add/remove/return. Write the enhanced for loop first, then the if, then what happens inside. Don't forget to return the new list.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li><strong>Translation from arrays:</strong> <code>arr.length</code> → <code>list.size()</code>; <code>arr[i]</code> → <code>list.get(i)</code>; <code>arr[i] = x</code> → <code>list.set(i, x)</code>. Everything from 4.5 carries over.</li><li><strong>New with ArrayLists:</strong> insert in sorted position (<code>add(i, x)</code> at the first i where <code>x &lt; get(i)</code>, else append), remove all matches (backward loop), build a filtered result list (new ArrayList, add matches), merge two lists.</li><li><strong>FRQ 3 shape:</strong> you're given a class (say <code>Song</code> with <code>getTitle()</code>, <code>getDuration()</code>) and asked to write methods over an <code>ArrayList&lt;Song&gt;</code>: find the longest, count those over a threshold, return a list of titles, remove those matching a condition. Every one is a loop + accessor calls + accumulator or result list.</li><li><strong>Return a new list vs. modify in place:</strong> read the verb. "Returns a list of…" → build and return new. "Removes from…" or "updates…" → modify the parameter, return void. Doing the wrong one earns zero on that part.</li><li><strong>Accessor calls on elements:</strong> <code>list.get(i).getTitle()</code> — get the element, then call its method. With an enhanced for, <code>s.getTitle()</code>. Chaining is normal.</li><li><strong>Comparing elements for max/min:</strong> the comparison uses a field: <code>if (s.getDuration() &gt; longest.getDuration()) longest = s;</code>. Initialize <code>longest</code> to <code>list.get(0)</code>.</li><li><strong>Rubric reality:</strong> points typically go to the loop over all elements, the correct accessor call, the correct condition, the correct action (add/remove/update), and the correct return. Each independently. A structurally correct answer with one wrong comparison still scores most points.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Modifying when asked to return new (or vice versa).</strong> Read the prompt's verb.</li><li><strong>Not returning the result list.</strong> Built it, forgot <code>return result;</code>.</li><li><strong>Comparing objects with == or &lt;.</strong> Compare their fields via accessors.</li><li><strong>Forward-loop removal (again).</strong> Backward.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> What does the following method return for the list <code>[5, 2, 8, 2, 9]</code>?
+<pre class="code">public static int f(ArrayList&lt;Integer&gt; list)
+{
+    int r = list.get(0);
+    for (int i = 1; i &lt; list.size(); i++)
+    {
+        if (list.get(i) &lt; r) r = list.get(i);
+    }
+    return r;
+}</pre></div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> 9</li><li><span class="opt-letter">B</span> 5</li><li><span class="opt-letter">C</span> 2</li><li><span class="opt-letter">D</span> 26</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> This is the min pattern. The smallest value is 2.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> A method should return a new ArrayList containing only the even values from <code>nums</code>, leaving <code>nums</code> unchanged. Which approach is correct?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Traverse <code>nums</code> backward, removing odd values, and return <code>nums</code>.</li><li><span class="opt-letter">B</span> Create an empty ArrayList, add each even value from <code>nums</code> to it, and return the new list.</li><li><span class="opt-letter">C</span> Use <code>set</code> to replace odd values with 0 and return <code>nums</code>.</li><li><span class="opt-letter">D</span> Sort <code>nums</code> and return it.</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> "New list" and "unchanged original" mean build and return a separate list.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Filter</dt><dd>building a new list from elements that meet a condition</dd></div><div><dt>Insert in order</dt><dd>adding an element at the position that keeps the list sorted</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="4-9.html"><span class="dir">Previous</span>4.9 ArrayList Traversals</a>
+  <a class="to-right" href="4-11.html"><span class="dir">Next</span>4.11 2D Array Creation and Access</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

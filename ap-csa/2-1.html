@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.1 Algorithms with Selection and Repetition — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/2-1.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-2.html">UNIT 2: SELECTION AND ITERATION</a> &middot; TOPIC 2.1</div>
+<h1 class="article-title"><span class="title-num">2.1</span> Algorithms with Selection and Repetition</h1>
+<p class="article-lede">Every algorithm is sequence, selection, and repetition. This topic names them and shows how they combine.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li><strong>Sequence:</strong> statements executed in order. <strong>Selection:</strong> a decision that chooses between paths (<code>if</code>). <strong>Repetition (iteration):</strong> a loop that repeats code (<code>while</code>, <code>for</code>).</li><li>An algorithm can be described in words, in a flowchart, or in code. The same logic can be implemented several equivalent ways.</li><li>Reading an algorithm: identify the initializations, what decisions are made, what repeats, and what's true when it stops.</li><li>Tracing is the essential skill — a table with one column per variable and one row per executed statement or loop pass.</li><li>Two algorithms are equivalent if they produce the same result for all inputs, even if the code differs.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">int total = 0;                  // sequence
+for (int i = 1; i &lt;= 5; i++)    // repetition
+{
+    if (i % 2 == 1)             // selection
+    {
+        total += i;
+    }
+}
+// total is 1 + 3 + 5 = 9</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> Before tracing, write what each variable starts as. Then execute statements strictly in order. If a question describes an algorithm in English and asks which code implements it, translate the English into initializations, a loop, and a decision — then match.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The three control structures are <strong>complete</strong>: any algorithm can be expressed with only sequence, selection, and repetition. There's no fourth thing to learn — methods and recursion are ways of organizing these three.</li><li><strong>Reading an algorithm from code:</strong> find what's initialized before the loop (the accumulator or tracker), what the loop iterates over, what the selection decides each time, and what's true when the loop ends. Those four facts identify the algorithm.</li><li><strong>Writing an algorithm from a description:</strong> the description's nouns are variables, its "for each" or "until" is the loop, its "if" is the selection, its "total/count/largest" is the accumulator's role.</li><li>Two code segments are <strong>equivalent</strong> when every input produces the same result — not when they look similar. The exam's equivalence questions are best answered by testing with specific inputs, including boundaries.</li><li>Tracing discipline: a table with a column per variable, a row per statement executed (or per loop iteration). Write the values, not the expressions. This is a skill to practice, not a concept to understand.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Tracing mentally.</strong> Write it down. Every time.</li><li><strong>Identifying an algorithm by one variable name.</strong> A variable named <code>sum</code> might be counting. Read what's added to it.</li><li><strong>Checking equivalence with one input.</strong> One match proves nothing. Try a boundary and a normal case.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which control structure is demonstrated by the code segment <code>if (x &gt; 0) { count++; }</code>?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> Sequence</li><li><span class="opt-letter">B</span> Selection</li><li><span class="opt-letter">C</span> Repetition</li><li><span class="opt-letter">D</span> Recursion</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> An if statement chooses whether to execute code — that's selection.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> An algorithm should add up the even numbers from 2 to 10. Which of the following correctly does so?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>int s = 0; for (int i = 2; i &lt;= 10; i += 2) { s += i; }</code></li><li><span class="opt-letter">B</span> <code>int s = 0; for (int i = 2; i &lt; 10; i += 2) { s += i; }</code></li><li><span class="opt-letter">C</span> <code>int s = 0; for (int i = 1; i &lt;= 10; i++) { s += i; }</code></li><li><span class="opt-letter">D</span> <code>int s = 2; for (int i = 2; i &lt;= 10; i++) { s += i; }</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: A.</strong> Start at 2, step by 2, include 10. Option B stops at 8; C adds all numbers; D starts wrong and adds odds.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Sequence</dt><dd>statements executed one after another</dd></div><div><dt>Selection</dt><dd>choosing a path with a conditional</dd></div><div><dt>Repetition</dt><dd>repeating with a loop; also called iteration</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="unit-2.html"><span class="dir">Up</span>Unit 2 overview</a>
+  <a class="to-right" href="2-2.html"><span class="dir">Next</span>2.2 Boolean Expressions</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>

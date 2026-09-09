@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.7 Application Program Interface (API) and Libraries — The Stacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>
+(function(){try{var t=localStorage.getItem("stacks-theme");if(t)document.documentElement.setAttribute("data-theme",t);var c=localStorage.getItem("stacks-cb");if(c==="1")document.documentElement.setAttribute("data-cb","1");}catch(e){}})();
+</script>
+</head>
+<body data-page="ap-csa/1-7.html" data-base="../">
+
+<div class="mobile-topbar">
+  <a class="wordmark" href="../index.html">The Stacks</a>
+  <button id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+
+<div class="shell">
+  <aside id="sidebar">
+    <div class="sidebar-inner">
+      <div class="site-header">
+        <div class="wrap">
+          <a class="wordmark" href="../index.html">The Stacks<small>free AP Computer Science notes</small></a>
+        </div>
+      </div>
+      <input id="sidebar-search" class="sidebar-search" type="search" placeholder="Search this site" aria-label="Search pages">
+      <nav id="sidebar-tree" aria-label="Course navigation"></nav>
+      <div class="sidebar-controls">
+        <label class="switch-row">
+          <span class="switch-label">Dark mode</span>
+          <span class="switch"><input type="checkbox" id="theme-toggle" role="switch" aria-label="Toggle dark mode"><span class="switch-track"></span></span>
+        </label>
+        <label class="switch-row">
+          <span class="switch-label">Color-blind friendly</span>
+          <span class="switch"><input type="checkbox" id="cb-toggle" role="switch" aria-label="Toggle color-blind friendly palette"><span class="switch-track"></span></span>
+        </label>
+      </div>
+      <div class="sidebar-foot">Built by a high school student, one unit at a time.</div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+    <main>
+
+<div class="article-eyebrow"><a href="unit-1.html">UNIT 1: USING OBJECTS AND METHODS</a> &middot; TOPIC 1.7</div>
+<h1 class="article-title"><span class="title-num">1.7</span> Application Program Interface (API) and Libraries</h1>
+<p class="article-lede">Java ships with thousands of classes. An API tells you what they do and how to call them, without showing the code inside.</p>
+
+<section class="block">
+  <h2>What you need to know</h2>
+  <ul class="points"><li>A <strong>library</strong> is a collection of classes written and tested by others. Java's standard library includes <code>String</code>, <code>Math</code>, <code>Scanner</code>, <code>ArrayList</code>, and more.</li><li>An <strong>API (Application Program Interface)</strong> is the documentation of a library: each class, its methods, their parameters, return types, and what they do. You program to the API without knowing the implementation.</li><li>The AP exam provides a <strong>Java Quick Reference</strong> — a mini-API listing exactly the methods you may use from String, Math, Integer, Double, ArrayList, and Object.</li><li>Classes in the <code>java.lang</code> package (String, Math, Integer, Double) are available automatically. Others (<code>Scanner</code>, <code>ArrayList</code>, <code>File</code>) require an <code>import</code> statement at the top of the file.</li><li>Reading documentation is a skill: the method header tells you the return type, name, and parameter types. That's enough to call it correctly.</li><li>Using a library is <strong>abstraction</strong> in practice — you rely on <em>what</em> a method does, not <em>how</em>.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Worked example</h2>
+  
+<pre class="code">import java.util.Scanner;    // needed: not in java.lang
+import java.util.ArrayList;
+
+public class Demo
+{
+    public static void main(String[] args)
+    {
+        String s = "abc";                    // String: no import
+        double r = Math.sqrt(16);            // Math: no import
+        ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;();
+    }
+}</pre>
+</section>
+
+<div class="callout"><strong>Exam tip:</strong> If a question asks why a program won't compile and it uses Scanner or ArrayList without an import, that's the answer. If it asks what a method returns, look at the header's return type — the exam sometimes gives you a header for a made-up method and expects you to use it correctly from the header alone.</div>
+
+<section class="block">
+  <h2>Going deeper</h2>
+  <p class="block-note">The nuance, edge cases, and connections that turn a 3 into a 5.</p>
+  <ul class="points"><li>The <strong>Java Quick Reference</strong> provided on the exam lists exactly: <code>String</code> (length, substring ×2, indexOf, equals, compareTo), <code>Integer</code> (MIN_VALUE, MAX_VALUE, parseInt), <code>Double</code> (parseDouble), <code>Math</code> (abs, pow, sqrt, random), <code>ArrayList</code> (size, add ×2, get, set, remove), <code>Object</code> (equals, toString), <code>File</code> and <code>Scanner</code> (the input methods). Anything not listed you should treat as unavailable on FRQs.</li><li>Reading a method in an API: <code>public int indexOf(String str)</code> tells you it's public (callable), returns an int, is named indexOf, takes one String. That's everything needed to call it correctly.</li><li><code>java.lang</code> is imported automatically: String, Math, Integer, Double, Object, System. Everything else needs <code>import package.Class;</code> at the top of the file, before the class declaration. <code>java.util.Scanner</code>, <code>java.util.ArrayList</code>, <code>java.io.File</code>, <code>java.io.FileNotFoundException</code> are the ones on the exam.</li><li><strong>Libraries are abstraction:</strong> you don't know how <code>Math.sqrt</code> computes a square root and don't need to. The API is the contract. This is the same idea as procedural abstraction in 3.1.</li><li>On FRQs, the problem often gives you a class with its method headers and says "you may use these." Treat that as an API: use the methods as specified, don't reimplement them, and don't assume methods that aren't listed.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Mistakes that cost points</h2>
+  <ul class="mistakes"><li><strong>Using methods not on the reference sheet.</strong> <code>charAt</code>, <code>contains</code>, <code>split</code>, <code>toCharArray</code>, <code>Math.round</code>, <code>Math.floor</code> — none are on it. On an FRQ they may not earn credit even if they'd work in real Java.</li><li><strong>Forgetting an import.</strong> Using Scanner or ArrayList without importing is a compile error and a standard question.</li><li><strong>Assuming a method's behavior instead of reading it.</strong> If an FRQ defines <code>getScore()</code>, read what it returns. Don't guess.</li></ul>
+</section>
+
+<section class="block">
+  <h2>Practice questions</h2>
+  <p class="block-note">Written in the style of the real exam. Try each one before revealing the answer.</p>
+  
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q1</span> Which of the following best describes an API?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> The source code of a library</li><li><span class="opt-letter">B</span> The documentation describing a library's classes, methods, parameters, and return values</li><li><span class="opt-letter">C</span> A type of run-time error</li><li><span class="opt-letter">D</span> A Java keyword</li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: B.</strong> An API is the interface specification — what you can call and how — not the implementation.</p>
+  </details>
+</div>
+<div class="question">
+  <div class="q-stem"><span class="q-num">Q2</span> Which of the following classes requires an <code>import</code> statement before it can be used?</div>
+  <ol class="q-options"><li><span class="opt-letter">A</span> <code>String</code></li><li><span class="opt-letter">B</span> <code>Math</code></li><li><span class="opt-letter">C</span> <code>Scanner</code></li><li><span class="opt-letter">D</span> <code>Integer</code></li></ol>
+  <details class="q-answer">
+    <summary>Show answer</summary>
+    <p><strong>Answer: C.</strong> Scanner is in java.util. The other three are in java.lang, which is imported automatically.</p>
+  </details>
+</div>
+</section>
+
+<section class="vocab">
+  <h2>Key vocabulary</h2>
+  <dl><div><dt>Library</dt><dd>a collection of pre-written classes available for use</dd></div><div><dt>API</dt><dd>documentation describing how to use a library's classes and methods</dd></div><div><dt>import</dt><dd>a statement that makes a class outside java.lang available in a file</dd></div><div><dt>Java Quick Reference</dt><dd>the list of methods provided on the AP exam</dd></div></dl>
+</section>
+
+<div class="pager">
+  <a href="1-6.html"><span class="dir">Previous</span>1.6 Compound Assignment Operators</a>
+  <a class="to-right" href="1-8.html"><span class="dir">Next</span>1.8 Documentation with Comments</a>
+</div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">Notes track the College Board Course and Exam Description. AP&reg; is a trademark of the College Board, which was not involved in producing and does not endorse this site.</div>
+    </footer>
+  </div>
+</div>
+
+<script src="../nav-data.js"></script>
+<script src="../search-index.js"></script>
+<script src="../nav.js"></script>
+<script src="../theme.js"></script>
+
+</body>
+</html>
